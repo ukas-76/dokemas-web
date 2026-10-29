@@ -1,0 +1,64 @@
+// Variables Warna DOKEMAS sesuai Gambar
+$navy-dark: #0b1b2a;
+$navy-main: #0d233a;
+$green-primary: #3a821d;
+$green-light: #e8f5e9;
+$bg-soft: #f4f7f2;
+
+@import "bootstrap/scss/bootstrap";
+
+// Custom Helpers & Styling
+body {
+    background-color: $bg-soft;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #1e293b;
+}
+
+.text-navy {
+    color: $navy-main;
+}
+
+.bg-navy-dark {
+    background-color: $navy-dark;
+}
+
+.bg-navy-main {
+    background-color: $navy-main;
+}
+
+.btn-green {
+    background-color: $green-primary;
+    color: #ffffff;
+    border: none;
+    transition: all 0.2s ease;
+    &:hover {
+        background-color: darken($green-primary, 8%);
+        color: #ffffff;
+    }
+}
+
+.badge-green-soft {
+    background-color: $green-light;
+    color: $green-primary;
+    font-weight: 600;
+}
+
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+    }
+}
+
+// Hero Pattern & Overlay
+.hero-section {
+    background: linear-gradient(180deg, #0d233a 0%, #081624 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
