@@ -2,9 +2,8 @@
     <div class="container">
         <!-- Brand Logo -->
         <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
-            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #3a821d !important;">
-                <i class="bi bi-geo-alt-fill"></i>
-            </div>
+            <!-- Menggunakan Logo Kustom -->
+            <img src="{{ asset('images/logo-dokemas.png') }}" alt="Logo DOKEMAS" style="height: 40px; width: auto;" class="object-fit-contain">
             <div>
                 <span class="fw-bold d-block text-navy lh-1" style="font-size: 1.1rem; letter-spacing: 0.5px;">DOKEMAS</span>
                 <small class="text-muted fw-semibold" style="font-size: 0.65rem; letter-spacing: 1px;">DOLAN KELILING BANYUMAS</small>

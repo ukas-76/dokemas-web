@@ -53,12 +53,13 @@ body {
 
 // Hero Pattern & Overlay
 .hero-section {
-    background: linear-gradient(180deg, #0d233a 0%, #081624 100%);
+    background: 
+        radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(13, 35, 58, 0.82) 0%, rgba(6, 18, 30, 0.88) 100%),
+        url('/images/gunung-selamet.jpg');
+    background-size: 24px 24px, cover, cover;
+    background-position: center, center, center;
+    background-repeat: repeat, no-repeat, no-repeat;
     position: relative;
     overflow: hidden;
-}
-
-.hero-pattern {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-    background-size: 24px 24px;
 }
