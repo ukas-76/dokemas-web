@@ -76,88 +76,114 @@
 <section class="py-5">
     <div class="container">
         
-        <!-- Header Kategori -->
-        <div class="d-flex justify-content-between align-items-end mb-4">
-            <div>
-                <span class="text-uppercase text-success fw-bold small" style="letter-spacing: 1px;">• RAGAM REKREASI</span>
-                <h3 class="fw-bold text-navy mt-1 mb-1">Kategori Pilihan Wisatawan</h3>
-                <p class="text-muted small mb-0">Jelajahi Banyumas sesuai preferensi gaya liburan dan petualangan Anda.</p>
-            </div>
-            <span class="text-muted small fw-bold">{{ count($categories) }} KATEGORI INTI</span>
-        </div>
-
         <!-- LOOPING CARD KATEGORI -->
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 mb-5">
-            @foreach($categories as $category)
-            <div class="col">
-                <div class="card border-0 shadow-sm rounded-4 h-100 p-2 card-hover bg-white">
-                    <div class="rounded-3 overflow-hidden mb-2" style="height: 110px;">
-                        <img src="{{ $category['image'] }}" class="w-100 h-100 object-fit-cover" alt="{{ $category['name'] }}">
-                    </div>
-                    <div class="px-1">
-                        <h6 class="fw-bold text-navy mb-0">{{ $category['name'] }}</h6>
-                        <small class="text-muted" style="font-size: 0.75rem;">{{ $category['count'] }}</small>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
+       <div class="d-flex justify-content-between align-items-end mb-4">
+    <div>
+        <span class="text-uppercase text-success fw-bold small" style="letter-spacing: 1px;">• RAGAM REKREASI</span>
+        <h3 class="fw-bold text-navy mt-1 mb-1">Kategori Pilihan Wisatawan</h3>
+        <p class="text-muted small mb-0">Jelajahi Banyumas sesuai preferensi gaya liburan Anda.</p>
+    </div>
+    <span class="text-muted small fw-bold">{{ count($categories ?? []) }} KATEGORI INTI</span>
+</div>
 
-        <!-- Header Destinasi -->
-        <div class="pt-4 mb-4">
-            <span class="badge badge-green-soft px-3 py-2 rounded-pill small mb-2">• PILIHAN TERPOPULER MINGGU INI</span>
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-2">
-                <div>
-                    <h3 class="fw-bold text-navy mb-1">Destinasi & Penginapan Unggulan</h3>
-                    <p class="text-muted small mb-0">Rekomendasi terbaik dengan ulasan tertinggi dan fasilitas terverifikasi tim DOKEMAS.</p>
-                </div>
-                <a href="#" class="text-success text-decoration-none fw-bold small">Lihat Semua Katalog (120+) <i class="bi bi-arrow-right"></i></a>
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 mb-5">
+    @foreach($categories ?? [] as $category)
+    <div class="col">
+        <div class="card border-0 shadow-sm rounded-4 h-100 p-2 card-hover bg-white">
+            <div class="rounded-3 overflow-hidden mb-2 bg-light d-flex align-items-center justify-content-center" style="height: 110px;">
+                <!-- Menggunakan gambar fallback Unsplash berdasarkan slug kategori -->
+                <img src="https://source.unsplash.com/400x300/?{{ $category['slug'] ?? 'tourism' }},banyumas" 
+                     class="w-100 h-100 object-fit-cover" 
+                     alt="{{ $category['name'] ?? 'Kategori' }}"
+                     onerror="this.src='https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=400&q=80'">
+            </div>
+            <div class="px-1">
+                <h6 class="fw-bold text-navy mb-0">{{ $category['name'] ?? 'Kategori' }}</h6>
+                <small class="text-muted" style="font-size: 0.75rem;">{{ $category['destinations_count'] ?? 0 }} Tempat</small>
             </div>
         </div>
+    </div>
+    @endforeach
+</div>
+    
 
         <!-- LOOPING CARD DESTINASI -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-            @foreach($destinations as $item)
-            <div class="col">
-                <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden card-hover bg-white">
-                    <div class="position-relative" style="height: 180px;">
-                        <img src="{{ $item['image'] }}" class="w-100 h-100 object-fit-cover" alt="{{ $item['title'] }}">
-                        <span class="badge bg-navy-main text-white position-absolute top-0 start-0 m-3 px-2 py-1 rounded-pill small" style="font-size: 0.65rem;">{{ $item['category'] }}</span>
-                        <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-3 p-1 d-flex align-items-center justify-content-center shadow-sm" style="width: 28px; height: 28px;">
-                            <i class="bi bi-heart text-secondary" style="font-size: 0.8rem;"></i>
-                        </button>
-                    </div>
-                    <div class="card-body p-3 d-flex flex-column justify-content-between">
-                        <div>
-                            <div class="d-flex align-items-center gap-1 mb-1" style="font-size: 0.75rem;">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <span class="fw-bold">{{ $item['rating'] }}</span>
-                                <span class="text-muted">({{ $item['reviews_count'] }} ulasan)</span>
-                            </div>
-                            <h6 class="fw-bold text-navy mb-1">{{ $item['title'] }}</h6>
-                            <p class="text-muted mb-2" style="font-size: 0.7rem;"><i class="bi bi-geo-alt"></i> {{ $item['location'] }}</p>
-                            
-                            <div class="d-flex flex-wrap gap-1 mb-3">
-                                @foreach($item['tags'] as $tag)
-                                <span class="badge bg-light text-secondary fw-normal" style="font-size: 0.65rem;">{{ $tag }}</span>
-                                @endforeach
-                            </div>
-                        </div>
+        <div class="pt-4 mb-4">
+    <span class="badge badge-green-soft px-3 py-2 rounded-pill small mb-2">• PILIHAN TERPOPULER MINGGU INI</span>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-2">
+        <div>
+            <h3 class="fw-bold text-navy mb-1">Destinasi & Penginapan Unggulan</h3>
+            <p class="text-muted small mb-0">Rekomendasi terbaik dengan ulasan tertinggi dan fasilitas terverifikasi tim DOKEMAS.</p>
+        </div>
+        <a href="#" class="text-success text-decoration-none fw-bold small">Lihat Semua Katalog <i class="bi bi-arrow-right"></i></a>
+    </div>
+</div>
 
-                        <div class="d-flex justify-content-between align-items-end pt-2 border-top">
-                            <div>
-                                <small class="text-muted d-block" style="font-size: 0.6rem;">{{ $item['price_label'] }}</small>
-                                <span class="fw-bold text-success" style="font-size: 0.9rem;">{{ $item['price'] }} <small class="text-muted fw-normal">{{ $item['price_unit'] }}</small></span>
-                            </div>
-                            <a href="#" class="btn btn-light rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                <i class="bi bi-arrow-up-right text-dark"></i>
-                            </a>
-                        </div>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    @foreach($destinations ?? [] as $item)
+    <div class="col">
+        <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden card-hover bg-white">
+            <div class="position-relative" style="height: 180px;">
+                <!-- Thumbnail Image dari API -->
+                <img src="{{ $item['thumbnail_url'] ?? 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=500&q=80' }}" 
+                     class="w-100 h-100 object-fit-cover" 
+                     alt="{{ $item['name'] ?? 'Destinasi' }}">
+                
+                <!-- Nama Kategori -->
+                <span class="badge bg-navy-main text-white position-absolute top-0 start-0 m-3 px-2 py-1 rounded-pill small" style="font-size: 0.65rem;">
+                    {{ $item['category']['name'] ?? 'Wisata' }}
+                </span>
+
+                <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-3 p-1 d-flex align-items-center justify-content-center shadow-sm" style="width: 28px; height: 28px;">
+                    <i class="bi bi-heart text-secondary" style="font-size: 0.8rem;"></i>
+                </button>
+            </div>
+            
+            <div class="card-body p-3 d-flex flex-column justify-content-between">
+                <div>
+                    <!-- Rating & Reviews Count -->
+                    <div class="d-flex align-items-center gap-1 mb-1" style="font-size: 0.75rem;">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <span class="fw-bold">{{ number_format((float)($item['rating_avg'] ?? 0), 1) }}</span>
+                        <span class="text-muted">({{ $item['reviews_count'] ?? 0 }} ulasan)</span>
+                    </div>
+
+                    <!-- Judul Destinasi -->
+                    <h6 class="fw-bold text-navy mb-1 text-truncate" title="{{ $item['name'] ?? '' }}">{{ $item['name'] ?? 'Nama Destinasi' }}</h6>
+                    
+                    <!-- Alamat / Lokasi -->
+                    <p class="text-muted mb-2 text-truncate" style="font-size: 0.7rem;" title="{{ $item['address'] ?? '' }}">
+                        <i class="bi bi-geo-alt"></i> {{ $item['address'] ?? 'Banyumas' }}
+                    </p>
+                    
+                    <!-- Tag Bawaan -->
+                    <div class="d-flex flex-wrap gap-1 mb-3">
+                        <span class="badge bg-light text-secondary fw-normal" style="font-size: 0.65rem;">
+                            <i class="bi bi-clock"></i> {{ $item['opening_hours'] ?? '08:00 - 17:00' }}
+                        </span>
+                        @if($item['is_popular'] ?? false)
+                            <span class="badge bg-success bg-opacity-10 text-success fw-normal" style="font-size: 0.65rem;">Populer</span>
+                        @endif
                     </div>
                 </div>
+
+                <!-- Price Section -->
+                <div class="d-flex justify-content-between align-items-end pt-2 border-top">
+                    <div>
+                        <small class="text-muted d-block" style="font-size: 0.6rem;">TIKET / HARGA</small>
+                        <span class="fw-bold text-success" style="font-size: 0.9rem;">
+                            {{ isset($item['price']) && $item['price'] > 0 ? 'Rp ' . number_format($item['price'], 0, ',', '.') : 'Gratis' }}
+                        </span>
+                    </div>
+                    <a href="#" class="btn btn-light rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                        <i class="bi bi-arrow-up-right text-dark"></i>
+                    </a>
+                </div>
             </div>
-            @endforeach
         </div>
+    </div>
+    @endforeach
+</div>
 
     </div>
 </section>
