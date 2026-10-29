@@ -12,20 +12,23 @@ class HomeController extends Controller
         $baseUrl = env('API_BASE_URL', 'https://porto-backend-dokemas.rryxja.easypanel.host/api');
 
         try {
-            // 1. Tarik Data Kategori dari API
+            // 1. Tarik Data Kategori
             $categoriesResponse = Http::get("{$baseUrl}/categories");
-            $categories = $categoriesResponse->successful() ? $categoriesResponse->json('data') : [];
+            $categoriesRaw = $categoriesResponse->json();
+            // Mengecek apakah respon berupa array langsung atau terbungkus 'data'
+            $categories = isset($categoriesRaw['data']) ? $categoriesRaw['data'] : (is_array($categoriesRaw) ? $categoriesRaw : []);
 
-            // 2. Tarik Data Destinasi & Hotel Unggulan dari API
+            // 2. Tarik Data Destinasi
             $destinationsResponse = Http::get("{$baseUrl}/destinations", [
                 'limit' => 4,
                 'q' => $request->query('q'),
                 'category' => $request->query('kategori')
             ]);
-            $destinations = $destinationsResponse->successful() ? $destinationsResponse->json('data') : [];
+            $destinationsRaw = $destinationsResponse->json();
+            // Data destinasi berada di dalam $destinationsRaw['data'] (paginasi Laravel)
+            $destinations = $destinationsRaw['data'] ?? [];
 
         } catch (\Exception $e) {
-            // Fallback jika API offline/error
             $categories = [];
             $destinations = [];
         }
