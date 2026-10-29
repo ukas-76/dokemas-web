@@ -4,8 +4,9 @@
             <!-- Col 1: Brand Info -->
             <div class="col-lg-4 col-md-6">
                 <div class="d-flex align-items-center gap-2 mb-3">
-                    <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background-color: #3a821d !important;">
-                        <i class="bi bi-geo-alt-fill fs-6"></i>
+                    <!-- Kotak Putih Penampung Logo -->
+                    <div class="bg-white p-1 rounded-2 d-inline-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px;">
+                        <img src="{{ asset('images/logo-dokemas.png') }}" alt="Logo DOKEMAS" class="w-100 h-100 object-fit-contain">
                     </div>
                     <div>
                         <span class="fw-bold d-block text-white lh-1">DOKEMAS</span>

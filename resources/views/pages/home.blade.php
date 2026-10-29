@@ -3,7 +3,7 @@
 @section('content')
 
 <!-- HERO & SEARCH BAR -->
-<section class="hero-section text-white pt-5 pb-5 hero-pattern">
+<section class="hero-section text-white pt-5 pb-5" style="background: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), linear-gradient(180deg, rgba(13, 35, 58, 0.75) 0%, rgba(6, 18, 30, 0.85) 100%), url('{{ asset('images/gunung-selamet.jpg') }}'); background-size: 24px 24px, cover, cover; background-position: center;">
     <div class="container pt-4 pb-5 text-center position-relative z-1">
         <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-white bg-opacity-10 border border-white border-opacity-10 text-white-50 small mb-4">
             <i class="bi bi-compass text-success"></i> GERBANG RESMI WISATA LERENG SLAMET
@@ -76,8 +76,28 @@
 <section class="py-5">
     <div class="container">
         
-        <!-- LOOPING CARD KATEGORI -->
-       <div class="d-flex justify-content-between align-items-end mb-4">
+@php
+    // Pemetaan nama icon dari API Backend ke class Bootstrap Icons yang valid
+    $iconMap = [
+        'forest' => 'bi-tree-fill',          // Diubah dari bi-trees-fill
+        'beach_access' => 'bi-sun-fill',
+        'diamond' => 'bi-gem',
+        'family_restroom' => 'bi-people-fill',
+        'restaurant' => 'bi-cup-hot-fill',   // Diubah dari bi-utensils
+        'mosque' => 'bi-moon-stars-fill',
+        'museum' => 'bi-bank',
+        // Fallback berdasarkan slug
+        'alam' => 'bi-tree-fill',            // Diubah dari bi-trees-fill
+        'alam-bebas' => 'bi-compass-fill',
+        'hidden-gem' => 'bi-gem',
+        'keluarga' => 'bi-people-fill',
+        'kuliner' => 'bi-cup-hot-fill',      // Diubah dari bi-utensils
+        'religi' => 'bi-moon-stars-fill',
+        'sejarah' => 'bi-bank',
+    ];
+@endphp
+
+<div class="d-flex justify-content-between align-items-end mb-4">
     <div>
         <span class="text-uppercase text-success fw-bold small" style="letter-spacing: 1px;">• RAGAM REKREASI</span>
         <h3 class="fw-bold text-navy mt-1 mb-1">Kategori Pilihan Wisatawan</h3>
@@ -86,23 +106,33 @@
     <span class="text-muted small fw-bold">{{ count($categories ?? []) }} KATEGORI INTI</span>
 </div>
 
-<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 mb-5">
+<!-- Grid Kategori -->
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-7 g-3 mb-5">
     @foreach($categories ?? [] as $category)
-    <div class="col">
-        <div class="card border-0 shadow-sm rounded-4 h-100 p-2 card-hover bg-white">
-            <div class="rounded-3 overflow-hidden mb-2 bg-light d-flex align-items-center justify-content-center" style="height: 110px;">
-                <!-- Menggunakan gambar fallback Unsplash berdasarkan slug kategori -->
-                <img src="https://source.unsplash.com/400x300/?{{ $category['slug'] ?? 'tourism' }},banyumas" 
-                     class="w-100 h-100 object-fit-cover" 
-                     alt="{{ $category['name'] ?? 'Kategori' }}"
-                     onerror="this.src='https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=400&q=80'">
-            </div>
-            <div class="px-1">
-                <h6 class="fw-bold text-navy mb-0">{{ $category['name'] ?? 'Kategori' }}</h6>
-                <small class="text-muted" style="font-size: 0.75rem;">{{ $category['destinations_count'] ?? 0 }} Tempat</small>
-            </div>
+        @php
+            // Ambil icon dari pemetaan, jika tidak ditemukan gunakan icon default 'bi-grid-fill'
+            $iconClass = $iconMap[$category['icon'] ?? ''] ?? ($iconMap[$category['slug'] ?? ''] ?? 'bi-grid-fill');
+        @endphp
+        <div class="col">
+            <a href="?kategori={{ $category['slug'] ?? '' }}" class="text-decoration-none">
+                <div class="card border-0 shadow-sm rounded-4 h-100 p-3 text-center card-hover bg-white transition-all">
+                    <!-- Icon Bubble -->
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success mx-auto mb-2" style="width: 52px; height: 52px;">
+                        <i class="bi {{ $iconClass }} fs-4"></i>
+                    </div>
+                    
+                    <!-- Nama Kategori -->
+                    <h6 class="fw-bold text-navy mb-1 text-truncate" style="font-size: 0.85rem;" title="{{ $category['name'] ?? '' }}">
+                        {{ $category['name'] ?? 'Kategori' }}
+                    </h6>
+                    
+                    <!-- Jumlah Tempat -->
+                    <span class="badge bg-light text-muted fw-normal rounded-pill px-2 py-1 mx-auto" style="font-size: 0.65rem;">
+                        {{ $category['destinations_count'] ?? 0 }} Tempat
+                    </span>
+                </div>
+            </a>
         </div>
-    </div>
     @endforeach
 </div>
     
