@@ -18,10 +18,10 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-semibold">
                 <li class="nav-item">
-                    <a class="nav-link px-3 rounded-pill {{ request()->routeIs('home') ? 'text-success bg-light fw-bold' : 'text-secondary' }}" href="{{ route('home') }}">Beranda</a>
+                    <a class="nav-link px-3 rounded-pill {{ request()->routeIs('home') ? 'text-success bg-success bg-opacity-10 fw-bold' : 'text-secondary' }}" href="{{ route('home') }}">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-3 text-secondary" href="#">Wisata & Penginapan</a>
+                    <a class="nav-link px-3 rounded-pill {{ request()->routeIs('destinasi.*') ? 'text-success bg-success bg-opacity-10 fw-bold' : 'text-secondary' }}" href="{{ route('destinasi.index') }}">Wisata & Penginapan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link px-3 text-secondary" href="#">Gabung Mitra</a>
