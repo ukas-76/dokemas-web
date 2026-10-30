@@ -28,7 +28,7 @@
         <!-- Search Bar Floating Card -->
         <!-- Search Box Floating Card (Sederhana & Fungsional) -->
 <div class="card border-0 shadow-lg p-3 p-md-4 mx-auto text-start rounded-4 text-dark" style="max-width: 850px; margin-bottom: -80px; background-color: #ffffff;">
-    <form action="#" method="GET" class="row g-2 align-items-center">
+    <form action="{{ route('destinasi.index') }}" method="GET" class="row g-2 align-items-center">
         <!-- Input Kata Kunci / Lokasi -->
         <div class="col-md-5">
             <label class="form-label text-uppercase text-muted fw-bold mb-1" style="font-size: 0.65rem; letter-spacing: 0.5px;">
@@ -145,7 +145,7 @@
             <h3 class="fw-bold text-navy mb-1">Destinasi & Penginapan Unggulan</h3>
             <p class="text-muted small mb-0">Rekomendasi terbaik dengan ulasan tertinggi dan fasilitas terverifikasi tim DOKEMAS.</p>
         </div>
-        <a href="#" class="text-success text-decoration-none fw-bold small">Lihat Semua Katalog <i class="bi bi-arrow-right"></i></a>
+        <a href="{{ route('destinasi.index') }}" class="text-success text-decoration-none fw-bold small">Lihat Semua Katalog <i class="bi bi-arrow-right"></i></a>
     </div>
 </div>
 
@@ -205,7 +205,7 @@
                             {{ isset($item['price']) && $item['price'] > 0 ? 'Rp ' . number_format($item['price'], 0, ',', '.') : 'Gratis' }}
                         </span>
                     </div>
-                    <a href="#" class="btn btn-light rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                    <a href="{{ route('destinasi.show', $item['slug'] ?? ($item['id'] ?? 'curug-jaten-baturraden')) }}" class="btn btn-light rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
                         <i class="bi bi-arrow-up-right text-dark"></i>
                     </a>
                 </div>
