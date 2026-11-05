@@ -3,35 +3,40 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\Category;
+use App\Models\Destination;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $baseUrl = env('API_BASE_URL', 'https://porto-backend-dokemas.rryxja.easypanel.host/api');
+        // 1. Ambil data kategori langsung dari database
+        $categories = Category::withCount('destinations')->get();
 
-        try {
-            // 1. Tarik Data Kategori
-            $categoriesResponse = Http::get("{$baseUrl}/categories");
-            $categoriesRaw = $categoriesResponse->json();
-            // Mengecek apakah respon berupa array langsung atau terbungkus 'data'
-            $categories = isset($categoriesRaw['data']) ? $categoriesRaw['data'] : (is_array($categoriesRaw) ? $categoriesRaw : []);
+        // 2. Query destinasi unggulan dari database
+        $destinationsQuery = Destination::with('category');
 
-            // 2. Tarik Data Destinasi
-            $destinationsResponse = Http::get("{$baseUrl}/destinations", [
-                'limit' => 4,
-                'q' => $request->query('q'),
-                'category' => $request->query('kategori')
-            ]);
-            $destinationsRaw = $destinationsResponse->json();
-            // Data destinasi berada di dalam $destinationsRaw['data'] (paginasi Laravel)
-            $destinations = $destinationsRaw['data'] ?? [];
-
-        } catch (\Exception $e) {
-            $categories = [];
-            $destinations = [];
+        if ($request->filled('q')) {
+            $q = trim($request->query('q'));
+            $destinationsQuery->where(function ($sub) use ($q) {
+                $sub->where('name', 'like', "%{$q}%")
+                    ->orWhere('location', 'like', "%{$q}%")
+                    ->orWhere('subdistrict', 'like', "%{$q}%");
+            });
         }
+
+        if ($request->filled('kategori')) {
+            $cat = $request->query('kategori');
+            $destinationsQuery->whereHas('category', function ($sub) use ($cat) {
+                $sub->where('slug', 'like', "%{$cat}%");
+            });
+        }
+
+        // Ambil 4-8 destinasi pilihan terpopuler
+        $destinations = $destinationsQuery->orderByDesc('is_featured')
+            ->orderByDesc('rating')
+            ->limit(4)
+            ->get();
 
         return view('pages.home', compact('categories', 'destinations'));
     }
