@@ -46,4 +46,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Destinasi yang didaftarkan oleh user mitra ini.
+     */
+    public function destination()
+    {
+        return $this->hasOne(Destination::class);
+    }
+
+    public function destinations()
+    {
+        return $this->hasMany(Destination::class);
+    }
 }

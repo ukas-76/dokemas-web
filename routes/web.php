@@ -11,6 +11,14 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/destinasi', [DestinationController::class, 'index'])->name('destinasi.index');
 Route::get('/destinasi/{slug}', [DestinationController::class, 'show'])->name('destinasi.show');
 Route::get('/gabung-mitra', [MitraController::class, 'register'])->name('mitra.register');
+Route::get('/mitra/dashboard', [MitraController::class, 'dashboard'])->name('mitra.dashboard');
+
+// Endpoint Aksi & Integrasi Dashboard Mitra
+Route::post('/mitra/destination/update', [MitraController::class, 'updateDestination'])->name('mitra.destination.update');
+Route::post('/mitra/tickets/validate', [MitraController::class, 'validateTicket'])->name('mitra.tickets.validate');
+Route::post('/mitra/status/update', [MitraController::class, 'updateStatus'])->name('mitra.status.update');
+Route::post('/mitra/capacity/update', [MitraController::class, 'updateCapacity'])->name('mitra.capacity.update');
+Route::post('/mitra/announcement/publish', [MitraController::class, 'publishAnnouncement'])->name('mitra.announcement.publish');
 
 // Autentikasi Pengguna (Masuk & Keluar)
 Route::get('/auth/google', function () {
@@ -62,3 +70,22 @@ Route::post('/logout', function (\Illuminate\Http\Request $request) {
     $request->session()->regenerateToken();
     return back()->with('success', 'Berhasil keluar.');
 })->name('logout');
+
+// Update Profil Pengguna
+Route::post('/profile/update', function (\Illuminate\Http\Request $request) {
+    if (!Auth::check()) {
+        return back()->with('login_required', 'Silakan masuk terlebih dahulu.');
+    }
+
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
+    ]);
+
+    $user = Auth::user();
+    $user->name = $validated['name'];
+    $user->email = $validated['email'];
+    $user->save();
+
+    return back()->with('success', 'Profil akun Anda berhasil diperbarui!');
+})->name('profile.update');
