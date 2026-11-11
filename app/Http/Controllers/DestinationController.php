@@ -36,21 +36,61 @@ class DestinationController extends Controller
         $selectedArea = trim((string) $request->query('wilayah', ''));
         $sort = $request->query('sort', 'rating_desc');
 
-        // A. Filter Pencarian Teks (q)
+        // A. Filter Pencarian Teks (q) Cerdas & Fleksibel
         if ($q !== '') {
-            $query->where(function ($sub) use ($q) {
-                $sub->where('name', 'like', "%{$q}%")
-                    ->orWhere('description', 'like', "%{$q}%")
-                    ->orWhere('location', 'like', "%{$q}%")
-                    ->orWhere('subdistrict', 'like', "%{$q}%");
+            $rawTokens = preg_split('/\s+/', $q, -1, PREG_SPLIT_NO_EMPTY);
+            $tokens = array_filter($rawTokens, fn($t) => mb_strlen($t) > 1);
+            if (empty($tokens)) {
+                $tokens = [$q];
+            }
+
+            $query->where(function ($sub) use ($tokens) {
+                foreach ($tokens as $token) {
+                    $variants = [$token];
+                    // Normalisasi variasi ejaan umum Baturraden / Baturaden
+                    if (stripos($token, 'baturaden') !== false) {
+                        $variants[] = str_ireplace('baturaden', 'baturraden', $token);
+                    } elseif (stripos($token, 'baturraden') !== false) {
+                        $variants[] = str_ireplace('baturraden', 'baturaden', $token);
+                    }
+
+                    $sub->where(function ($tokenSub) use ($variants) {
+                        foreach ($variants as $var) {
+                            $tokenSub->orWhere('name', 'like', "%{$var}%")
+                                     ->orWhere('description', 'like', "%{$var}%")
+                                     ->orWhere('location', 'like', "%{$var}%")
+                                     ->orWhere('subdistrict', 'like', "%{$var}%")
+                                     ->orWhereHas('category', function ($catSub) use ($var) {
+                                         $catSub->where('name', 'like', "%{$var}%")
+                                                ->orWhere('slug', 'like', "%{$var}%");
+                                     });
+                        }
+                    });
+                }
             });
         }
 
         // B. Filter Kategori (Array atau Tunggal)
         if (!empty($selectedCategories)) {
-            $query->whereHas('category', function ($sub) use ($selectedCategories) {
-                $sub->whereIn('slug', $selectedCategories)
-                    ->orWhereIn('id', $selectedCategories);
+            // Normalisasi kategori umum atau sinonim (contoh: 'wisata' -> 'alam')
+            $mappedCats = [];
+            foreach ($selectedCategories as $catVal) {
+                $mappedCats[] = $catVal;
+                if ($catVal === 'wisata' || $catVal === 'wisata-alam') {
+                    $mappedCats[] = 'alam';
+                }
+            }
+            $mappedCats = array_unique(array_filter($mappedCats));
+
+            $query->whereHas('category', function ($sub) use ($mappedCats) {
+                $sub->whereIn('slug', $mappedCats)
+                    ->orWhereIn('id', $mappedCats)
+                    ->orWhere(function ($s) use ($mappedCats) {
+                        foreach ($mappedCats as $mc) {
+                            $s->orWhere('name', 'like', "%{$mc}%")
+                              ->orWhere('slug', 'like', "%{$mc}%");
+                        }
+                    });
             });
         }
 

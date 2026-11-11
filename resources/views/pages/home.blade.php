@@ -34,7 +34,7 @@
             <label class="form-label text-uppercase text-muted fw-bold mb-1" style="font-size: 0.65rem; letter-spacing: 0.5px;">
                 <i class="bi bi-geo-alt text-secondary"></i> Cari Lokasi / Tempat
             </label>
-            <input type="text" name="q" class="form-control form-control-lg border-0 bg-light fs-6 fw-semibold text-navy" placeholder="Misal: Baturraden, Curug...">
+            <input type="text" name="q" class="form-control form-control-lg border-0 bg-light fs-6 fw-semibold text-navy" placeholder="Misal: Baturraden, Curug..." value="{{ request('q') }}">
         </div>
 
         <!-- Select Kategori -->
@@ -44,10 +44,19 @@
             </label>
             <select name="kategori" class="form-select form-select-lg border-0 bg-light fs-6 fw-semibold text-navy">
                 <option value="">Semua Kategori</option>
-                <option value="wisata">Wisata Alam</option>
-                <option value="hotel">Hotel & Resort</option>
-                <option value="homestay">Homestay</option>
-                <option value="kuliner">Kuliner</option>
+                @if(isset($categories) && count($categories) > 0)
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->slug }}" {{ request('kategori') == $cat->slug ? 'selected' : '' }}>
+                            {{ $cat->name }}
+                        </option>
+                    @endforeach
+                @else
+                    <option value="alam">Wisata Alam</option>
+                    <option value="kuliner">Kuliner</option>
+                    <option value="sejarah">Wisata Sejarah</option>
+                    <option value="religi">Wisata Religi</option>
+                    <option value="keluarga">Wisata Keluarga</option>
+                @endif
             </select>
         </div>
 
@@ -62,9 +71,9 @@
     <!-- Tag Populer -->
     <div class="pt-3 mt-3 border-top d-flex align-items-center gap-2 flex-wrap" style="font-size: 0.75rem;">
         <span class="text-muted font-monospace">POPULER:</span>
-        <a href="?q=Curug+Cipendok" class="badge bg-light text-dark fw-normal text-decoration-none px-2 py-1">Curug Cipendok</a>
-        <a href="?q=Baturraden" class="badge bg-light text-dark fw-normal text-decoration-none px-2 py-1">Baturraden</a>
-        <a href="?q=Mendoan" class="badge bg-light text-dark fw-normal text-decoration-none px-2 py-1">Mendoan Sokaraja</a>
+        <a href="{{ route('destinasi.index', ['q' => 'Curug Cipendok']) }}" class="badge bg-light text-dark fw-normal text-decoration-none px-2 py-1">Curug Cipendok</a>
+        <a href="{{ route('destinasi.index', ['q' => 'Baturraden']) }}" class="badge bg-light text-dark fw-normal text-decoration-none px-2 py-1">Baturraden</a>
+        <a href="{{ route('destinasi.index', ['q' => 'Mendoan']) }}" class="badge bg-light text-dark fw-normal text-decoration-none px-2 py-1">Mendoan Sokaraja</a>
     </div>
 </div>
     </div>
@@ -106,33 +115,30 @@
     <span class="text-muted small fw-bold">{{ count($categories ?? []) }} KATEGORI INTI</span>
 </div>
 
-<!-- Grid Kategori -->
-<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-7 g-3 mb-5">
+<!-- Grid Kategori 7 Kolom Sejajar Rapi di Desktop -->
+<div class="category-grid-7 mb-5">
     @foreach($categories ?? [] as $category)
         @php
-            // Ambil icon dari pemetaan, jika tidak ditemukan gunakan icon default 'bi-grid-fill'
             $iconClass = $iconMap[$category['icon'] ?? ''] ?? ($iconMap[$category['slug'] ?? ''] ?? 'bi-grid-fill');
         @endphp
-        <div class="col">
-            <a href="?kategori={{ $category['slug'] ?? '' }}" class="text-decoration-none">
-                <div class="card border-0 shadow-sm rounded-4 h-100 p-3 text-center card-hover bg-white transition-all">
-                    <!-- Icon Bubble -->
-                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success mx-auto mb-2" style="width: 52px; height: 52px;">
-                        <i class="bi {{ $iconClass }} fs-4"></i>
-                    </div>
-                    
-                    <!-- Nama Kategori -->
-                    <h6 class="fw-bold text-navy mb-1 text-truncate" style="font-size: 0.85rem;" title="{{ $category['name'] ?? '' }}">
-                        {{ $category['name'] ?? 'Kategori' }}
-                    </h6>
-                    
-                    <!-- Jumlah Tempat -->
-                    <span class="badge bg-light text-muted fw-normal rounded-pill px-2 py-1 mx-auto" style="font-size: 0.65rem;">
-                        {{ $category['destinations_count'] ?? 0 }} Tempat
-                    </span>
+        <a href="{{ route('destinasi.index', ['kategori' => $category['slug'] ?? '']) }}" class="text-decoration-none d-block h-100">
+            <div class="card border-0 shadow-sm rounded-4 h-100 p-3 text-center card-hover bg-white transition-all">
+                <!-- Icon Bubble -->
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success mx-auto mb-2" style="width: 52px; height: 52px;">
+                    <i class="bi {{ $iconClass }} fs-4"></i>
                 </div>
-            </a>
-        </div>
+                
+                <!-- Nama Kategori -->
+                <h6 class="fw-bold text-navy mb-1 text-truncate" style="font-size: 0.85rem;" title="{{ $category['name'] ?? '' }}">
+                    {{ $category['name'] ?? 'Kategori' }}
+                </h6>
+                
+                <!-- Jumlah Tempat -->
+                <span class="badge bg-light text-muted fw-normal rounded-pill px-2 py-1 mx-auto" style="font-size: 0.65rem;">
+                    {{ $category['destinations_count'] ?? 0 }} Tempat
+                </span>
+            </div>
+        </a>
     @endforeach
 </div>
     

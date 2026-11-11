@@ -9,25 +9,22 @@
     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
         <!-- Top Row Meta Info -->
         <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between pb-3 mb-4 border-bottom border-light-subtle gap-2">
-            <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-file-earmark-text text-secondary fs-5"></i>
-                <div>
-                    <span class="fw-bold text-navy" style="font-size: 0.88rem; letter-spacing: 0.5px;">FORMULIR ONBOARDING MITRA DOKEMAS</span>
-                    <span class="text-muted small"> &bull; Tahun Anggaran 2025</span>
-                </div>
+            <div>
+                <h5 class="fw-bold text-navy mb-1" style="font-size: 1.15rem; letter-spacing: -0.3px;">Pendaftaran Kemitraan DOKEMAS</h5>
+                <p class="text-muted small mb-0">Portal resmi onboarding pengelola destinasi wisata & penginapan Kabupaten Banyumas</p>
             </div>
             <div>
-                <span class="badge bg-light text-success fw-semibold border border-success-subtle rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2" id="stepperProgressBadge" style="font-size: 0.78rem;">
+                <span class="badge bg-success bg-opacity-10 text-success fw-semibold border border-success-subtle rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2" id="stepperProgressBadge" style="font-size: 0.82rem;">
                     <span class="rounded-circle bg-success d-inline-block" style="width: 7px; height: 7px;"></span>
                     <span id="stepperProgressText">
                         @if(($step ?? 1) == 1)
-                            Progress Pendaftaran: 25% Selesai
+                            Langkah 1 dari 4: 25% Selesai
                         @elseif(($step ?? 1) == 2)
-                            Progress Pendaftaran: 50% Selesai
+                            Langkah 2 dari 4: 50% Selesai
                         @elseif(($step ?? 1) == 3)
-                            Progress Pendaftaran: 75% Selesai
+                            Langkah 3 dari 4: 75% Selesai
                         @else
-                            Progress Pendaftaran: 100% Siap Dikirim
+                            Langkah 4 dari 4: 100% Siap Dikirim
                         @endif
                     </span>
                 </span>
@@ -35,7 +32,7 @@
         </div>
 
         <!-- Stepper Progress Bar -->
-        <div class="row g-2 align-items-center" id="stepperNavRow">
+        <div class="row g-3 align-items-center" id="stepperNavRow">
             <!-- Step 1 -->
             <div class="col-6 col-lg-3" onclick="goToStep(1)" style="cursor: pointer;" title="Klik untuk ke Langkah 1">
                 <div class="d-flex align-items-center gap-3">
@@ -47,15 +44,9 @@
                         @endif
                     </div>
                     <div class="flex-grow-1 min-w-0" id="stepIndicatorLabel1">
-                        @if(($step ?? 1) == 1)
-                            <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-0 d-inline-block mb-1" style="font-size: 0.62rem; letter-spacing: 0.5px;">SEDANG MENGISI</span>
-                            <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Informasi Akun</strong>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Verifikasi Data & OTP</small>
-                        @else
-                            <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 1</span>
-                            <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Informasi Akun</strong>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Terverifikasi No OTP</small>
-                        @endif
+                        <span class="text-success fw-semibold d-block" style="font-size: 0.72rem;">Langkah 1</span>
+                        <strong class="d-block text-navy text-truncate" style="font-size: 0.88rem;">Informasi Akun</strong>
+                        <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">Data kontak & PIC</small>
                     </div>
                 </div>
             </div>
@@ -71,25 +62,15 @@
                         @endif
                     </div>
                     <div class="flex-grow-1 min-w-0" id="stepIndicatorLabel2">
-                        @if(($step ?? 1) == 2)
-                            <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-0 d-inline-block mb-1" style="font-size: 0.62rem; letter-spacing: 0.5px;">SEDANG MENGISI</span>
-                            <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Detail Tempat & Fasil</strong>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Katalog & Titik Lokasi</small>
-                        @elseif(($step ?? 1) > 2)
-                            <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 2</span>
-                            <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Detail Tempat & Fasil</strong>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Katalog & Titik Lokasi</small>
-                        @else
-                            <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 2</span>
-                            <span class="d-block text-secondary fw-semibold text-truncate" style="font-size: 0.85rem;">Detail Tempat & Fasil</span>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Katalog & Titik Lokasi</small>
-                        @endif
+                        <span class="{{ ($step ?? 1) >= 2 ? 'text-success fw-semibold' : 'text-muted' }} d-block" style="font-size: 0.72rem;">Langkah 2</span>
+                        <strong class="d-block text-navy text-truncate" style="font-size: 0.88rem;">Profil Destinasi</strong>
+                        <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">Lokasi & fasilitas</small>
                     </div>
                 </div>
             </div>
 
             <!-- Step 3 -->
-            <div class="col-6 col-lg-3 mt-3 mt-lg-0" onclick="goToStep(3)" style="cursor: pointer;" title="Klik untuk ke Langkah 3">
+            <div class="col-6 col-lg-3" onclick="goToStep(3)" style="cursor: pointer;" title="Klik untuk ke Langkah 3">
                 <div class="d-flex align-items-center gap-3">
                     <div class="step-circle {{ ($step ?? 1) == 3 ? 'active' : (($step ?? 1) > 3 ? 'completed' : 'inactive') }} flex-shrink-0" id="stepIndicatorCircle3">
                         @if(($step ?? 1) > 3)
@@ -99,39 +80,23 @@
                         @endif
                     </div>
                     <div class="flex-grow-1 min-w-0" id="stepIndicatorLabel3">
-                        @if(($step ?? 1) == 3)
-                            <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-0 d-inline-block mb-1" style="font-size: 0.62rem; letter-spacing: 0.5px;">SEDANG MENGISI</span>
-                            <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Upload Foto & Dokum</strong>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">NIB & Surat Izin</small>
-                        @elseif(($step ?? 1) > 3)
-                            <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 3</span>
-                            <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Upload Foto & Dokum</strong>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Berkas Terlampir</small>
-                        @else
-                            <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 3</span>
-                            <span class="d-block text-secondary fw-semibold text-truncate" style="font-size: 0.85rem;">Upload Foto & Dokum</span>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">NIB & Surat Izin</small>
-                        @endif
+                        <span class="{{ ($step ?? 1) >= 3 ? 'text-success fw-semibold' : 'text-muted' }} d-block" style="font-size: 0.72rem;">Langkah 3</span>
+                        <strong class="d-block text-navy text-truncate" style="font-size: 0.88rem;">Dokumen Legalitas</strong>
+                        <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">NIB OSS & izin</small>
                     </div>
                 </div>
             </div>
 
             <!-- Step 4 -->
-            <div class="col-6 col-lg-3 mt-3 mt-lg-0" onclick="goToStep(4)" style="cursor: pointer;" title="Klik untuk ke Langkah 4">
+            <div class="col-6 col-lg-3" onclick="goToStep(4)" style="cursor: pointer;" title="Klik untuk ke Langkah 4">
                 <div class="d-flex align-items-center gap-3">
                     <div class="step-circle {{ ($step ?? 1) == 4 ? 'active' : 'inactive' }} flex-shrink-0" id="stepIndicatorCircle4">
                         4
                     </div>
                     <div class="flex-grow-1 min-w-0" id="stepIndicatorLabel4">
-                        @if(($step ?? 1) == 4)
-                            <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-0 d-inline-block mb-1" style="font-size: 0.62rem; letter-spacing: 0.5px;">SEDANG MENGISI</span>
-                            <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Review & Konfirmasi</strong>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Persetujuan Kerjasama</small>
-                        @else
-                            <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 4</span>
-                            <span class="d-block text-secondary fw-semibold text-truncate" style="font-size: 0.85rem;">Review & Konfirmasi</span>
-                            <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Persetujuan Kerjasama</small>
-                        @endif
+                        <span class="{{ ($step ?? 1) == 4 ? 'text-success fw-semibold' : 'text-muted' }} d-block" style="font-size: 0.72rem;">Langkah 4</span>
+                        <strong class="d-block text-navy text-truncate" style="font-size: 0.88rem;">Review & Kirim</strong>
+                        <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">Konfirmasi akhir</small>
                     </div>
                 </div>
             </div>
@@ -244,9 +209,11 @@
                     <div id="step1Container" style="{{ ($step ?? 1) == 1 ? 'display: block;' : 'display: none;' }}">
                         
                         <!-- Header Seksi 01 -->
-                        <div class="d-flex align-items-center gap-2 mb-4">
-                            <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold" style="font-size: 0.78rem;">01</span>
-                            <h6 class="fw-bold text-navy mb-0" style="letter-spacing: 0.5px; font-size: 0.95rem;">DATA PENGELOLA & PENANGGUNG JAWAB USAHA</h6>
+                        <div class="mb-4 pb-2 border-bottom">
+                            <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                <i class="bi bi-person-badge text-success"></i> Data Penanggung Jawab
+                            </h5>
+                            <p class="text-muted small mb-0">Informasi identitas pengelola resmi destinasi untuk keperluan administrasi kemitraan.</p>
                         </div>
 
                         <!-- Nama Lengkap & NIK KTP -->
@@ -289,9 +256,11 @@
                         </div>
 
                         <!-- Header Seksi 02 -->
-                        <div class="d-flex align-items-center gap-2 mb-4 pt-2 border-top border-light-subtle">
-                            <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold mt-3" style="font-size: 0.78rem;">02</span>
-                            <h6 class="fw-bold text-navy mb-0 mt-3" style="letter-spacing: 0.5px; font-size: 0.95rem;">KONTAK RESMI & VERIFIKASI NOMOR WHATSAPP</h6>
+                        <div class="mb-4 pb-2 border-bottom pt-3">
+                            <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                <i class="bi bi-shield-lock text-success"></i> Kontak Resmi & Keamanan Akun
+                            </h5>
+                            <p class="text-muted small mb-0">Nomor WhatsApp dan kata sandi untuk login portal dashboard mitra.</p>
                         </div>
 
                         <!-- Nomor WhatsApp & Tombol Kirim OTP -->
@@ -301,9 +270,9 @@
                                     <label class="form-label fw-bold text-navy small mb-0">Nomor WhatsApp Pengelola (Nomor Utama) <span class="text-danger">*</span></label>
                                 </div>
                                 <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light fw-bold text-navy fs-6 border-end-0">+62</span>
+                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6 fw-semibold">+62</span>
                                     <input type="text" class="form-control fs-6 border-start-0 border-end-0" id="step1PhoneInput" name="owner_phone" placeholder="813-xxxx-xxxx" value="813-9090-4421" required>
-                                    <button type="button" class="btn btn-slate-soft px-3" id="btnSendOtp" onclick="sendOtpCode()">
+                                    <button type="button" class="btn btn-light border border-start-0 text-success fw-semibold px-3 small d-inline-flex align-items-center" id="btnSendOtp" onclick="sendOtpCode()">
                                         <i class="bi bi-send me-1"></i> Kirim OTP
                                     </button>
                                 </div>
@@ -364,14 +333,14 @@
                         <!-- Tombol Aksi Langkah 1 -->
                         <div class="pt-4 border-top border-light-subtle d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3">
                             <a href="{{ route('home') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold small w-100 w-sm-auto text-decoration-none">
-                                <i class="bi bi-arrow-left me-2"></i> Batal & Kembali
+                                <i class="bi bi-arrow-left me-1"></i> Batal
                             </a>
                             <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
-                                <button type="button" class="btn btn-slate-soft rounded-pill px-4 py-2 fw-semibold small">
+                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small">
                                     <i class="bi bi-bookmark me-1"></i> Simpan Draf
                                 </button>
                                 <button type="button" class="btn btn-green rounded-pill px-4 py-2 fw-bold text-white small shadow-sm" onclick="goToStep(2)">
-                                    Lanjut ke Langkah 2: Detail Tempat & Fasilitas <i class="bi bi-arrow-right ms-2"></i>
+                                    Lanjutkan ke Langkah 2 <i class="bi bi-arrow-right ms-1"></i>
                                 </button>
                             </div>
                         </div>
@@ -386,9 +355,11 @@
                         <!-- ============================================== -->
                         <!-- SECTION 01: INFORMASI DASAR USAHA -->
                         <!-- ============================================== -->
-                        <div class="d-flex align-items-center gap-2 mb-4">
-                            <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold" style="font-size: 0.78rem;">01</span>
-                            <h6 class="fw-bold text-navy mb-0" style="letter-spacing: 0.5px; font-size: 0.95rem;">INFORMASI DASAR USAHA</h6>
+                        <div class="mb-4 pb-2 border-bottom">
+                            <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                <i class="bi bi-building text-success"></i> Profil & Kategori Usaha
+                            </h5>
+                            <p class="text-muted small mb-0">Informasi nama tempat, kategori wisata, dan jam operasional kunjungan.</p>
                         </div>
 
                         <!-- Nama Destinasi -->
@@ -423,10 +394,10 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-navy small mb-2">Kisaran Harga Tiket / Sewa (Rp) <span class="text-danger">*</span></label>
+                                <label class="form-label fw-bold text-navy small mb-2">Kisaran Harga Tiket / Sewa <span class="text-danger">*</span></label>
                                 <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light fw-bold text-navy fs-7 border-end-0">IDR / Rp</span>
-                                    <input type="text" class="form-control fs-6 border-start-0" name="price_range" placeholder="Misal: 15.000 (tiket) atau 450.000 (kamar)" value="15.000 (tiket)">
+                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6 fw-semibold">Rp</span>
+                                    <input type="text" class="form-control fs-6 border-start-0" name="price_range" placeholder="Contoh: 15.000 / orang atau 450.000 / kamar" value="15.000 / orang">
                                 </div>
                             </div>
                         </div>
@@ -437,12 +408,12 @@
                                 <label class="form-label fw-bold text-navy small mb-0">Jam Operasional Kunjungan <span class="text-danger">*</span></label>
                                 <span class="text-muted" style="font-size: 0.75rem;">Waktu Indonesia Barat (WIB)</span>
                             </div>
-                            <div class="d-flex flex-column flex-sm-row gap-2">
+                            <div class="d-flex flex-column flex-sm-row gap-2 align-items-stretch">
                                 <div class="flex-grow-1">
                                     <input type="text" id="inputJamOperasional" class="form-control form-control-lg rounded-3 fs-6" name="open_hours" placeholder="Contoh: 08:00 - 17:00 WIB (Setiap Hari)" value="08:00 - 17:00 WIB (Setiap Hari)" required>
                                 </div>
-                                <button type="button" class="btn btn-slate-soft px-3 py-2 flex-shrink-0" onclick="document.getElementById('inputJamOperasional').value='00:00 - 24:00 WIB (Buka 24 Jam)'">
-                                    Set 'Buka 24 Jam'
+                                <button type="button" class="btn btn-light border rounded-3 px-3 fs-6 fw-semibold text-secondary flex-shrink-0 d-inline-flex align-items-center justify-content-center" onclick="document.getElementById('inputJamOperasional').value='00:00 - 24:00 WIB (Buka 24 Jam)'">
+                                    <i class="bi bi-clock-history me-1"></i> Set Buka 24 Jam
                                 </button>
                             </div>
                         </div>
@@ -450,9 +421,11 @@
                         <!-- ============================================== -->
                         <!-- SECTION 02: LOKASI & KONTAK PENGELOLA -->
                         <!-- ============================================== -->
-                        <div class="d-flex align-items-center gap-2 mb-4 pt-2 border-top border-light-subtle">
-                            <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold mt-3" style="font-size: 0.78rem;">02</span>
-                            <h6 class="fw-bold text-navy mb-0 mt-3" style="letter-spacing: 0.5px; font-size: 0.95rem;">LOKASI & KONTAK PENGELOLA</h6>
+                        <div class="mb-4 pb-2 border-bottom pt-3">
+                            <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                <i class="bi bi-geo-alt text-success"></i> Lokasi & Kontak Operasional
+                            </h5>
+                            <p class="text-muted small mb-0">Tautan titik Google Maps dan alamat lengkap petunjuk rute wisatawan.</p>
                         </div>
 
                         <!-- Kecamatan & Link Maps -->
@@ -507,7 +480,7 @@
                                 </span>
                             </div>
                             <div class="input-group input-group-lg rounded-3">
-                                <span class="input-group-text bg-light fw-bold text-navy fs-6 border-end-0">+62</span>
+                                <span class="input-group-text bg-light text-muted border-end-0 fs-6 fw-semibold">+62</span>
                                 <input type="text" class="form-control fs-6 border-start-0" name="phone" placeholder="812-xxxx-xxxx" value="813-9090-4421" required>
                             </div>
                         </div>
@@ -515,12 +488,14 @@
                         <!-- ============================================== -->
                         <!-- SECTION 03: FOTO SAMPUL & GALERI DESTINASI -->
                         <!-- ============================================== -->
-                        <div class="d-flex align-items-center justify-content-between mb-4 pt-2 border-top border-light-subtle">
-                            <div class="d-flex align-items-center gap-2 mt-3">
-                                <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold" style="font-size: 0.78rem;">03</span>
-                                <h6 class="fw-bold text-navy mb-0" style="letter-spacing: 0.5px; font-size: 0.95rem;">FOTO SAMPUL & GALERI DESTINASI</h6>
+                        <div class="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom pt-3">
+                            <div>
+                                <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                    <i class="bi bi-images text-success"></i> Foto Sampul & Galeri Destinasi
+                                </h5>
+                                <p class="text-muted small mb-0">Unggah foto berkualitas tinggi untuk tampilan katalog wisatawan.</p>
                             </div>
-                            <small class="text-muted fw-semibold mt-3">Minimal 3 Foto</small>
+                            <span class="badge bg-light text-secondary border px-3 py-2 rounded-pill small">Minimal 3 Foto</span>
                         </div>
 
                         <!-- Drag & Drop Upload Zone -->
@@ -597,13 +572,12 @@
                         <!-- ============================================== -->
                         <!-- SECTION 04: KELENGKAPAN FASILITAS WISATA -->
                         <!-- ============================================== -->
-                        <div class="d-flex align-items-center gap-2 mb-2 pt-2 border-top border-light-subtle">
-                            <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold mt-3" style="font-size: 0.78rem;">04</span>
-                            <h6 class="fw-bold text-navy mb-0 mt-3" style="letter-spacing: 0.5px; font-size: 0.95rem;">KELENGKAPAN FASILITAS WISATA</h6>
+                        <div class="mb-3 pb-2 border-bottom pt-3">
+                            <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                <i class="bi bi-grid text-success"></i> Kelengkapan Fasilitas Destinasi
+                            </h5>
+                            <p class="text-muted small mb-0">Pilih fasilitas yang tersedia untuk membantu penyaringan fitur pencarian wisatawan.</p>
                         </div>
-                        <p class="text-secondary small mb-3">
-                            Pilih semua fasilitas publik dan kenyamanan yang tersedia di lokasi untuk membantu penyaringan fitur pencarian wisatawan:
-                        </p>
 
                         <!-- Interactive Facility Chips Grid -->
                         <div class="d-flex flex-wrap gap-2 mb-5">
@@ -685,14 +659,14 @@
                         <!-- ============================================== -->
                         <div class="pt-4 border-top border-light-subtle d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3">
                             <button type="button" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold small w-100 w-sm-auto" onclick="goToStep(1)">
-                                <i class="bi bi-arrow-left me-2"></i> Kembali ke Langkah 1
+                                <i class="bi bi-arrow-left me-1"></i> Kembali
                             </button>
                             <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
-                                <button type="button" class="btn btn-slate-soft rounded-pill px-4 py-2 fw-semibold small">
+                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small">
                                     <i class="bi bi-bookmark me-1"></i> Simpan Draf
                                 </button>
                                 <button type="button" class="btn btn-green rounded-pill px-4 py-2 fw-bold text-white small shadow-sm" onclick="goToStep(3)">
-                                    Lanjut ke Langkah 3: Upload Legalitas & Dokumen <i class="bi bi-arrow-right ms-2"></i>
+                                    Lanjutkan ke Langkah 3 <i class="bi bi-arrow-right ms-1"></i>
                                 </button>
                             </div>
                         </div>
@@ -707,9 +681,11 @@
                         <!-- ============================================== -->
                         <!-- SECTION 01: LEGALITAS & PERIZINAN BERUSAHA -->
                         <!-- ============================================== -->
-                        <div class="d-flex align-items-center gap-2 mb-4">
-                            <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold" style="font-size: 0.78rem;">01</span>
-                            <h6 class="fw-bold text-navy mb-0" style="letter-spacing: 0.5px; font-size: 0.95rem;">LEGALITAS & PERIZINAN BERUSAHA</h6>
+                        <div class="mb-4 pb-2 border-bottom">
+                            <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                <i class="bi bi-file-earmark-check text-success"></i> Legalitas & Perizinan Berusaha
+                            </h5>
+                            <p class="text-muted small mb-0">Nomor izin berusaha OSS-RBA dan status legalitas pengelolaan lahan destinasi.</p>
                         </div>
 
                         <!-- NIB & NPWP -->
@@ -765,9 +741,11 @@
                         <!-- ============================================== -->
                         <!-- SECTION 02: UNGGAH BERKAS DOKUMEN RESMI -->
                         <!-- ============================================== -->
-                        <div class="d-flex align-items-center gap-2 mb-4 pt-2 border-top border-light-subtle">
-                            <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold mt-3" style="font-size: 0.78rem;">02</span>
-                            <h6 class="fw-bold text-navy mb-0 mt-3" style="letter-spacing: 0.5px; font-size: 0.95rem;">UNGGAH BERKAS DOKUMEN RESMI (PDF / SCAN JPG)</h6>
+                        <div class="mb-3 pb-2 border-bottom pt-3">
+                            <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                <i class="bi bi-file-earmark-arrow-up text-success"></i> Berkas Dokumen Persyaratan
+                            </h5>
+                            <p class="text-muted small mb-0">Unggah berkas untuk proses verifikasi kurasi oleh Dinporabudpar Banyumas.</p>
                         </div>
 
                         <p class="text-secondary small mb-3">
@@ -877,9 +855,11 @@
                         <!-- ============================================== -->
                         <!-- SECTION 03: REKENING PENYALURAN DANA TIKET -->
                         <!-- ============================================== -->
-                        <div class="d-flex align-items-center gap-2 mb-4 pt-2 border-top border-light-subtle">
-                            <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold mt-3" style="font-size: 0.78rem;">03</span>
-                            <h6 class="fw-bold text-navy mb-0 mt-3" style="letter-spacing: 0.5px; font-size: 0.95rem;">REKENING PENYALURAN DANA & PENDAPATAN TIKET ONLINE</h6>
+                        <div class="mb-3 pb-2 border-bottom pt-3">
+                            <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                <i class="bi bi-bank text-success"></i> Rekening Penyaluran Pendapatan Tiket
+                            </h5>
+                            <p class="text-muted small mb-0">Rekening resmi pengelola untuk pencairan tiket online & QRIS DOKEMAS.</p>
                         </div>
 
                         <div class="p-3 rounded-3 bg-light border border-light-subtle mb-4">
@@ -916,14 +896,14 @@
                         <!-- Bottom Actions Langkah 3 -->
                         <div class="pt-4 border-top border-light-subtle d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3">
                             <button type="button" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold small w-100 w-sm-auto" onclick="goToStep(2)">
-                                <i class="bi bi-arrow-left me-2"></i> Kembali ke Langkah 2
+                                <i class="bi bi-arrow-left me-1"></i> Kembali
                             </button>
                             <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
-                                <button type="button" class="btn btn-slate-soft rounded-pill px-4 py-2 fw-semibold small">
+                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small">
                                     <i class="bi bi-bookmark me-1"></i> Simpan Draf
                                 </button>
                                 <button type="button" class="btn btn-green rounded-pill px-4 py-2 fw-bold text-white small shadow-sm" onclick="goToStep(4)">
-                                    Lanjut ke Langkah 4: Review & Konfirmasi <i class="bi bi-arrow-right ms-2"></i>
+                                    Lanjutkan ke Langkah 4 <i class="bi bi-arrow-right ms-1"></i>
                                 </button>
                             </div>
                         </div>
@@ -953,8 +933,8 @@
                                 <div class="card border border-light-subtle rounded-4 p-3 p-md-4 bg-light bg-opacity-50">
                                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-light-subtle pb-2">
                                         <div class="d-flex align-items-center gap-2">
-                                            <i class="bi bi-person-circle text-navy fs-5"></i>
-                                            <strong class="text-navy small">01. DATA PENGELOLA & AKUN RESMI</strong>
+                                            <i class="bi bi-person-circle text-success fs-5"></i>
+                                            <strong class="text-navy small">Data Pengelola & Akun Resmi</strong>
                                         </div>
                                         <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1" onclick="goToStep(1)">
                                             <i class="bi bi-pencil-square me-1"></i> Ubah
@@ -987,7 +967,7 @@
                                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-light-subtle pb-2">
                                         <div class="d-flex align-items-center gap-2">
                                             <i class="bi bi-geo-alt-fill text-success fs-5"></i>
-                                            <strong class="text-navy small">02. DETAIL TEMPAT, FASILITAS & KATALOG</strong>
+                                            <strong class="text-navy small">Detail Destinasi & Fasilitas</strong>
                                         </div>
                                         <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1" onclick="goToStep(2)">
                                             <i class="bi bi-pencil-square me-1"></i> Ubah
@@ -1031,8 +1011,8 @@
                                 <div class="card border border-light-subtle rounded-4 p-3 p-md-4 bg-light bg-opacity-50">
                                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom border-light-subtle pb-2">
                                         <div class="d-flex align-items-center gap-2">
-                                            <i class="bi bi-file-earmark-lock-fill text-danger fs-5"></i>
-                                            <strong class="text-navy small">03. LEGALITAS, BERKAS DOKUMEN & REKENING PENYALURAN</strong>
+                                            <i class="bi bi-file-earmark-lock-fill text-success fs-5"></i>
+                                            <strong class="text-navy small">Legalitas, Berkas & Rekening</strong>
                                         </div>
                                         <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1" onclick="goToStep(3)">
                                             <i class="bi bi-pencil-square me-1"></i> Ubah
@@ -1069,9 +1049,11 @@
                         </div>
 
                         <!-- Pakta Integritas Section -->
-                        <div class="d-flex align-items-center gap-2 mb-3 pt-2 border-top border-light-subtle">
-                            <span class="badge bg-navy-main text-white rounded-2 px-2 py-1 fw-bold mt-3" style="font-size: 0.78rem;">04</span>
-                            <h6 class="fw-bold text-navy mb-0 mt-3" style="letter-spacing: 0.5px; font-size: 0.95rem;">PAKTA INTEGRITAS & PERSETUJUAN KEMITRAAN RESMI</h6>
+                        <div class="mb-3 pb-2 border-bottom pt-3">
+                            <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+                                <i class="bi bi-clipboard-check text-success"></i> Pakta Integritas & Persetujuan Kemitraan
+                            </h5>
+                            <p class="text-muted small mb-0">Pernyataan kesanggupan pengelolaan dan pemenuhan standar pelayanan pariwisata.</p>
                         </div>
 
                         <!-- 3 Checklist Persetujuan -->
@@ -1118,16 +1100,17 @@
                         <!-- Bottom Actions Langkah 4 -->
                         <div class="pt-4 border-top border-light-subtle d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3">
                             <button type="button" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold small w-100 w-sm-auto" onclick="goToStep(3)">
-                                <i class="bi bi-arrow-left me-2"></i> Kembali ke Langkah 3
+                                <i class="bi bi-arrow-left me-1"></i> Kembali
                             </button>
                             <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
-                                <button type="button" class="btn btn-slate-soft rounded-pill px-4 py-2 fw-semibold small" onclick="window.print()">
+                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small" onclick="window.print()">
                                     <i class="bi bi-printer me-1"></i> Cetak Ringkasan
                                 </button>
-                                <button type="button" class="btn btn-green rounded-pill px-5 py-2 fw-bold text-white small shadow-sm" onclick="submitPendaftaranMitra()">
-                                    <i class="bi bi-check2-circle me-1"></i> Kirim Pendaftaran Resmi
+                                <button type="button" class="btn btn-green rounded-pill px-4 py-2 fw-bold text-white small shadow-sm" onclick="submitPendaftaranMitra()">
+                                    <i class="bi bi-check2-circle me-1"></i> Kirim Pendaftaran
                                 </button>
                             </div>
+                        </div>
                         </div>
 
                     </div>
@@ -1254,82 +1237,24 @@
         updateCircle(circle3, 3, stepNum);
         updateCircle(circle4, 4, stepNum);
 
-        // Update labels
-        if (label1) {
-            if (stepNum === 1) {
-                label1.innerHTML = `
-                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-0 d-inline-block mb-1" style="font-size: 0.62rem; letter-spacing: 0.5px;">SEDANG MENGISI</span>
-                    <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Informasi Akun</strong>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Verifikasi Data & OTP</small>
-                `;
-            } else {
-                label1.innerHTML = `
-                    <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 1</span>
-                    <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Informasi Akun</strong>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Terverifikasi No OTP</small>
-                `;
-            }
+        // Helper update label status
+        function setStepLabel(el, num, current, title, desc) {
+            if (!el) return;
+            const isActive = num === current;
+            const isCompleted = num < current;
+            const colorClass = (isActive || isCompleted) ? 'text-success fw-semibold' : 'text-muted';
+            const titleColorClass = isActive ? 'text-navy fw-bold' : (isCompleted ? 'text-navy fw-semibold' : 'text-secondary fw-semibold');
+            el.innerHTML = `
+                <span class="${colorClass} d-block" style="font-size: 0.72rem;">Langkah ${num}</span>
+                <strong class="d-block ${titleColorClass} text-truncate" style="font-size: 0.88rem;">${title}</strong>
+                <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">${desc}</small>
+            `;
         }
 
-        if (label2) {
-            if (stepNum === 2) {
-                label2.innerHTML = `
-                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-0 d-inline-block mb-1" style="font-size: 0.62rem; letter-spacing: 0.5px;">SEDANG MENGISI</span>
-                    <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Detail Tempat & Fasil</strong>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Katalog & Titik Lokasi</small>
-                `;
-            } else if (stepNum > 2) {
-                label2.innerHTML = `
-                    <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 2</span>
-                    <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Detail Tempat & Fasil</strong>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Katalog & Fasilitas Lengkap</small>
-                `;
-            } else {
-                label2.innerHTML = `
-                    <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 2</span>
-                    <span class="d-block text-secondary fw-semibold text-truncate" style="font-size: 0.85rem;">Detail Tempat & Fasil</span>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Katalog & Titik Lokasi</small>
-                `;
-            }
-        }
-
-        if (label3) {
-            if (stepNum === 3) {
-                label3.innerHTML = `
-                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-0 d-inline-block mb-1" style="font-size: 0.62rem; letter-spacing: 0.5px;">SEDANG MENGISI</span>
-                    <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Upload Foto & Dokum</strong>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">NIB & Surat Izin</small>
-                `;
-            } else if (stepNum > 3) {
-                label3.innerHTML = `
-                    <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 3</span>
-                    <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Upload Foto & Dokum</strong>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Berkas Terlampir</small>
-                `;
-            } else {
-                label3.innerHTML = `
-                    <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 3</span>
-                    <span class="d-block text-secondary fw-semibold text-truncate" style="font-size: 0.85rem;">Upload Foto & Dokum</span>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">NIB & Surat Izin</small>
-                `;
-            }
-        }
-
-        if (label4) {
-            if (stepNum === 4) {
-                label4.innerHTML = `
-                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-0 d-inline-block mb-1" style="font-size: 0.62rem; letter-spacing: 0.5px;">SEDANG MENGISI</span>
-                    <strong class="d-block text-navy text-truncate" style="font-size: 0.85rem;">Review & Konfirmasi</strong>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Persetujuan Kerjasama</small>
-                `;
-            } else {
-                label4.innerHTML = `
-                    <span class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">LANGKAH 4</span>
-                    <span class="d-block text-secondary fw-semibold text-truncate" style="font-size: 0.85rem;">Review & Konfirmasi</span>
-                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Persetujuan Kerjasama</small>
-                `;
-            }
-        }
+        setStepLabel(label1, 1, stepNum, 'Informasi Akun', 'Data kontak & PIC');
+        setStepLabel(label2, 2, stepNum, 'Profil Destinasi', 'Lokasi & fasilitas');
+        setStepLabel(label3, 3, stepNum, 'Dokumen Legalitas', 'NIB OSS & izin');
+        setStepLabel(label4, 4, stepNum, 'Review & Kirim', 'Konfirmasi akhir');
 
         // Tampilkan Step Terpilih
         if (stepNum === 1) {

@@ -18,17 +18,50 @@ class HomeController extends Controller
 
         if ($request->filled('q')) {
             $q = trim($request->query('q'));
-            $destinationsQuery->where(function ($sub) use ($q) {
-                $sub->where('name', 'like', "%{$q}%")
-                    ->orWhere('location', 'like', "%{$q}%")
-                    ->orWhere('subdistrict', 'like', "%{$q}%");
+            $rawTokens = preg_split('/\s+/', $q, -1, PREG_SPLIT_NO_EMPTY);
+            $tokens = array_filter($rawTokens, fn($t) => mb_strlen($t) > 1);
+            if (empty($tokens)) {
+                $tokens = [$q];
+            }
+
+            $destinationsQuery->where(function ($sub) use ($tokens) {
+                foreach ($tokens as $token) {
+                    $variants = [$token];
+                    if (stripos($token, 'baturaden') !== false) {
+                        $variants[] = str_ireplace('baturaden', 'baturraden', $token);
+                    } elseif (stripos($token, 'baturraden') !== false) {
+                        $variants[] = str_ireplace('baturraden', 'baturaden', $token);
+                    }
+
+                    $sub->where(function ($tokenSub) use ($variants) {
+                        foreach ($variants as $var) {
+                            $tokenSub->orWhere('name', 'like', "%{$var}%")
+                                     ->orWhere('location', 'like', "%{$var}%")
+                                     ->orWhere('subdistrict', 'like', "%{$var}%")
+                                     ->orWhereHas('category', function ($catSub) use ($var) {
+                                         $catSub->where('name', 'like', "%{$var}%")
+                                                ->orWhere('slug', 'like', "%{$var}%");
+                                     });
+                        }
+                    });
+                }
             });
         }
 
         if ($request->filled('kategori')) {
-            $cat = $request->query('kategori');
-            $destinationsQuery->whereHas('category', function ($sub) use ($cat) {
-                $sub->where('slug', 'like', "%{$cat}%");
+            $cat = trim($request->query('kategori'));
+            $mappedCats = [$cat];
+            if ($cat === 'wisata' || $cat === 'wisata-alam') {
+                $mappedCats[] = 'alam';
+            }
+            $destinationsQuery->whereHas('category', function ($sub) use ($mappedCats) {
+                $sub->whereIn('slug', $mappedCats)
+                    ->orWhere(function ($s) use ($mappedCats) {
+                        foreach ($mappedCats as $mc) {
+                            $s->orWhere('name', 'like', "%{$mc}%")
+                              ->orWhere('slug', 'like', "%{$mc}%");
+                        }
+                    });
             });
         }
 

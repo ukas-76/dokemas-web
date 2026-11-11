@@ -4,11 +4,8 @@
 <div class="py-4" style="background-color: #f6f8fa; min-height: 85vh;">
     <div class="container">
 
-        <!-- HEADER & BREADCRUMB -->
+        <!-- HEADER -->
         <div class="mb-4">
-            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-success bg-opacity-10 text-success fw-bold small mb-2" style="font-size: 0.78rem; letter-spacing: 0.3px;">
-                <i class="bi bi-compass"></i> KATALOG WISATA & REKREASI • Kabupaten Banyumas
-            </div>
             <h1 class="h2 fw-bold text-navy mb-0" style="font-weight: 800; letter-spacing: -0.5px;">
                 Eksplorasi Destinasi & Penginapan Banyumas
             </h1>
@@ -96,9 +93,11 @@
             <div class="col-lg-3" id="sidebarFilterCol">
                 <div class="card border-0 shadow-sm rounded-4 p-3 p-xl-4 bg-white sticky-top-card">
                     <form action="{{ route('destinasi.index') }}" method="GET" id="filterForm">
+                        @if(request('q')) <input type="hidden" name="q" value="{{ request('q') }}"> @endif
                         @if(request('sort')) <input type="hidden" name="sort" value="{{ request('sort') }}"> @endif
                         <input type="hidden" name="view" value="{{ $viewMode ?? 'grid' }}">
                         <input type="hidden" name="per_page" value="{{ $perPage ?? 6 }}">
+                        <input type="hidden" name="wilayah" id="filterWilayahInput" value="{{ request('wilayah', '') }}">
                         
                         <!-- Filter Header -->
                         <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
@@ -118,7 +117,7 @@
                                 <span class="text-muted" style="font-size: 0.72rem;">IDR</span>
                             </div>
                             <!-- Price Range Slider -->
-                            <input type="range" class="form-range" min="10000" max="1500000" step="25000" id="priceRange" name="max_price" value="{{ request('max_price', 1500000) }}" oninput="updatePriceLabel(this.value)" onchange="document.getElementById('filterForm').submit();">
+                            <input type="range" class="form-range" min="10000" max="1500000" step="25000" id="priceRange" name="max_price" value="{{ request('max_price', 1500000) }}" oninput="updatePriceLabel(this.value)">
                             
                             <!-- Min & Max Input Boxes -->
                             <div class="row g-2 mt-1">
@@ -157,7 +156,7 @@
                                     @endphp
                                     <label class="form-check d-flex justify-content-between align-items-center mb-0 cursor-pointer" style="cursor: pointer;">
                                         <div class="d-flex align-items-center gap-2">
-                                            <input class="form-check-input mt-0 category-filter-checkbox" type="checkbox" name="kategori[]" value="{{ $catSlug }}" {{ in_array($catSlug, $activeCats) ? 'checked' : '' }} onchange="applyInstantFilter(this)">
+                                            <input class="form-check-input mt-0 category-filter-checkbox" type="checkbox" name="kategori[]" value="{{ $catSlug }}" {{ in_array($catSlug, $activeCats) ? 'checked' : '' }}>
                                             <span class="small {{ in_array($catSlug, $activeCats) ? 'fw-bold text-success' : 'text-secondary' }}">{{ $catName }}</span>
                                         </div>
                                         <span class="badge bg-light text-muted small" style="font-size: 0.72rem;">{{ $catCount }}</span>
@@ -178,21 +177,21 @@
 
                             <div class="d-flex flex-column gap-2">
                                 <label class="form-check d-flex align-items-center gap-2 mb-0" style="cursor: pointer;">
-                                    <input class="form-check-input mt-0" type="checkbox" name="rating[]" value="5" {{ in_array('5', $selectedRatings) ? 'checked' : '' }} onchange="applyInstantFilter(this)">
+                                    <input class="form-check-input mt-0" type="checkbox" name="rating[]" value="5" {{ in_array('5', $selectedRatings) ? 'checked' : '' }}>
                                     <span class="small {{ in_array('5', $selectedRatings) ? 'fw-bold text-success' : 'text-secondary' }} d-flex align-items-center gap-1">
                                         <i class="bi bi-star-fill text-warning" style="font-size: 0.8rem;"></i>
                                         <strong>5.0</strong> Sempurna
                                     </span>
                                 </label>
                                 <label class="form-check d-flex align-items-center gap-2 mb-0" style="cursor: pointer;">
-                                    <input class="form-check-input mt-0" type="checkbox" name="rating[]" value="4" {{ in_array('4', $selectedRatings) ? 'checked' : '' }} onchange="applyInstantFilter(this)">
+                                    <input class="form-check-input mt-0" type="checkbox" name="rating[]" value="4" {{ in_array('4', $selectedRatings) ? 'checked' : '' }}>
                                     <span class="small {{ in_array('4', $selectedRatings) ? 'fw-bold text-success' : 'text-secondary' }} d-flex align-items-center gap-1">
                                         <i class="bi bi-star-fill text-warning" style="font-size: 0.8rem;"></i>
                                         <strong>4.0+</strong> Sangat Baik
                                     </span>
                                 </label>
                                 <label class="form-check d-flex align-items-center gap-2 mb-0" style="cursor: pointer;">
-                                    <input class="form-check-input mt-0" type="checkbox" name="rating[]" value="3" {{ in_array('3', $selectedRatings) ? 'checked' : '' }} onchange="applyInstantFilter(this)">
+                                    <input class="form-check-input mt-0" type="checkbox" name="rating[]" value="3" {{ in_array('3', $selectedRatings) ? 'checked' : '' }}>
                                     <span class="small {{ in_array('3', $selectedRatings) ? 'fw-bold text-success' : 'text-secondary' }} d-flex align-items-center gap-1">
                                         <i class="bi bi-star-fill text-warning" style="font-size: 0.8rem;"></i>
                                         <strong>3.0+</strong> Cukup Baik
@@ -224,7 +223,7 @@
                             <div class="d-flex flex-column gap-2">
                                 @foreach($facilityList as $fac)
                                     <label class="form-check d-flex align-items-center gap-2 mb-0" style="cursor: pointer;">
-                                        <input class="form-check-input mt-0" type="checkbox" name="fasilitas[]" value="{{ $fac['val'] }}" {{ in_array($fac['val'], $selectedFacilities) ? 'checked' : '' }} onchange="applyInstantFilter(this)">
+                                        <input class="form-check-input mt-0" type="checkbox" name="fasilitas[]" value="{{ $fac['val'] }}" {{ in_array($fac['val'], $selectedFacilities) ? 'checked' : '' }}>
                                         <span class="small {{ in_array($fac['val'], $selectedFacilities) ? 'fw-bold text-success' : 'text-secondary' }}">{{ $fac['name'] }}</span>
                                     </label>
                                 @endforeach
@@ -244,20 +243,18 @@
 
                             <div class="d-flex flex-wrap gap-2">
                                 @foreach($areas as $area)
-                                    <a href="{{ route('destinasi.index', array_merge(request()->except('wilayah'), ['wilayah' => ($curArea == $area ? '' : $area)])) }}" 
-                                       class="area-pill {{ $curArea == $area ? 'active' : '' }}">
+                                    <button type="button" 
+                                            class="area-pill {{ $curArea == $area ? 'active' : '' }}" 
+                                            onclick="toggleAreaFilter('{{ $area }}', this)">
                                         {{ $area }}
-                                    </a>
+                                    </button>
                                 @endforeach
                             </div>
                         </div>
 
                         <!-- Tombol Terapkan Filter -->
-                        @php
-                            $totalActiveCount = count($activeCats) + count($selectedRatings) + count($selectedFacilities) + (!empty(request('wilayah')) ? 1 : 0) + (request('max_price') && request('max_price') < 1500000 ? 1 : 0);
-                        @endphp
                         <button type="submit" class="btn btn-green w-100 rounded-3 py-2 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm" style="background-color: #2e7d32;">
-                            <i class="bi bi-check-lg"></i> Terapkan {{ $totalActiveCount > 0 ? $totalActiveCount . ' ' : '' }}Filter
+                            <i class="bi bi-funnel-fill"></i> Terapkan Filter
                         </button>
                     </form>
                 </div>
@@ -433,8 +430,18 @@
         document.getElementById('maxPriceDisplay').innerText = new Intl.NumberFormat('id-ID').format(val);
     }
 
-    function applyInstantFilter(checkbox) {
-        document.getElementById('filterForm').submit();
+    function toggleAreaFilter(areaName, btn) {
+        const input = document.getElementById('filterWilayahInput');
+        if (!input) return;
+
+        if (input.value === areaName) {
+            input.value = '';
+            btn.classList.remove('active');
+        } else {
+            input.value = areaName;
+            document.querySelectorAll('.area-pill').forEach(el => el.classList.remove('active'));
+            btn.classList.add('active');
+        }
     }
 
     // Dropdown Opsi Tampilan Toggle (Klik Buka/Tutup Langsung)
