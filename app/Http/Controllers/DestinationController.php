@@ -127,13 +127,21 @@ class DestinationController extends Controller
 
         // H. Menghitung Total & Paginasi
         $totalRegistered = Destination::count();
-        $totalFound = (clone $query)->count();
 
-        $perPage = 6;
-        $currentPage = max(1, (int) $request->query('page', 1));
-        $totalPages = max(1, (int) ceil($totalFound / $perPage));
+        $perPage = (int) $request->query('per_page', 6);
+        if (!in_array($perPage, [6, 9, 12, 24])) {
+            $perPage = 6;
+        }
 
-        $destinations = $query->offset(($currentPage - 1) * $perPage)->limit($perPage)->get();
+        $viewMode = $request->query('view', 'grid');
+        if (!in_array($viewMode, ['grid', 'list'])) {
+            $viewMode = 'grid';
+        }
+
+        $destinations = $query->paginate($perPage)->withQueryString();
+        $totalFound = $destinations->total();
+        $currentPage = $destinations->currentPage();
+        $totalPages = $destinations->lastPage();
 
         return view('pages.destinasi.index', compact(
             'destinations',
@@ -142,6 +150,8 @@ class DestinationController extends Controller
             'totalFound',
             'currentPage',
             'totalPages',
+            'perPage',
+            'viewMode',
             'minPrice',
             'maxPrice',
             'selectedCategories',

@@ -460,11 +460,11 @@
 
             </div>
 
-            <!-- RIGHT COLUMN: STICKY SIDEBAR (BOOKING, WEATHER & NEARBY) -->
+            <!-- RIGHT COLUMN: SIDEBAR (BOOKING, WEATHER & NEARBY) -->
             <div class="col-lg-4">
                 
-                <!-- 1. STICKY BOOKING CARD -->
-                <div class="card border-0 shadow-lg rounded-4 p-4 bg-white mb-4 sticky-top-card" style="border: 1px solid #e2e8f0 !important;">
+                <!-- 1. BOOKING CARD -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4" style="border: 1px solid #e2e8f0 !important;">
                     
                     <!-- Top Alert Badge -->
                     <div class="p-2 rounded-3 bg-light text-secondary small d-flex align-items-center gap-2 mb-3" style="font-size: 0.72rem; border: 1px solid #e2e8f0;">
