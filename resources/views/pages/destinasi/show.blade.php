@@ -4,8 +4,8 @@
 <div class="py-4" style="background-color: #f8fafc; min-height: 90vh;">
     <div class="container">
 
-        <!-- BREADCRUMB & TOP ACTIONS -->
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+        <!-- BREADCRUMB -->
+        <div class="mb-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb small mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-secondary text-decoration-none"><i class="bi bi-house-door"></i> Beranda</a></li>
@@ -14,15 +14,6 @@
                     <li class="breadcrumb-item active text-navy fw-bold" aria-current="page">{{ $destination->name }}</li>
                 </ol>
             </nav>
-
-            <div class="d-flex align-items-center gap-2">
-                <button type="button" class="btn btn-white bg-white border border-slate-200 px-3 py-2 rounded-3 text-secondary small d-flex align-items-center gap-2 shadow-2xs hover-green" onclick="navigator.clipboard.writeText(window.location.href); alert('Tautan destinasi berhasil disalin!');">
-                    <i class="bi bi-share"></i> Bagikan
-                </button>
-                <button type="button" class="btn btn-white bg-white border border-slate-200 px-3 py-2 rounded-3 text-secondary small d-flex align-items-center gap-2 shadow-2xs hover-green" onclick="window.print()">
-                    <i class="bi bi-download"></i> Unduh Brosur PDF
-                </button>
-            </div>
         </div>
 
         <!-- TOP HEADER: BADGES, TITLE, LOCATION & METRICS -->
@@ -72,19 +63,79 @@
         </div>
 
         <!-- PHOTO GALLERY: ASYMMETRICAL MODERN 5-GRID -->
+        <!-- PHOTO GALLERY: ASYMMETRICAL MODERN 5-GRID DENGAN LIGHTBOX POPUP -->
         @php
             $gallery = is_array($destination->gallery) ? $destination->gallery : [];
             $mainImg = $destination->image ?: ($gallery[0] ?? 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=1200&q=80');
-            $thumb1 = $gallery[0] ?? $mainImg;
-            $thumb2 = $gallery[1] ?? ($gallery[0] ?? $mainImg);
-            $thumb3 = $gallery[2] ?? ($gallery[0] ?? $mainImg);
-            $thumb4 = $gallery[3] ?? ($gallery[1] ?? $mainImg);
+            $allImages = array_values(array_filter(array_unique(array_merge([$mainImg], $gallery))));
+            if (empty($allImages)) {
+                $allImages = [$mainImg];
+            }
+            $thumb1 = $allImages[1] ?? $allImages[0];
+            $thumb2 = $allImages[2] ?? ($allImages[1] ?? $allImages[0]);
+            $thumb3 = $allImages[3] ?? ($allImages[2] ?? $allImages[0]);
+            $thumb4 = $allImages[4] ?? ($allImages[3] ?? $allImages[0]);
         @endphp
+
+        <style>
+            .gallery-preview-card {
+                cursor: pointer;
+                transition: transform 0.25s ease, box-shadow 0.25s ease;
+            }
+            .gallery-preview-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+            }
+            .gallery-preview-card img {
+                transition: transform 0.35s ease;
+            }
+            .gallery-preview-card:hover img {
+                transform: scale(1.03);
+            }
+            .lightbox-arrow-btn {
+                background: rgba(15, 23, 42, 0.75) !important;
+                border: 2px solid rgba(255, 255, 255, 0.4) !important;
+                color: #ffffff !important;
+                backdrop-filter: blur(8px);
+                transition: all 0.2s ease !important;
+            }
+            .lightbox-arrow-btn:hover {
+                background-color: #3a821d !important;
+                border-color: #3a821d !important;
+                transform: translateY(-50%) scale(1.12) !important;
+                box-shadow: 0 0 25px rgba(58, 130, 29, 0.6) !important;
+            }
+            .lightbox-close-btn {
+                background: rgba(255, 255, 255, 0.15) !important;
+                border: 2px solid rgba(255, 255, 255, 0.45) !important;
+                color: #ffffff !important;
+                backdrop-filter: blur(8px);
+                transition: all 0.2s ease !important;
+            }
+            .lightbox-close-btn:hover {
+                background-color: #dc3545 !important;
+                border-color: #dc3545 !important;
+                transform: scale(1.1) rotate(90deg) !important;
+                box-shadow: 0 0 20px rgba(220, 53, 69, 0.6) !important;
+            }
+            /* Hilangkan scrollbar pada strip thumbnail galeri */
+            .lightbox-thumb-strip {
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                scrollbar-width: none !important;
+                -ms-overflow-style: none !important;
+            }
+            .lightbox-thumb-strip::-webkit-scrollbar {
+                display: none !important;
+                width: 0 !important;
+                height: 0 !important;
+            }
+        </style>
 
         <div class="row g-2 g-md-3 mb-4">
             <!-- Left Large Main Photo -->
             <div class="col-lg-7">
-                <div class="rounded-4 overflow-hidden position-relative shadow-sm h-100" style="min-height: 420px; background-color: #0b1b2a;">
+                <div class="rounded-4 overflow-hidden position-relative shadow-sm h-100 gallery-preview-card" style="min-height: 420px; background-color: #0b1b2a;" onclick="openLightbox(0)" title="Klik untuk memperbesar foto">
                     <img src="{{ $mainImg }}" alt="{{ $destination->name }}" class="w-100 h-100 object-fit-cover" id="mainGalleryImg">
                     
                     <!-- Dark Gradient Overlay with Text -->
@@ -95,8 +146,8 @@
                             </small>
                             <h4 class="h5 fw-bold mb-0 text-white">{{ $destination->name }}</h4>
                         </div>
-                        <span class="badge bg-white bg-opacity-20 backdrop-blur px-3 py-1 rounded-pill small">
-                            <i class="bi bi-camera me-1"></i> Foto Utama
+                        <span class="badge bg-white bg-opacity-25 backdrop-blur px-3 py-2 rounded-pill small">
+                            <i class="bi bi-arrows-fullscreen me-1"></i> Klik untuk Memperbesar
                         </span>
                     </div>
                 </div>
@@ -107,7 +158,7 @@
                 <div class="row g-2 g-md-3 h-100">
                     <!-- Top Left Thumb -->
                     <div class="col-6">
-                        <div class="rounded-4 overflow-hidden position-relative shadow-sm cursor-pointer" style="height: 200px;" onclick="changeMainImg('{{ $thumb1 }}')">
+                        <div class="rounded-4 overflow-hidden position-relative shadow-sm gallery-preview-card" style="height: 200px;" onclick="openLightbox(1)" title="Klik untuk melihat foto">
                             <img src="{{ $thumb1 }}" alt="{{ $destination->name }} 1" class="w-100 h-100 object-fit-cover">
                             <span class="badge bg-dark bg-opacity-70 text-white position-absolute top-0 start-0 m-2 px-2 py-1 rounded-pill" style="font-size: 0.65rem;">{{ $destination->subdistrict ?? 'Banyumas' }}</span>
                             <span class="badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 start-0 m-2 px-2 py-1 rounded-3 text-truncate" style="font-size: 0.68rem; max-width: 90%;">Spot Panorama</span>
@@ -116,7 +167,7 @@
 
                     <!-- Top Right Thumb -->
                     <div class="col-6">
-                        <div class="rounded-4 overflow-hidden position-relative shadow-sm cursor-pointer" style="height: 200px;" onclick="changeMainImg('{{ $thumb2 }}')">
+                        <div class="rounded-4 overflow-hidden position-relative shadow-sm gallery-preview-card" style="height: 200px;" onclick="openLightbox(2)" title="Klik untuk melihat foto">
                             <img src="{{ $thumb2 }}" alt="{{ $destination->name }} 2" class="w-100 h-100 object-fit-cover">
                             <span class="badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 start-0 m-2 px-2 py-1 rounded-3 text-truncate" style="font-size: 0.68rem; max-width: 90%;">Suasana Alami</span>
                         </div>
@@ -124,7 +175,7 @@
 
                     <!-- Bottom Left Thumb -->
                     <div class="col-6">
-                        <div class="rounded-4 overflow-hidden position-relative shadow-sm cursor-pointer" style="height: 200px;" onclick="changeMainImg('{{ $thumb3 }}')">
+                        <div class="rounded-4 overflow-hidden position-relative shadow-sm gallery-preview-card" style="height: 200px;" onclick="openLightbox(3)" title="Klik untuk melihat foto">
                             <img src="{{ $thumb3 }}" alt="{{ $destination->name }} 3" class="w-100 h-100 object-fit-cover">
                             <span class="badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 start-0 m-2 px-2 py-1 rounded-3 text-truncate" style="font-size: 0.68rem; max-width: 90%;">Spot Fotogenik</span>
                         </div>
@@ -132,11 +183,11 @@
 
                     <!-- Bottom Right Thumb -->
                     <div class="col-6">
-                        <div class="rounded-4 overflow-hidden position-relative shadow-sm cursor-pointer" style="height: 200px;" onclick="alert('Membuka Galeri Foto & Video {{ addslashes($destination->name) }}')">
+                        <div class="rounded-4 overflow-hidden position-relative shadow-sm gallery-preview-card" style="height: 200px;" onclick="openLightbox(0)" title="Lihat semua foto destinasi">
                             <img src="{{ $thumb4 }}" alt="{{ $destination->name }} 4" class="w-100 h-100 object-fit-cover">
                             <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-60 d-flex flex-column align-items-center justify-content-center text-white text-center p-2">
                                 <i class="bi bi-grid-3x3-gap fs-4 mb-1"></i>
-                                <span class="fw-bold small" style="font-size: 0.82rem;">Lihat Semua Foto ↗</span>
+                                <span class="fw-bold small" style="font-size: 0.82rem;">Lihat Semua Foto ({{ count($allImages) }}) ↗</span>
                             </div>
                         </div>
                     </div>
@@ -701,9 +752,205 @@
     </div>
 </div>
 
+<!-- ============================================================== -->
+<!-- LIGHTBOX MODAL POPUP GALERI FOTO DESTINASI                    -->
+<!-- ============================================================== -->
+<div class="modal fade" id="modalGalleryLightbox" tabindex="-1" aria-labelledby="modalGalleryLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen p-0 m-0">
+        <div class="modal-content border-0 text-white position-relative" style="background-color: rgba(6, 13, 22, 0.98); backdrop-filter: blur(14px);">
+            
+            <!-- Top Header Bar -->
+            <div class="position-absolute top-0 start-0 w-100 px-3 px-md-4 py-3 d-flex justify-content-between align-items-center" style="z-index: 1090; background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%);">
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge bg-success bg-opacity-25 text-success border border-success-subtle px-3 py-2 rounded-pill fw-semibold small">
+                        <i class="bi bi-images me-1"></i> Galeri Foto
+                    </span>
+                    <div>
+                        <h5 class="fw-bold text-white mb-0 text-truncate" style="max-width: 450px;">{{ $destination->name }}</h5>
+                        <small class="text-white-50" id="lightboxCounter">Foto 1 dari {{ count($allImages) }}</small>
+                    </div>
+                </div>
+                
+                <!-- Close Button (Pojok Kanan Atas) -->
+                <button type="button" class="btn lightbox-close-btn rounded-circle d-flex align-items-center justify-content-center p-0" onclick="closeLightbox(event)" aria-label="Tutup Galeri" title="Tutup Galeri (Esc)" style="width: 48px; height: 48px; z-index: 1099; cursor: pointer;">
+                    <i class="bi bi-x-lg fs-4 text-white" style="pointer-events: none;"></i>
+                </button>
+            </div>
+
+            <!-- Center Image Container with Left & Right Navigation Arrows (Row Kiri-Kanan) -->
+            <div class="modal-body p-0 d-flex align-items-center justify-content-center position-relative w-100 h-100" style="overflow: hidden;" onclick="if(event.target === this) closeLightbox(event);">
+                
+                <!-- Left Navigation Arrow (Row Panah Kiri) -->
+                <button type="button" class="btn lightbox-arrow-btn rounded-circle shadow-lg d-flex align-items-center justify-content-center position-absolute start-0 top-50 translate-middle-y ms-2 ms-md-4" style="width: 60px; height: 60px; z-index: 1080; cursor: pointer;" onclick="event.stopPropagation(); prevLightboxImage()" title="Foto Sebelumnya (Panah Kiri)">
+                    <i class="bi bi-chevron-left fs-2 text-white" style="pointer-events: none;"></i>
+                </button>
+
+                <!-- Current Active Image (Large & Responsive) -->
+                <div class="d-flex flex-column align-items-center justify-content-center w-100 h-100" style="padding-top: 60px; padding-bottom: 75px; padding-left: 20px; padding-right: 20px;" onclick="if(event.target === this) closeLightbox(event);">
+                    <div class="d-flex flex-column align-items-center justify-content-center position-relative w-100 h-100" style="max-width: 1400px; max-height: 82vh;">
+                        <img id="lightboxActiveImage" src="{{ $allImages[0] ?? '' }}" alt="{{ $destination->name }}" class="rounded-4" style="width: 100%; height: 100%; max-height: 76vh; object-fit: contain; filter: drop-shadow(0 25px 50px rgba(0,0,0,0.9)); transition: opacity 0.2s ease-in-out;">
+                        <div class="mt-3 text-white-50 text-center" id="lightboxCaption" style="font-size: 0.92rem; text-shadow: 0 2px 8px rgba(0,0,0,0.95); font-weight: 500;">
+                            {{ $destination->name }} &bull; {{ $destination->address_full ?? ($destination->location ?? 'Kabupaten Banyumas') }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Navigation Arrow (Row Panah Kanan) -->
+                <button type="button" class="btn lightbox-arrow-btn rounded-circle shadow-lg d-flex align-items-center justify-content-center position-absolute end-0 top-50 translate-middle-y me-2 me-md-4" style="width: 60px; height: 60px; z-index: 1080; cursor: pointer;" onclick="event.stopPropagation(); nextLightboxImage()" title="Foto Selanjutnya (Panah Kanan)">
+                    <i class="bi bi-chevron-right fs-2 text-white" style="pointer-events: none;"></i>
+                </button>
+
+            </div>
+
+            <!-- Bottom Thumbnail Strip -->
+            <div class="position-absolute bottom-0 start-0 w-100 p-3 text-center" style="z-index: 1060; background: linear-gradient(0deg, rgba(6,13,22,0.95) 0%, transparent 100%); pointer-events: none;">
+                <div class="d-inline-flex align-items-center gap-2 p-1.5 rounded-pill bg-black bg-opacity-70 border border-white border-opacity-20 shadow-lg lightbox-thumb-strip" style="max-width: 90vw; pointer-events: auto; height: 56px;">
+                    @foreach($allImages as $idx => $img)
+                        <img src="{{ $img }}" alt="Thumbnail {{ $idx + 1 }}" class="rounded-circle object-fit-cover cursor-pointer flex-shrink-0" style="width: 42px; height: 42px; border: 2.5px solid {{ $idx == 0 ? '#22c55e' : 'transparent' }}; opacity: {{ $idx == 0 ? '1' : '0.5' }}; transition: all 0.2s ease; box-sizing: border-box;" onclick="event.stopPropagation(); setLightboxIndex({{ $idx }})" id="lightboxThumb{{ $idx }}">
+                    @endforeach
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script>
     const ticketPrice = {{ (int) $destination->price }};
     const insurancePerPerson = {{ $destination->price > 0 ? 1000 : 0 }};
+
+    // Galeri Foto & Lightbox Modal
+    const galleryImages = @json($allImages);
+    let currentLightboxIndex = 0;
+    let lightboxModalInstance = null;
+
+    function openLightbox(index) {
+        if (!galleryImages || galleryImages.length === 0) return;
+        
+        currentLightboxIndex = (index >= 0 && index < galleryImages.length) ? index : 0;
+        updateLightboxContent();
+
+        const modalEl = document.getElementById('modalGalleryLightbox');
+        if (!modalEl) return;
+
+        if (window.bootstrap && window.bootstrap.Modal) {
+            try {
+                lightboxModalInstance = bootstrap.Modal.getOrCreateInstance(modalEl);
+                lightboxModalInstance.show();
+            } catch(e) {
+                modalEl.classList.add('show');
+                modalEl.style.display = 'block';
+            }
+        } else {
+            modalEl.classList.add('show');
+            modalEl.style.display = 'block';
+        }
+    }
+
+    function closeLightbox(e) {
+        if (e) {
+            if (e.preventDefault) e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+        }
+
+        const modalEl = document.getElementById('modalGalleryLightbox');
+        if (!modalEl) return;
+
+        // Tutup via Bootstrap instance jika ada
+        if (window.bootstrap && window.bootstrap.Modal) {
+            try {
+                const inst = bootstrap.Modal.getInstance(modalEl) || bootstrap.Modal.getOrCreateInstance(modalEl);
+                if (inst) {
+                    inst.hide();
+                }
+            } catch (err) {
+                console.warn('Bootstrap close error:', err);
+            }
+        }
+
+        // Fallback langsung hapus style dan class show
+        modalEl.classList.remove('show');
+        modalEl.style.display = 'none';
+        modalEl.setAttribute('aria-hidden', 'true');
+        modalEl.removeAttribute('aria-modal');
+
+        // Kembalikan overflow scroll pada body
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('overflow');
+        document.body.style.removeProperty('padding-right');
+
+        // Hapus backdrop jika tertinggal di DOM
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(b => b.remove());
+    }
+
+    function updateLightboxContent() {
+        const imgEl = document.getElementById('lightboxActiveImage');
+        const counterEl = document.getElementById('lightboxCounter');
+        
+        if (imgEl && galleryImages[currentLightboxIndex]) {
+            imgEl.style.opacity = '0.3';
+            setTimeout(() => {
+                imgEl.src = galleryImages[currentLightboxIndex];
+                imgEl.style.opacity = '1';
+            }, 100);
+        }
+
+        if (counterEl) {
+            counterEl.innerText = `Foto ${currentLightboxIndex + 1} dari ${galleryImages.length}`;
+        }
+
+        // Sinkronisasi border thumbnail di bagian bawah modal
+        galleryImages.forEach((_, idx) => {
+            const thumb = document.getElementById(`lightboxThumb${idx}`);
+            if (thumb) {
+                if (idx === currentLightboxIndex) {
+                    thumb.style.borderColor = '#22c55e';
+                    thumb.style.boxShadow = '0 0 12px rgba(34, 197, 94, 0.9)';
+                    thumb.style.opacity = '1';
+                    thumb.style.transform = 'scale(1.08)';
+                } else {
+                    thumb.style.borderColor = 'transparent';
+                    thumb.style.boxShadow = 'none';
+                    thumb.style.opacity = '0.5';
+                    thumb.style.transform = 'scale(1)';
+                }
+            }
+        });
+    }
+
+    function nextLightboxImage() {
+        if (!galleryImages || galleryImages.length <= 1) return;
+        currentLightboxIndex = (currentLightboxIndex + 1) % galleryImages.length;
+        updateLightboxContent();
+    }
+
+    function prevLightboxImage() {
+        if (!galleryImages || galleryImages.length <= 1) return;
+        currentLightboxIndex = (currentLightboxIndex - 1 + galleryImages.length) % galleryImages.length;
+        updateLightboxContent();
+    }
+
+    function setLightboxIndex(idx) {
+        if (idx >= 0 && idx < galleryImages.length) {
+            currentLightboxIndex = idx;
+            updateLightboxContent();
+        }
+    }
+
+    // Navigasi Keyboard (Tombol Panah Kiri, Kanan, & Tombol Escape untuk Menutup)
+    document.addEventListener('keydown', function(e) {
+        const modalEl = document.getElementById('modalGalleryLightbox');
+        if (modalEl && (modalEl.classList.contains('show') || modalEl.style.display === 'block')) {
+            if (e.key === 'ArrowRight') {
+                nextLightboxImage();
+            } else if (e.key === 'ArrowLeft') {
+                prevLightboxImage();
+            } else if (e.key === 'Escape') {
+                closeLightbox(e);
+            }
+        }
+    });
 
     function changeMainImg(src) {
         document.getElementById('mainGalleryImg').src = src;
