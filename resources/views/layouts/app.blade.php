@@ -29,5 +29,42 @@
         @include('layouts.footer')
     @endif
 
+    @if(session('login_required'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var modalEl = document.getElementById('modalAuth');
+                if (modalEl) {
+                    if (window.bootstrap && window.bootstrap.Modal) {
+                        var modal = window.bootstrap.Modal.getOrCreateInstance(modalEl);
+                        modal.show();
+                    } else if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                        var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                        modal.show();
+                    }
+                }
+            });
+        </script>
+    @endif
+
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof showGlobalToast === 'function') {
+                    showGlobalToast("{{ session('success') }}", 'success');
+                }
+            });
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof showGlobalToast === 'function') {
+                    showGlobalToast("{{ session('error') }}", 'danger');
+                }
+            });
+        </script>
+    @endif
+
 </body>
 </html>
