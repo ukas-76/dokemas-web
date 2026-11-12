@@ -853,20 +853,20 @@
                         </div>
 
                         <!-- ============================================== -->
-                        <!-- SECTION 03: REKENING PENYALURAN DANA TIKET -->
+                        <!-- SECTION 03: REKENING VERIFIKASI USAHA & MITRA -->
                         <!-- ============================================== -->
                         <div class="mb-3 pb-2 border-bottom pt-3">
                             <h5 class="fw-bold text-navy mb-1 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
-                                <i class="bi bi-bank text-success"></i> Rekening Penyaluran Pendapatan Tiket
+                                <i class="bi bi-bank text-success"></i> Rekening Operasional & Verifikasi Usaha
                             </h5>
-                            <p class="text-muted small mb-0">Rekening resmi pengelola untuk pencairan tiket online & QRIS DOKEMAS.</p>
+                            <p class="text-muted small mb-0">Rekening resmi pengelola untuk verifikasi keabsahan entitas usaha wisata Banyumas.</p>
                         </div>
 
                         <div class="p-3 rounded-3 bg-light border border-light-subtle mb-4">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="bi bi-info-circle-fill text-success fs-5"></i>
                                 <small class="text-secondary" style="font-size: 0.78rem; line-height: 1.5;">
-                                    Penyaluran dana penjualan tiket melalui portal DOKEMAS & QRIS resmi ditransfer otomatis setiap hari kerja (H+1) langsung ke rekening pengelola tanpa potongan administrasi tambahan.
+                                    Data rekening bank diperlukan sebagai verifikasi identitas resmi badan usaha/pengelola destinasi guna koordinasi kemitraan promosi pariwisata Pemerintah Kabupaten Banyumas.
                                 </small>
                             </div>
                         </div>
@@ -1032,7 +1032,7 @@
                                             <span class="text-navy fw-semibold" id="revLahan">Kerjasama Perhutani (PKS KPH) & SPPL</span>
                                         </div>
                                         <div class="col-sm-6 mt-3">
-                                            <span class="text-muted d-block" style="font-size: 0.72rem;">REKENING PENYALURAN DANA TIKET:</span>
+                                            <span class="text-muted d-block" style="font-size: 0.72rem;">REKENING OPERASIONAL USAHA:</span>
                                             <span class="text-navy fw-semibold" id="revBank">Bank Jateng &bull; 1002-3948-2819 an. Hutan Pinus Limpakuwus</span>
                                         </div>
                                         <div class="col-12 mt-3">
@@ -1167,11 +1167,11 @@
                 </div>
 
                 <div class="d-flex align-items-start gap-3 p-3 rounded-3 border border-light-subtle">
-                    <i class="bi bi-qr-code text-navy fs-3 flex-shrink-0"></i>
+                    <i class="bi bi-patch-check-fill text-success fs-3 flex-shrink-0"></i>
                     <div>
-                        <strong class="text-navy d-block small mb-1">Penerbitan QRIS & Brosur Resmi DOKEMAS</strong>
+                        <strong class="text-navy d-block small mb-1">Publikasi Katalog & Promosi Resmi DOKEMAS</strong>
                         <p class="text-secondary small mb-0" style="line-height: 1.45;">
-                            Setelah terverifikasi, destinasi Anda akan otomatis terbit di katalog publik DOKEMAS beserta standee QRIS tiket resmi Pemkab Banyumas.
+                            Setelah terverifikasi, destinasi Anda akan otomatis terbit di katalog publik DOKEMAS dan dipromosikan ke seluruh calon wisatawan Banyumas.
                         </p>
                     </div>
                 </div>

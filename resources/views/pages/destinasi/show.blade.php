@@ -100,10 +100,10 @@
                 transition: all 0.2s ease !important;
             }
             .lightbox-arrow-btn:hover {
-                background-color: #3a821d !important;
-                border-color: #3a821d !important;
+                background-color: #1967d2 !important;
+                border-color: #1967d2 !important;
                 transform: translateY(-50%) scale(1.12) !important;
-                box-shadow: 0 0 25px rgba(58, 130, 29, 0.6) !important;
+                box-shadow: 0 0 25px rgba(25, 103, 210, 0.6) !important;
             }
             .lightbox-close-btn {
                 background: rgba(255, 255, 255, 0.15) !important;
@@ -316,32 +316,49 @@
 
                 <!-- CARD 3: RUTE & PANDUAN AKSES LOKASI -->
                 <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4" id="rute">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h3 class="h5 fw-bold text-navy mb-0" style="font-weight: 800;">
-                            Rute & Panduan Akses Lokasi
-                        </h3>
-                        <a href="https://maps.google.com/?q={{ urlencode($destination->name . ' ' . $destination->location . ' Banyumas') }}" target="_blank" class="btn btn-sm btn-dark text-white rounded-3 px-3 py-2 fw-semibold d-flex align-items-center gap-2" style="background-color: #0f172a;">
-                            <i class="bi bi-compass"></i> Buka di Google Maps ↗
+                    @php
+                        $mapQuery = !empty($destination->latitude) && !empty($destination->longitude)
+                            ? $destination->latitude . ',' . $destination->longitude
+                            : urlencode($destination->name . ', ' . ($destination->address_full ?? $destination->location) . ', Banyumas');
+                    @endphp
+
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-3">
+                        <div>
+                            <h3 class="h5 fw-bold text-navy mb-0" style="font-weight: 800;">
+                                Rute & Panduan Akses Lokasi
+                            </h3>
+                            <p class="text-muted small mb-0 mt-1">Berlokasi di kawasan strategis {{ $destination->location }}, Kabupaten Banyumas.</p>
+                        </div>
+                        <a href="https://maps.google.com/?q={{ $mapQuery }}" target="_blank" class="btn btn-sm btn-green text-white rounded-pill px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2 shadow-xs text-nowrap align-self-start align-self-sm-center" title="Buka aplikasi Google Maps untuk navigasi GPS">
+                            <i class="bi bi-geo-alt-fill"></i> Buka di Google Maps ↗
                         </a>
                     </div>
-                    <p class="text-muted small mb-3">Berlokasi di kawasan strategis {{ $destination->location }}, Kabupaten Banyumas.</p>
 
-                    <!-- Stylized Map Card Preview -->
-                    <div class="rounded-4 overflow-hidden position-relative p-4 mb-3 text-dark d-flex align-items-center justify-content-center" style="height: 240px; background: linear-gradient(135deg, #cbe3ca 0%, #b8dcb5 100%); border: 1px solid #a8d5a4;">
-                        <!-- Map Route SVG Art -->
-                        <div class="position-absolute w-100 h-100 top-0 start-0 opacity-40" style="background-image: radial-gradient(#2e7d32 1px, transparent 1px); background-size: 16px 16px;"></div>
+                    <!-- Interactive Google Maps Frame (API Maps Embed) -->
+                    <div class="rounded-4 overflow-hidden position-relative mb-3 shadow-xs border border-light-subtle bg-light" style="height: 380px;">
+                        <iframe 
+                            class="w-100 h-100 border-0" 
+                            style="border: 0; min-height: 380px;" 
+                            loading="lazy" 
+                            allowfullscreen 
+                            referrerpolicy="no-referrer-when-downgrade" 
+                            src="https://maps.google.com/maps?q={{ $mapQuery }}&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            title="Peta Lokasi Google Maps {{ $destination->name }}">
+                        </iframe>
+                    </div>
 
-                        <div class="card border-0 shadow-lg p-3 rounded-4 bg-white text-start z-1" style="max-width: 340px;">
-                            <div class="d-flex align-items-center gap-2 mb-1">
-                                <div class="rounded-circle bg-success text-white p-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                    <i class="bi bi-geo-alt-fill"></i>
-                                </div>
-                                <div>
-                                    <h6 class="fw-bold text-navy mb-0 text-truncate" style="font-size: 0.9rem; max-width: 250px;">{{ $destination->name }}</h6>
-                                    <small class="text-muted" style="font-size: 0.72rem;">{{ $destination->location }}</small>
-                                </div>
+                    <!-- Detail Alamat & Tombol Petunjuk Arah Langsung -->
+                    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between p-3 rounded-4 bg-light border border-slate-100 mb-3 gap-2">
+                        <div class="d-flex align-items-start gap-2">
+                            <i class="bi bi-geo-alt-fill text-danger fs-5 flex-shrink-0 mt-n1"></i>
+                            <div>
+                                <strong class="text-navy d-block small">{{ $destination->name }}</strong>
+                                <span class="text-secondary" style="font-size: 0.78rem;">{{ $destination->address_full ?? ($destination->location . ', Kabupaten Banyumas, Jawa Tengah') }}</span>
                             </div>
                         </div>
+                        <a href="https://maps.google.com/maps/dir/?api=1&destination={{ $mapQuery }}" target="_blank" class="btn btn-sm btn-white bg-white border border-slate-200 text-primary rounded-pill px-3 py-1-5 fw-bold text-nowrap d-inline-flex align-items-center gap-1 shadow-2xs hover-green align-self-start align-self-sm-center">
+                            <i class="bi bi-sign-turn-right-fill text-primary"></i> Petunjuk Arah Navigasi
+                        </a>
                     </div>
 
                     <!-- 2 Transport Cards -->
@@ -475,7 +492,7 @@
                                 </div>
                             </div>
                             <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                                "Suasana alam Banyumas memang juara! Pembelian e-tiket di website DOKEMAS praktis banget, tinggal tunjukkan barcode di ponsel langsung masuk tanpa antre."
+                                "Suasana alam Banyumas memang juara! Informasi di website DOKEMAS sangat lengkap dan akurat, mulai dari jam operasional, rute jalan, hingga estimasi harga tiket di loket resmi."
                             </p>
                         </div>
                     </div>
@@ -486,24 +503,24 @@
                     <h3 class="h5 fw-bold text-navy mb-1" style="font-weight: 800;">
                         FAQ & Pertanyaan Sering Diajukan
                     </h3>
-                    <p class="text-muted small mb-4">Informasi penting seputar tiket, jam buka, dan aturan kunjungan.</p>
+                    <p class="text-muted small mb-4">Informasi penting seputar tiket masuk di loket, jam operasional, dan aturan kunjungan.</p>
 
                     <div class="d-flex flex-column gap-3">
                         <div class="p-3 rounded-4 bg-light border border-slate-100">
                             <h6 class="fw-bold text-navy mb-2" style="font-size: 0.9rem;">
-                                Apakah perlu mencetak tiket fisik?
+                                Bagaimana cara membeli tiket masuk {{ $destination->name }}?
                             </h6>
                             <p class="text-muted small mb-0" style="line-height: 1.6;">
-                                Tidak perlu dicetak. Anda cukup memperlihatkan QR Code E-Tiket dari smartphone Anda kepada petugas loket untuk diverifikasi instan.
+                                Tiket masuk dibeli langsung di pintu loket resmi destinasi saat kedatangan (On The Spot / OTS). Pembayaran dapat dilakukan dengan uang tunai maupun scan QRIS resmi pengelola.
                             </p>
                         </div>
 
                         <div class="p-3 rounded-4 bg-light border border-slate-100">
                             <h6 class="fw-bold text-navy mb-2" style="font-size: 0.9rem;">
-                                Bagaimana proses refund / reschedule jika cuaca buruk?
+                                Apakah perlu melakukan pemesanan / reservasi tiket sebelumnya?
                             </h6>
                             <p class="text-muted small mb-0" style="line-height: 1.6;">
-                                Tiket online yang dipesan melalui portal DOKEMAS memiliki jaminan ganti tanggal kunjungan hingga H-1 melalui Customer Service tanpa biaya administrasi.
+                                Untuk kunjungan wisata harian reguler tidak memerlukan pemesanan di awal. Pengunjung bisa langsung datang sesuai jam operasional. Untuk rombongan besar atau reservasi penginapan/villa, silakan hubungi kontak pengelola via WhatsApp.
                             </p>
                         </div>
                     </div>
@@ -511,16 +528,16 @@
 
             </div>
 
-            <!-- RIGHT COLUMN: SIDEBAR (BOOKING, WEATHER & NEARBY) -->
+            <!-- RIGHT COLUMN: SIDEBAR (INFORMASI KUNJUNGAN, CUACA & DESTINASI SEKITAR) -->
             <div class="col-lg-4">
                 
-                <!-- 1. BOOKING CARD -->
+                <!-- 1. INFORMASI TIKET & KUNJUNGAN LOKET RESMI -->
                 <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4" style="border: 1px solid #e2e8f0 !important;">
                     
                     <!-- Top Alert Badge -->
                     <div class="p-2 rounded-3 bg-light text-secondary small d-flex align-items-center gap-2 mb-3" style="font-size: 0.72rem; border: 1px solid #e2e8f0;">
-                        <i class="bi bi-shield-check text-success fs-6"></i>
-                        <span>Harga Resmi Pemkab Banyumas • Tanpa Biaya Tersembunyi</span>
+                        <i class="bi bi-info-circle-fill text-primary fs-6"></i>
+                        <span>Informasi Tarif Resmi di Loket Masuk Banyumas</span>
                     </div>
 
                     <!-- Price Header -->
@@ -531,86 +548,67 @@
                             </small>
                             <div class="d-flex align-items-baseline gap-1">
                                 <span class="display-6 fw-bold text-navy" style="font-weight: 800;">
-                                    Rp {{ number_format($destination->price, 0, ',', '.') }}
+                                    @if(($destination->price ?? 0) > 0)
+                                        Rp {{ number_format($destination->price, 0, ',', '.') }}
+                                    @else
+                                        Gratis
+                                    @endif
                                 </span>
-                                <small class="text-muted">{{ $destination->price_label ?? '/ orang' }}</small>
+                                @if(($destination->price ?? 0) > 0)
+                                    <small class="text-muted">{{ $destination->price_label ?? '/ orang' }}</small>
+                                @endif
                             </div>
                         </div>
-                        <span class="badge rounded-pill fw-semibold px-2 py-1" style="background-color: #dcfce7; color: #15803d; font-size: 0.7rem;">
-                            {{ $destination->type === 'ticket' ? 'E-Tiket Terusan' : 'Konfirmasi Instan' }}
+                        <span class="badge rounded-pill fw-semibold px-3 py-2" style="background-color: #e8f0fe; color: #1967d2; font-size: 0.72rem;">
+                            <i class="bi bi-ticket-perforated me-1"></i> Beli di Loket (OTS)
                         </span>
                     </div>
 
-                    <!-- Booking Form -->
-                    <form id="ticketBookingForm" onsubmit="event.preventDefault(); showTicketModal();">
-                        <!-- Date Picker -->
-                        <div class="mb-3">
-                            <label class="form-label text-navy fw-bold small mb-1">Pilih Tanggal Kunjungan</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-slate-200 text-muted"><i class="bi bi-calendar3"></i></span>
-                                <input type="date" class="form-control bg-light border-slate-200 small" id="visitDateInput" required value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}">
+                    <!-- Ringkasan Info Operasional & Loket -->
+                    <div class="d-flex flex-column gap-2 mb-4">
+                        <div class="p-3 bg-light rounded-3 border border-slate-100 small">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted"><i class="bi bi-clock-history me-1 text-primary"></i> Jam Operasional:</span>
+                                <strong class="text-navy">{{ $destination->open_hours ?? '08:00 - 17:00 WIB' }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted"><i class="bi bi-shop me-1 text-primary"></i> Pembelian Tiket:</span>
+                                <strong class="text-navy">Loket Resmi di Lokasi</strong>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted"><i class="bi bi-cash-stack me-1 text-primary"></i> Metode Bayar Lokasi:</span>
+                                <span class="fw-semibold text-success">Tunai & QRIS</span>
                             </div>
                         </div>
 
-                        <!-- Quantity Selector Stepper -->
-                        <div class="mb-3">
-                            <label class="form-label text-navy fw-bold small mb-1">Jumlah Pengunjung</label>
-                            <div class="d-flex align-items-center justify-content-between p-2 rounded-3 border border-slate-200 bg-light">
-                                <div class="d-flex align-items-center gap-2 text-secondary small">
-                                    <i class="bi bi-people-fill text-muted"></i>
-                                    <span id="labelPengunjung">2 Pengunjung</span>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <button type="button" class="btn btn-sm btn-white bg-white shadow-2xs rounded-circle border" style="width: 30px; height: 30px; line-height: 1;" onclick="updateVisitorQty(-1)">-</button>
-                                    <span class="fw-bold text-navy" id="displayQty">2</span>
-                                    <input type="hidden" id="visitorQty" value="2">
-                                    <button type="button" class="btn btn-sm btn-white bg-white shadow-2xs rounded-circle border" style="width: 30px; height: 30px; line-height: 1;" onclick="updateVisitorQty(1)">+</button>
-                                </div>
+                        <div class="p-3 rounded-3 border border-slate-100 bg-white" style="font-size: 0.78rem; line-height: 1.5;">
+                            <div class="d-flex gap-2 text-secondary">
+                                <i class="bi bi-info-circle-fill text-primary fs-6 flex-shrink-0"></i>
+                                <span>Tiket masuk dibeli secara langsung di gerbang masuk tempat wisata saat kedatangan (On The Spot). Tidak ada transaksi pembelian tiket via website.</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Price Breakdown -->
-                        <div class="bg-light p-3 rounded-3 mb-3 border border-slate-100 small">
-                            <div class="d-flex justify-content-between text-secondary mb-1">
-                                <span><span id="ticketCountLabel">2</span>x {{ $destination->type === 'ticket' ? 'Tiket Masuk' : 'Reservasi' }}</span>
-                                <span class="text-navy fw-semibold" id="ticketSubtotal">Rp {{ number_format($destination->price * 2, 0, ',', '.') }}</span>
-                            </div>
-                            <div class="d-flex justify-content-between text-secondary mb-2">
-                                <span>Asuransi Jasa Raharja Wisata</span>
-                                <span class="text-navy fw-semibold" id="insuranceFee">Rp 2.000</span>
-                            </div>
-                            <hr class="my-2 opacity-25">
-                            <div class="d-flex justify-content-between align-items-center fw-bold">
-                                <span class="text-navy">Total Pembayaran</span>
-                                <span class="text-success fs-5" id="totalPaymentDisplay">Rp {{ number_format($destination->price * 2 + 2000, 0, ',', '.') }}</span>
-                            </div>
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <button type="submit" class="btn btn-green w-100 rounded-3 py-3 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm mb-2" style="background-color: #2e7d32;">
-                            <i class="bi bi-ticket-perforated-fill"></i> {{ $destination->type === 'ticket' ? 'Beli E-Tiket Bebas Antre' : ($destination->type === 'hotel' || $destination->type === 'villa' ? 'Pesan Kamar / Villa' : 'Pesan Tempat / Menu') }}
-                        </button>
-
-                        <a href="https://wa.me/6281234567890?text={{ urlencode('Halo DOKEMAS, saya ingin bertanya tentang reservasi ' . $destination->name . '.') }}" target="_blank" class="btn btn-white bg-white border border-slate-200 text-secondary w-100 rounded-3 py-2 fw-semibold small d-flex align-items-center justify-content-center gap-2 mb-2 hover-green">
-                            <i class="bi bi-whatsapp text-success"></i> Hubungi Pengelola via WhatsApp
+                    <!-- Action Buttons -->
+                    <div class="d-flex flex-column gap-2">
+                        <a href="https://maps.google.com/?q={{ urlencode($destination->name . ' ' . $destination->location . ' Banyumas') }}" target="_blank" class="btn btn-green w-100 rounded-3 py-3 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm text-decoration-none">
+                            <i class="bi bi-geo-alt-fill"></i> Petunjuk Arah Google Maps
                         </a>
 
-                        <div class="text-center">
-                            <a href="https://maps.google.com/?q={{ urlencode($destination->name . ' ' . $destination->location) }}" target="_blank" class="text-muted text-decoration-none small" style="font-size: 0.75rem;">
-                                <i class="bi bi-signpost-2"></i> Petunjuk Arah Google Maps
-                            </a>
-                        </div>
-                    </form>
+                        <a href="https://wa.me/6281234567890?text={{ urlencode('Halo pengelola ' . $destination->name . ', saya ingin bertanya mengenai info kunjungan dan jam buka.') }}" target="_blank" class="btn btn-white bg-white border border-slate-200 text-secondary w-100 rounded-3 py-2 fw-semibold small d-flex align-items-center justify-content-center gap-2 hover-green text-decoration-none">
+                            <i class="bi bi-whatsapp text-success"></i> Hubungi Pengelola via WhatsApp
+                        </a>
+                    </div>
 
-                    <!-- Trust Notes -->
+                    <!-- Info Catatan Kunjungan -->
                     <div class="mt-4 pt-3 border-top d-flex flex-column gap-2 text-muted" style="font-size: 0.72rem;">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-check2 text-success"></i>
-                            <span>E-Tiket QR Code langsung dikirim via WhatsApp & Email</span>
+                            <span>Informasi lokasi & jam buka diperbarui berkala</span>
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-check2 text-success"></i>
-                            <span>Garansi Bebas Ganti Tanggal (Reschedule) hingga H-1</span>
+                            <span>Dukung pariwisata lokal Banyumas dengan membeli tiket resmi</span>
                         </div>
                     </div>
 
@@ -691,66 +689,7 @@
     </div>
 </div>
 
-<!-- MODAL SIMULASI E-TIKET RESMI DOKEMAS -->
-<div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
-            <div class="modal-header bg-navy-main text-white py-3 border-0" style="background-color: #0f172a;">
-                <div class="d-flex align-items-center gap-2">
-                    <img src="{{ asset('images/logo-dokemas.png') }}" alt="Logo" style="height: 28px;">
-                    <div>
-                        <h6 class="modal-title fw-bold text-white lh-1 mb-0" id="ticketModalLabel">E-Tiket Resmi DOKEMAS</h6>
-                        <small class="text-white-50" style="font-size: 0.65rem;">Dolan Keliling Banyumas</small>
-                    </div>
-                </div>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
 
-            <div class="modal-body p-4 text-center">
-                <div class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-1 rounded-pill mb-3">
-                    <i class="bi bi-check-circle-fill me-1"></i> E-TIKET SIAP DIGUNAKAN
-                </div>
-
-                <h5 class="fw-bold text-navy mb-1">{{ $destination->name }}</h5>
-                <p class="text-muted small mb-3">{{ $destination->address_full ?? $destination->location }}</p>
-
-                <!-- QR Code Simulation -->
-                <div class="bg-white p-3 rounded-4 shadow-sm border border-slate-200 d-inline-block mb-3">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=DOKEMAS-{{ strtoupper(str_replace('-', '', $destination->slug)) }}-{{ time() }}" alt="QR Code Tiket" class="img-fluid" style="width: 160px; height: 160px;">
-                    <small class="d-block text-muted mt-2 fw-bold font-monospace" style="letter-spacing: 1px;">DKM-{{ strtoupper(substr(str_replace('-', '', $destination->slug), 0, 4)) }}-{{ rand(1000, 9999) }}</small>
-                </div>
-
-                <div class="bg-light p-3 rounded-3 text-start small border border-slate-100 mb-3">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span class="text-muted">Tanggal Kunjungan:</span>
-                        <strong class="text-navy" id="modalDate">-</strong>
-                    </div>
-                    <div class="d-flex justify-content-between mb-1">
-                        <span class="text-muted">Jumlah Pengunjung:</span>
-                        <strong class="text-navy" id="modalVisitors">-</strong>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <span class="text-muted">Total Tagihan (Termasuk Asuransi):</span>
-                        <strong class="text-success fs-6" id="modalFinalPrice">-</strong>
-                    </div>
-                </div>
-
-                <p class="text-muted small" style="font-size: 0.75rem;">
-                    Tunjukkan QR Code ini kepada petugas loket di pintu masuk {{ $destination->name }} untuk scan instan tanpa antre.
-                </p>
-
-                <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-green rounded-3 py-2 fw-bold" onclick="alert('E-Tiket PDF berhasil diunduh!');" style="background-color: #2e7d32;">
-                        <i class="bi bi-download me-1"></i> Unduh E-Tiket PDF
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary rounded-3 py-2 small" data-bs-dismiss="modal">
-                        Tutup
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- ============================================================== -->
 <!-- LIGHTBOX MODAL POPUP GALERI FOTO DESTINASI                    -->
@@ -816,9 +755,6 @@
 </div>
 
 <script>
-    const ticketPrice = {{ (int) $destination->price }};
-    const insurancePerPerson = {{ $destination->price > 0 ? 1000 : 0 }};
-
     // Galeri Foto & Lightbox Modal
     const galleryImages = @json($allImages);
     let currentLightboxIndex = 0;
@@ -954,38 +890,6 @@
 
     function changeMainImg(src) {
         document.getElementById('mainGalleryImg').src = src;
-    }
-
-    function updateVisitorQty(delta) {
-        let qty = parseInt(document.getElementById('visitorQty').value) + delta;
-        if (qty < 1) qty = 1;
-        if (qty > 30) qty = 30;
-
-        document.getElementById('visitorQty').value = qty;
-        document.getElementById('displayQty').innerText = qty;
-        document.getElementById('labelPengunjung').innerText = qty + ' Pengunjung';
-        document.getElementById('ticketCountLabel').innerText = qty;
-
-        const subtotal = qty * ticketPrice;
-        const insurance = qty * insurancePerPerson;
-        const total = subtotal + insurance;
-
-        document.getElementById('ticketSubtotal').innerText = 'Rp ' + new Intl.NumberFormat('id-ID').format(subtotal);
-        document.getElementById('insuranceFee').innerText = 'Rp ' + new Intl.NumberFormat('id-ID').format(insurance);
-        document.getElementById('totalPaymentDisplay').innerText = 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
-    }
-
-    function showTicketModal() {
-        const date = document.getElementById('visitDateInput').value;
-        const qty = document.getElementById('visitorQty').value;
-        const total = document.getElementById('totalPaymentDisplay').innerText;
-
-        document.getElementById('modalDate').innerText = date;
-        document.getElementById('modalVisitors').innerText = qty + ' Pengunjung';
-        document.getElementById('modalFinalPrice').innerText = total;
-
-        const modal = new bootstrap.Modal(document.getElementById('ticketModal'));
-        modal.show();
     }
 </script>
 @endsection

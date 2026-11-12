@@ -107,21 +107,6 @@
                     <span>Informasi & Fasilitas</span>
                 </button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-pill py-2 px-3 fw-semibold small d-flex align-items-center justify-content-center gap-2" 
-                        id="tab-overview" data-bs-toggle="pill" data-bs-target="#content-overview" type="button" role="tab">
-                    <i class="bi bi-bar-chart-line"></i>
-                    <span>Statistik & Penjualan</span>
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link rounded-pill py-2 px-3 fw-semibold small d-flex align-items-center justify-content-center gap-2" 
-                        id="tab-integrations" data-bs-toggle="pill" data-bs-target="#content-integrations" type="button" role="tab">
-                    <i class="bi bi-diagram-3"></i>
-                    <span>Integrasi Aplikasi & API</span>
-                    <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-2">5 Aktif</span>
-                </button>
-            </li>
         </ul>
     </div>
 
@@ -290,11 +275,11 @@
                             <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Label kecil di atas harga (misal: "TIKET MASUK").</small>
                         </div>
 
-                        <!-- Label Tombol Pesan -->
+                        <!-- Label Tombol Aksi -->
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-navy small mb-2">Teks Tombol Aksi Wisatawan</label>
                             <input type="text" name="button_label" class="form-control rounded-3 fs-6" 
-                                   value="{{ $activeDestination->button_label ?? 'Beli Tiket >' }}" placeholder="Contoh: Beli Tiket >, Pesan Kamar >, Reservasi >">
+                                   value="{{ $activeDestination->button_label ?? 'Lihat Detail >' }}" placeholder="Contoh: Lihat Detail >, Info Rute >, Cek Lokasi >">
                             <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Teks pada tombol kartu katalog publik.</small>
                         </div>
 
@@ -419,132 +404,6 @@
                         </button>
                     </div>
 
-                </div>
-            </div>
-
-            <!-- ========================================================== -->
-            <!-- TAB 4: STATISTIK & PENJUALAN TIKET                         -->
-            <!-- ========================================================== -->
-            <div class="tab-pane fade" id="content-overview" role="tabpanel">
-                
-                <!-- 4 KPI Metrics -->
-                <div class="row g-3 mb-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
-                            <span class="text-uppercase text-muted fw-bold small">PENDAPATAN HARI INI</span>
-                            <h3 class="fw-bold text-navy my-1">{{ $stats['today_revenue_formatted'] }}</h3>
-                            <small class="text-success fw-semibold"><i class="bi bi-graph-up-arrow me-1"></i>{{ $stats['revenue_growth'] }} vs kemarin</small>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
-                            <span class="text-uppercase text-muted fw-bold small">TIKET TERJUAL HARI INI</span>
-                            <h3 class="fw-bold text-navy my-1">{{ number_format($stats['today_tickets'], 0, ',', '.') }} Tiket</h3>
-                            <small class="text-muted">1.180 Online &bull; 240 Loket QRIS</small>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
-                            <span class="text-uppercase text-muted fw-bold small">KUOTA PENGUNJUNG HARI INI</span>
-                            <h3 class="fw-bold text-navy my-1">{{ $stats['capacity_percent'] }}%</h3>
-                            <small class="text-muted">{{ number_format($stats['capacity_used'], 0, ',', '.') }} / {{ number_format($stats['capacity_total'], 0, ',', '.') }} kuota</small>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
-                            <span class="text-uppercase text-muted fw-bold small">RATING KEPUASAN</span>
-                            <h3 class="fw-bold text-navy my-1">★ {{ number_format($stats['avg_rating'], 1) }}</h3>
-                            <small class="text-muted">{{ number_format($stats['total_reviews'], 0, ',', '.') }} ulasan terverifikasi</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tabel Transaksi Terkini -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
-                    <h6 class="fw-bold text-navy mb-3 border-bottom border-light-subtle pb-3 d-flex align-items-center gap-2">
-                        <i class="bi bi-receipt text-success"></i> Transaksi Pemesanan Tiket Terkini
-                    </h6>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="table-light">
-                                <tr style="font-size: 0.75rem;">
-                                    <th class="py-2 text-uppercase text-muted border-0">KODE & WISATAWAN</th>
-                                    <th class="py-2 text-uppercase text-muted border-0">TIKET & NOMINAL</th>
-                                    <th class="py-2 text-uppercase text-muted border-0">METODE PEMBAYARAN</th>
-                                    <th class="py-2 text-uppercase text-muted border-0">STATUS</th>
-                                </tr>
-                            </thead>
-                            <tbody style="font-size: 0.82rem;">
-                                @foreach($recentTransactions as $trx)
-                                    <tr>
-                                        <td class="py-3">
-                                            <strong class="d-block text-navy">{{ $trx['ticket_code'] }}</strong>
-                                            <span class="text-secondary small">{{ $trx['customer_name'] }}</span>
-                                        </td>
-                                        <td class="py-3">
-                                            <strong class="text-success">{{ $trx['total_amount_formatted'] }}</strong>
-                                            <small class="text-muted d-block">{{ $trx['quantity'] }} Orang &bull; {{ $trx['category'] }}</small>
-                                        </td>
-                                        <td class="py-3">
-                                            <span class="badge bg-light text-dark border">{{ $trx['payment_method'] }}</span>
-                                        </td>
-                                        <td class="py-3">
-                                            <span class="{{ $trx['status_class'] }} px-2 py-1 rounded-pill" style="font-size: 0.72rem;">
-                                                <i class="bi bi-check-circle-fill me-1"></i>{{ $trx['status_label'] }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- ========================================================== -->
-            <!-- TAB 5: INTEGRASI EKOSISTEM & API EXTERNAL                  -->
-            <!-- ========================================================== -->
-            <div class="tab-pane fade" id="content-integrations" role="tabpanel">
-                <div class="alert alert-success d-flex align-items-start gap-3 rounded-4 p-3 mb-4 border-0 bg-success bg-opacity-10">
-                    <i class="bi bi-plug-fill text-success fs-3 flex-shrink-0 mt-n1"></i>
-                    <div>
-                        <strong class="text-navy d-block mb-1" style="font-size: 0.95rem;">Ekosistem Terhubung & Integrasi Sistem Eksternal</strong>
-                        <p class="text-secondary mb-0 small" style="line-height: 1.5;">
-                            Portal DOKEMAS siap dihubungkan dengan berbagai aplikasi eksternal: pelaporan PAD Dinporabudpar, gateway Bank Jateng QRIS, aplikasi mobile wisatawan, hingga mesin barrier gate loket fisik.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row g-4 mb-4">
-                    @foreach($integrations as $item)
-                        <div class="col-lg-6">
-                            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 card-hover">
-                                <div class="d-flex align-items-start justify-content-between mb-3">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div class="rounded-3 p-2 d-flex align-items-center justify-content-center bg-light border border-light-subtle" style="width: 48px; height: 48px;">
-                                            <i class="bi {{ $item['icon'] }} {{ $item['icon_color'] }} fs-4"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="fw-bold text-navy mb-0">{{ $item['name'] }}</h6>
-                                            <small class="text-muted" style="font-size: 0.72rem;">{{ $item['category'] }}</small>
-                                        </div>
-                                    </div>
-                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1 rounded-pill" style="font-size: 0.72rem;">
-                                        <span class="rounded-circle bg-success d-inline-block me-1" style="width: 6px; height: 6px;"></span>
-                                        {{ $item['status_label'] }}
-                                    </span>
-                                </div>
-                                <p class="text-secondary small mb-3" style="line-height: 1.5;">{{ $item['description'] }}</p>
-                                <div class="pt-3 border-top border-light-subtle d-flex align-items-center justify-content-between">
-                                    <code class="text-muted small text-truncate" style="font-size: 0.72rem; max-width: 280px;">{{ $item['endpoint'] }}</code>
-                                    <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fw-semibold" onclick="alert('Uji koneksi ke ' + '{{ $item['name'] }}' + ' berhasil! Latensi: 38ms (200 OK).')">
-                                        <i class="bi bi-arrow-repeat me-1"></i> Uji Ping
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
                 </div>
             </div>
 

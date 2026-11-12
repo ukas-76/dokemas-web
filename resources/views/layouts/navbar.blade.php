@@ -18,14 +18,14 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-semibold">
                 <li class="nav-item">
-                    <a class="nav-link px-3 rounded-pill {{ request()->routeIs('home') ? 'text-success bg-success bg-opacity-10 fw-bold' : 'text-secondary' }}" href="{{ route('home') }}">Beranda</a>
+                    <a class="nav-link px-3 rounded-pill {{ request()->routeIs('home') ? 'text-primary bg-primary bg-opacity-10 fw-bold' : 'text-secondary' }}" href="{{ route('home') }}">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-3 rounded-pill {{ request()->routeIs('destinasi.*') ? 'text-success bg-success bg-opacity-10 fw-bold' : 'text-secondary' }}" href="{{ route('destinasi.index') }}">Wisata & Penginapan</a>
+                    <a class="nav-link px-3 rounded-pill {{ request()->routeIs('destinasi.*') ? 'text-primary bg-primary bg-opacity-10 fw-bold' : 'text-secondary' }}" href="{{ route('destinasi.index') }}">Wisata & Penginapan</a>
                 </li>
                 <li class="nav-item">
                     @auth
-                        <a class="nav-link px-3 rounded-pill {{ request()->routeIs('mitra.register') ? 'text-success bg-success bg-opacity-10 fw-bold border border-success border-opacity-25' : 'text-secondary' }}" href="{{ route('mitra.register') }}">Gabung Mitra</a>
+                        <a class="nav-link px-3 rounded-pill {{ request()->routeIs('mitra.register') ? 'text-primary bg-primary bg-opacity-10 fw-bold border border-primary border-opacity-25' : 'text-secondary' }}" href="{{ route('mitra.register') }}">Gabung Mitra</a>
                     @else
                         <a class="nav-link px-3 rounded-pill text-secondary cursor-pointer" href="javascript:void(0)" onclick="promptMitraLogin()">Gabung Mitra</a>
                     @endauth
@@ -37,14 +37,14 @@
                 @auth
                     <!-- Logo Profile & Menu Akun Interaktif -->
                     <div class="dropdown position-relative">
-                        <button class="btn btn-dark rounded-circle d-flex align-items-center justify-content-center p-0 shadow-sm border border-2 border-white" type="button" id="userProfileDropdownToggle" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; cursor: pointer;" title="{{ Auth::user()->name }}">
+                        <button class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center p-0 shadow-sm border border-2 border-white" type="button" id="userProfileDropdownToggle" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; cursor: pointer; background-color: #1967d2 !important; border-color: #1967d2 !important;" title="{{ Auth::user()->name }}">
                             <span class="fw-bold fs-6 text-white">{{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2 p-2" id="userProfileDropdownMenu" aria-labelledby="userProfileDropdownToggle" style="min-width: 270px; z-index: 1060;">
                             <!-- Header Info -->
                             <li class="px-3 py-2 border-bottom mb-2 bg-light rounded-3">
                                 <div class="d-flex align-items-center gap-2 mb-1">
-                                    <div class="rounded-circle bg-success bg-opacity-15 text-success d-flex align-items-center justify-content-center fw-bold" style="width: 34px; height: 34px; font-size: 0.85rem;">
+                                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center fw-bold" style="width: 34px; height: 34px; font-size: 0.85rem; background-color: #1967d2;">
                                         {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
                                     </div>
                                     <div class="overflow-hidden">
@@ -52,7 +52,7 @@
                                         <small class="text-muted d-block text-truncate" style="font-size: 0.72rem;">{{ Auth::user()->email }}</small>
                                     </div>
                                 </div>
-                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2 py-0-5" style="font-size: 0.65rem;">
+                                <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-2 py-0-5" style="font-size: 0.65rem;">
                                     <i class="bi bi-shield-check me-1"></i>Akun Terverifikasi
                                 </span>
                             </li>
@@ -66,17 +66,6 @@
                                     <div>
                                         <span class="d-block fw-bold text-navy lh-sm">Profil Saya</span>
                                         <span class="text-muted" style="font-size: 0.7rem;">Informasi akun & kontak</span>
-                                    </div>
-                                </button>
-                            </li>
-                            <li>
-                                <button type="button" class="dropdown-item small py-2 px-3 rounded-3 d-flex align-items-center gap-3 w-100 text-start border-0 bg-transparent cursor-pointer" onclick="openModalDirectly('modalTickets')">
-                                    <div class="rounded-circle bg-warning bg-opacity-15 text-dark d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px;">
-                                        <i class="bi bi-ticket-perforated-fill text-warning fs-6"></i>
-                                    </div>
-                                    <div>
-                                        <span class="d-block fw-bold text-navy lh-sm">Tiket & Reservasi</span>
-                                        <span class="text-muted" style="font-size: 0.7rem;">E-tiket & kode QR masuk</span>
                                     </div>
                                 </button>
                             </li>
@@ -269,14 +258,14 @@
                 <!-- User Summary Card -->
                 <div class="card border-0 bg-light rounded-4 p-3 mb-4">
                     <div class="d-flex align-items-center gap-3">
-                        <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm flex-shrink-0" style="width: 58px; height: 58px;">
+                        <div class="rounded-circle text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm flex-shrink-0" style="width: 58px; height: 58px; background-color: #1967d2;">
                             {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
                         </div>
                         <div class="overflow-hidden">
                             <h6 class="fw-bold text-navy mb-0 text-truncate">{{ Auth::user()->name ?? 'Pengguna DOKEMAS' }}</h6>
                             <p class="text-muted small mb-1 text-truncate">{{ Auth::user()->email ?? 'user@dokemas.id' }}</p>
                             <div class="d-flex flex-wrap align-items-center gap-1">
-                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2 py-0-5" style="font-size: 0.68rem;">
+                                <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-2 py-0-5" style="font-size: 0.68rem;">
                                     <i class="bi bi-patch-check-fill me-1"></i>Akun Terverifikasi
                                 </span>
                                 <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2 py-0-5" style="font-size: 0.68rem;">
@@ -328,8 +317,8 @@
                         <div class="row g-2 text-center">
                             <div class="col-4">
                                 <div class="bg-white p-2 rounded-3 border border-light-subtle shadow-2xs">
-                                    <span class="fw-bold text-success d-block fs-6">2</span>
-                                    <span class="text-muted" style="font-size: 0.68rem;">Tiket Aktif</span>
+                                    <span class="fw-bold text-primary d-block fs-6">4</span>
+                                    <span class="text-muted" style="font-size: 0.68rem;">Destinasi Favorit</span>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -354,194 +343,6 @@
                         </button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL TIKET & RESERVASI SAYA INTERAKTIF (Selalu ada di DOM untuk memastikan responsivitas) -->
-<div class="modal fade" id="modalTickets" tabindex="-1" aria-labelledby="modalTicketsLabel" aria-hidden="true" style="z-index: 1070;">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-        <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
-            <div class="modal-header border-0 pb-0 pt-4 px-4">
-                <div class="d-flex align-items-center gap-2">
-                    <div class="rounded-circle bg-warning bg-opacity-15 text-warning p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                        <i class="bi bi-ticket-perforated-fill fs-5"></i>
-                    </div>
-                    <div>
-                        <div class="d-flex align-items-center gap-2">
-                            <h5 class="modal-title fw-bold text-navy" id="modalTicketsLabel">Tiket & Reservasi Saya</h5>
-                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-0-5" style="font-size: 0.7rem;">2 Tiket Aktif</span>
-                        </div>
-                        <p class="text-muted small mb-0">E-tiket resmi untuk akses gerbang masuk wisata & penginapan Banyumas</p>
-                    </div>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModalDirectly('modalTickets')"></button>
-            </div>
-            <div class="modal-body p-4">
-                <!-- Ticket List -->
-                <div class="d-flex flex-column gap-3">
-
-                    <!-- Ticket 1: Lokawisata Baturraden -->
-                    <div class="card border rounded-4 overflow-hidden shadow-xs">
-                        <div class="card-header bg-light border-0 py-3 px-4 d-flex flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="badge bg-success text-white rounded-pill px-2 py-1" style="font-size: 0.72rem;">
-                                    <i class="bi bi-check-circle-fill me-1"></i>Siap Digunakan
-                                </span>
-                                <span class="fw-bold text-navy small">#DKM-BTR-882194</span>
-                            </div>
-                            <span class="text-muted small" style="font-size: 0.75rem;"><i class="bi bi-calendar3 me-1"></i>Sabtu, 15 November 2026</span>
-                        </div>
-                        <div class="card-body p-4">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-7">
-                                    <h6 class="fw-bold text-navy mb-1 fs-6">Lokawisata Baturraden</h6>
-                                    <p class="text-muted small mb-3"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Karangmangu, Kec. Baturraden, Banyumas</p>
-                                    
-                                    <div class="row g-2 small mb-3">
-                                        <div class="col-6">
-                                            <span class="text-muted d-block" style="font-size: 0.72rem;">Jenis Tiket</span>
-                                            <span class="fw-bold text-dark">2x Tiket Dewasa</span>
-                                        </div>
-                                        <div class="col-6">
-                                            <span class="text-muted d-block" style="font-size: 0.72rem;">Jam Operasional</span>
-                                            <span class="fw-bold text-dark">08:00 - 17:00 WIB</span>
-                                        </div>
-                                        <div class="col-6">
-                                            <span class="text-muted d-block" style="font-size: 0.72rem;">Metode Bayar</span>
-                                            <span class="fw-semibold text-success"><i class="bi bi-qr-code me-1"></i>QRIS Banyumas (Lunas)</span>
-                                        </div>
-                                        <div class="col-6">
-                                            <span class="text-muted d-block" style="font-size: 0.72rem;">Total Tagihan</span>
-                                            <span class="fw-bold text-success fs-6">Rp 40.000</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-wrap gap-2">
-                                        <button type="button" class="btn btn-green rounded-pill px-3 py-1-5 btn-sm text-white fw-bold shadow-xs" onclick="simulateTicketDownload('Lokawisata Baturraden', 'DKM-BTR-882194')">
-                                            <i class="bi bi-download me-1"></i> Unduh E-Tiket (PDF)
-                                        </button>
-                                        <a href="{{ route('destinasi.show', 'lokawisata-baturraden') }}" class="btn btn-outline-secondary rounded-pill px-3 py-1-5 btn-sm fw-semibold text-navy">
-                                            <i class="bi bi-eye me-1"></i> Detail Wisata
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 text-center border-start-md ps-md-4 pt-3 pt-md-0 border-light-subtle">
-                                    <div class="bg-light p-3 rounded-4 d-inline-block border border-light-subtle text-center">
-                                        <!-- SVG Barcode / QR Simulation -->
-                                        <div class="bg-white p-2 rounded-3 shadow-2xs d-inline-block mb-2">
-                                            <svg width="105" height="105" viewBox="0 0 24 24" fill="none" stroke="#0d233a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                <rect x="2" y="2" width="6" height="6" rx="1"></rect>
-                                                <rect x="16" y="2" width="6" height="6" rx="1"></rect>
-                                                <rect x="2" y="16" width="6" height="6" rx="1"></rect>
-                                                <path d="M4 4h2v2H4z"></path>
-                                                <path d="M18 4h2v2h-2z"></path>
-                                                <path d="M4 18h2v2H4z"></path>
-                                                <path d="M10 2v6h4V2z"></path>
-                                                <path d="M2 10h6v4H2z"></path>
-                                                <path d="M10 10h4v4h-4z"></path>
-                                                <path d="M16 10h6v2h-6z"></path>
-                                                <path d="M18 14h4v2h-4z"></path>
-                                                <path d="M10 16h2v6h-2z"></path>
-                                                <path d="M14 18h4v4h-4z"></path>
-                                                <path d="M20 20h2v2h-2z"></path>
-                                            </svg>
-                                        </div>
-                                        <small class="d-block text-muted" style="font-size: 0.68rem;">Tunjukkan kode QR ini ke petugas tiket di pintu gerbang utama</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ticket 2: Curug Cipendok -->
-                    <div class="card border rounded-4 overflow-hidden shadow-xs">
-                        <div class="card-header bg-light border-0 py-3 px-4 d-flex flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="badge bg-success text-white rounded-pill px-2 py-1" style="font-size: 0.72rem;">
-                                    <i class="bi bi-check-circle-fill me-1"></i>Siap Digunakan
-                                </span>
-                                <span class="fw-bold text-navy small">#DKM-CPD-551029</span>
-                            </div>
-                            <span class="text-muted small" style="font-size: 0.75rem;"><i class="bi bi-calendar3 me-1"></i>Minggu, 16 November 2026</span>
-                        </div>
-                        <div class="card-body p-4">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-7">
-                                    <h6 class="fw-bold text-navy mb-1 fs-6">Curug Cipendok</h6>
-                                    <p class="text-muted small mb-3"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Karangtengah, Kec. Cilongok, Banyumas</p>
-                                    
-                                    <div class="row g-2 small mb-3">
-                                        <div class="col-6">
-                                            <span class="text-muted d-block" style="font-size: 0.72rem;">Jenis Tiket</span>
-                                            <span class="fw-bold text-dark">1x Tiket Air Terjun</span>
-                                        </div>
-                                        <div class="col-6">
-                                            <span class="text-muted d-block" style="font-size: 0.72rem;">Jam Operasional</span>
-                                            <span class="fw-bold text-dark">08:00 - 17:00 WIB</span>
-                                        </div>
-                                        <div class="col-6">
-                                            <span class="text-muted d-block" style="font-size: 0.72rem;">Metode Bayar</span>
-                                            <span class="fw-semibold text-success"><i class="bi bi-qr-code me-1"></i>Transfer Bank (Lunas)</span>
-                                        </div>
-                                        <div class="col-6">
-                                            <span class="text-muted d-block" style="font-size: 0.72rem;">Total Tagihan</span>
-                                            <span class="fw-bold text-success fs-6">Rp 15.000</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-wrap gap-2">
-                                        <button type="button" class="btn btn-green rounded-pill px-3 py-1-5 btn-sm text-white fw-bold shadow-xs" onclick="simulateTicketDownload('Curug Cipendok', 'DKM-CPD-551029')">
-                                            <i class="bi bi-download me-1"></i> Unduh E-Tiket (PDF)
-                                        </button>
-                                        <a href="{{ route('destinasi.show', 'curug-cipendok') }}" class="btn btn-outline-secondary rounded-pill px-3 py-1-5 btn-sm fw-semibold text-navy">
-                                            <i class="bi bi-eye me-1"></i> Detail Wisata
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 text-center border-start-md ps-md-4 pt-3 pt-md-0 border-light-subtle">
-                                    <div class="bg-light p-3 rounded-4 d-inline-block border border-light-subtle text-center">
-                                        <div class="bg-white p-2 rounded-3 shadow-2xs d-inline-block mb-2">
-                                            <svg width="105" height="105" viewBox="0 0 24 24" fill="none" stroke="#0d233a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                <rect x="2" y="2" width="6" height="6" rx="1"></rect>
-                                                <rect x="16" y="2" width="6" height="6" rx="1"></rect>
-                                                <rect x="2" y="16" width="6" height="6" rx="1"></rect>
-                                                <path d="M4 4h2v2H4z"></path>
-                                                <path d="M18 4h2v2h-2z"></path>
-                                                <path d="M4 18h2v2H4z"></path>
-                                                <path d="M10 2v6h4V2z"></path>
-                                                <path d="M2 10h6v4H2z"></path>
-                                                <path d="M10 10h4v4h-4z"></path>
-                                                <path d="M16 10h6v2h-6z"></path>
-                                                <path d="M18 14h4v2h-4z"></path>
-                                                <path d="M10 16h2v6h-2z"></path>
-                                                <path d="M14 18h4v4h-4z"></path>
-                                                <path d="M20 20h2v2h-2z"></path>
-                                            </svg>
-                                        </div>
-                                        <small class="d-block text-muted" style="font-size: 0.68rem;">Tunjukkan kode QR ini ke petugas tiket di loket Curug Cipendok</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Banner Link to Destinasi -->
-                <div class="mt-4 p-3 bg-light rounded-4 border border-light-subtle d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-compass text-success fs-4"></i>
-                        <div>
-                            <span class="fw-bold text-navy d-block small">Ingin menambah destinasi wisata atau penginapan?</span>
-                            <small class="text-muted">Pilih ribuan destinasi & homestay terverifikasi di seluruh penjuru Banyumas.</small>
-                        </div>
-                    </div>
-                    <a href="{{ route('destinasi.index') }}" class="btn btn-green rounded-pill px-4 py-2 small fw-bold text-white text-nowrap shadow-xs">
-                        Jelajahi Katalog
-                    </a>
-                </div>
             </div>
         </div>
     </div>
@@ -590,7 +391,7 @@
         }
 
         // Listener klik di luar modal untuk menutup dialog
-        ['modalProfile', 'modalTickets', 'modalAuth'].forEach(function(modalId) {
+        ['modalProfile', 'modalAuth'].forEach(function(modalId) {
             var m = document.getElementById(modalId);
             if (m) {
                 m.addEventListener('click', function(e) {
@@ -704,33 +505,6 @@
             }
         }
     });
-
-    // Simulasi Unduh E-Tiket PDF
-    function simulateTicketDownload(destination, code) {
-        showGlobalToast('📥 E-Tiket #' + code + ' (' + destination + ') berhasil diunduh dalam format PDF!', 'success');
-        
-        try {
-            var fileContent = "====================================================\n" +
-                              "          DOKEMAS BANYUMAS - E-TIKET RESMI          \n" +
-                              "====================================================\n\n" +
-                              "Kode Reservasi : #" + code + "\n" +
-                              "Destinasi      : " + destination + "\n" +
-                              "Status         : LUNAS - Siap Digunakan di Pintu Masuk\n" +
-                              "Platform       : DOKEMAS (Dolan Keliling Banyumas)\n\n" +
-                              "Simpan tiket digital ini dan tunjukkan kepada petugas loket/gate scanner.";
-            var blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'E-Tiket-' + code + '-' + destination.replace(/\s+/g, '_') + '.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        } catch (e) {
-            console.log(e);
-        }
-    }
 
     // Global Toast Notification Helper
     function showGlobalToast(message, type) {
