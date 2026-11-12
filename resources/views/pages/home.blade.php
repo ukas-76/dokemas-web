@@ -20,7 +20,7 @@
         <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 text-white-50 small mb-5">
             <div><i class="bi bi-check-circle-fill text-success me-1"></i> 150+ Mitra Terverifikasi</div>
             <span class="opacity-25 d-none d-md-inline">•</span>
-            <div><i class="bi bi-qr-code text-success me-1"></i> Tiket QR Code Instan</div>
+            <div><i class="bi bi-geo-alt-fill text-success me-1"></i> Info Tiket & Rute Akurat</div>
             <span class="opacity-25 d-none d-md-inline">•</span>
             <div><i class="bi bi-shield-check text-success me-1"></i> Rekomendasi Resmi Banyumas</div>
         </div>
@@ -62,7 +62,7 @@
 
         <!-- Tombol Submit Cari -->
         <div class="col-md-3 pt-md-3">
-            <button type="submit" class="btn btn-green w-100 rounded-3 py-2 fw-bold d-flex align-items-center justify-content-center gap-2" style="background-color: #3a821d;">
+            <button type="submit" class="btn btn-green w-100 rounded-3 py-2 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm">
                 <i class="bi bi-search"></i> Cari
             </button>
         </div>
@@ -239,13 +239,13 @@
                     </h2>
 
                     <p class="text-white-50 mb-4 small" style="line-height: 1.7;">
-                        Pesan tiket wisata tanpa antre, nikmati check-in instan dengan e-tiket QR Code, dan dapatkan notifikasi cuaca lereng Gunung Slamet secara langsung.
+                        Jelajahi keindahan wisata Banyumas terlengkap, dapatkan info jam buka & rute lokasi terverifikasi, dan pantau cuaca lereng Gunung Slamet secara langsung.
                     </p>
 
                     <div class="d-flex flex-wrap gap-2 mb-4 small">
-                        <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-qr-code-scan text-success me-1"></i> Scan QR di Loket</span>
-                        <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-map text-success me-1"></i> Peta Offline Curug</span>
-                        <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-tag text-success me-1"></i> Promo Weekend</span>
+                        <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-info-circle text-success me-1"></i> Info Loket Resmi</span>
+                        <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-map text-success me-1"></i> Petunjuk Rute Wisata</span>
+                        <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-compass text-success me-1"></i> Kurasi Destinasi</span>
                     </div>
 
                     <div class="d-flex flex-wrap align-items-center gap-3">
@@ -290,14 +290,14 @@
 
                             <div class="bg-dark text-white p-2 rounded-3 mb-2">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <span class="badge bg-secondary" style="font-size: 0.5rem;">TIKET MASUK AKTIF</span>
+                                    <span class="badge bg-secondary" style="font-size: 0.5rem;">DESTINASI PILIHAN</span>
                                     <span class="badge bg-success" style="font-size: 0.5rem;">TERVERIFIKASI</span>
                                 </div>
                                 <div class="fw-bold" style="font-size: 0.7rem;">Curug Jaten Baturraden</div>
-                                <small class="text-white-50 d-block" style="font-size: 0.55rem;">1 Tiket Dewasa • Hari Ini</small>
+                                <small class="text-white-50 d-block" style="font-size: 0.55rem;">Buka 08:00 - 17:00 WIB • Banyumas</small>
                                 <div class="d-flex justify-content-between align-items-center mt-2 bg-white bg-opacity-10 p-1 rounded">
-                                    <code class="text-white" style="font-size: 0.6rem;">#DKM-88219</code>
-                                    <span class="badge bg-success" style="font-size: 0.5rem;">Siap Scan</span>
+                                    <code class="text-white" style="font-size: 0.6rem;">Tiket Masuk di Loket</code>
+                                    <span class="badge bg-success" style="font-size: 0.5rem;">Rp 15.000</span>
                                 </div>
                             </div>
 

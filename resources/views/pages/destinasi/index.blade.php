@@ -253,7 +253,7 @@
                         </div>
 
                         <!-- Tombol Terapkan Filter -->
-                        <button type="submit" class="btn btn-green w-100 rounded-3 py-2 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm" style="background-color: #2e7d32;">
+                        <button type="submit" class="btn btn-green w-100 rounded-3 py-2 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm">
                             <i class="bi bi-funnel-fill"></i> Terapkan Filter
                         </button>
                     </form>
@@ -388,7 +388,7 @@
                                 @for ($page = $start; $page <= $end; $page++)
                                     <li class="page-item {{ $page == $currentPage ? 'active' : '' }}">
                                         <a class="page-link rounded-3 border-0 px-3 py-2 fw-bold {{ $page == $currentPage ? 'text-white' : 'bg-white shadow-2xs text-secondary' }}" 
-                                           style="{{ $page == $currentPage ? 'background-color: #2e7d32;' : '' }}" 
+                                           style="{{ $page == $currentPage ? 'background-color: #1967d2;' : '' }}" 
                                            href="{{ $destinations->url($page) }}">
                                             {{ $page }}
                                         </a>
