@@ -159,15 +159,6 @@ body {
     border-color: $blue-primary;
 }
 
-#btnSendOtp {
-    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-    color: $blue-primary !important;
-    &:hover:not(:disabled) {
-        background-color: $blue-light !important;
-        color: $blue-hover !important;
-    }
-}
-
 .btn-slate-soft {
     background-color: #f1f5f9;
     color: #334155;
