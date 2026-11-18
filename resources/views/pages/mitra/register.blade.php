@@ -155,7 +155,7 @@
                                 @if(($step ?? 1) == 1)
                                     <strong class="text-success d-block small mb-1">Tips Langkah 1:</strong>
                                     <p class="text-secondary mb-0" style="font-size: 0.75rem; line-height: 1.45;">
-                                        Pastikan data penanggung jawab sesuai KTP dan nomor WhatsApp aktif untuk menerima kode verifikasi OTP instan.
+                                        Pastikan data penanggung jawab sesuai KTP dan nomor WhatsApp aktif untuk koordinasi kemitraan resmi.
                                     </p>
                                 @elseif(($step ?? 1) == 2)
                                     <strong class="text-success d-block small mb-1">Tips Pengisian:</strong>
@@ -204,7 +204,7 @@
                     @csrf
 
                     <!-- ============================================================== -->
-                    <!-- KONTEN LANGKAH 1: INFORMASI AKUN & VERIFIKASI NO OTP           -->
+                    <!-- KONTEN LANGKAH 1: INFORMASI AKUN & KONTAK RESMI PENGELOLA -->
                     <!-- ============================================================== -->
                     <div id="step1Container" style="{{ ($step ?? 1) == 1 ? 'display: block;' : 'display: none;' }}">
                         
@@ -222,7 +222,7 @@
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <label class="form-label fw-bold text-navy small mb-0">Nama Lengkap Penanggung Jawab <span class="text-danger">*</span></label>
                                 </div>
-                                <input type="text" class="form-control form-control-lg rounded-3 fs-6" name="owner_name" id="ownerNameInput" placeholder="Contoh: Rizko Afryan Santoso" value="Rizko Afryan Santoso" required>
+                                <input type="text" class="form-control rounded-3" name="owner_name" id="ownerNameInput" placeholder="Contoh: Rizko Afryan Santoso" value="Rizko Afryan Santoso" required style="font-size: 0.88rem;">
                                 <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Sesuai dengan nama pada identitas KTP resmi</small>
                             </div>
 
@@ -230,9 +230,9 @@
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <label class="form-label fw-bold text-navy small mb-0">Nomor Induk Kependudukan (NIK KTP) <span class="text-danger">*</span></label>
                                 </div>
-                                <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6"><i class="bi bi-person-vcard"></i></span>
-                                    <input type="text" class="form-control fs-6 border-start-0" name="owner_nik" id="ownerNikInput" placeholder="3302xxxxxxxxxxxx (16 Digit)" value="3302198765430001" maxlength="16" required>
+                                <div class="input-group rounded-3">
+                                    <span class="input-group-text bg-light text-muted border-end-0" style="font-size: 0.88rem;"><i class="bi bi-person-vcard"></i></span>
+                                    <input type="text" class="form-control border-start-0" name="owner_nik" id="ownerNikInput" placeholder="3302xxxxxxxxxxxx (16 Digit)" value="3302198765430001" maxlength="16" required style="font-size: 0.88rem;">
                                 </div>
                                 <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Untuk verifikasi izin berusaha dan perlindungan kemitraan</small>
                             </div>
@@ -242,7 +242,7 @@
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-navy small mb-2">Bentuk Entitas Pengelola <span class="text-danger">*</span></label>
-                                <select class="form-select form-select-lg rounded-3 fs-6" name="entity_type" required>
+                                <select class="form-select rounded-3" name="entity_type" required style="font-size: 0.88rem;">
                                     <option value="perorangan" selected>Perorangan / Pemilik Usaha Pribadi</option>
                                     <option value="pokdarwis">Kelompok Sadar Wisata (POKDARWIS)</option>
                                     <option value="bumdes">BUMDes / Pengelola Desa Wisata</option>
@@ -251,7 +251,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-navy small mb-2">Jabatan dalam Pengelolaan <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-lg rounded-3 fs-6" name="owner_position" placeholder="Contoh: Pemilik Usaha / Ketua POKDARWIS" value="Ketua Tim Pengelola" required>
+                                <input type="text" class="form-control rounded-3" name="owner_position" placeholder="Contoh: Pemilik Usaha / Ketua POKDARWIS" value="Ketua Tim Pengelola" required style="font-size: 0.88rem;">
                             </div>
                         </div>
 
@@ -263,60 +263,48 @@
                             <p class="text-muted small mb-0">Nomor WhatsApp dan kata sandi untuk login portal dashboard mitra.</p>
                         </div>
 
-                        <!-- Nomor WhatsApp & Tombol Kirim OTP -->
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-7">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <label class="form-label fw-bold text-navy small mb-0">Nomor WhatsApp Pengelola (Nomor Utama) <span class="text-danger">*</span></label>
-                                </div>
-                                <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6 fw-semibold">+62</span>
-                                    <input type="text" class="form-control fs-6 border-start-0 border-end-0" id="step1PhoneInput" name="owner_phone" placeholder="813-xxxx-xxxx" value="813-9090-4421" required>
-                                    <button type="button" class="btn btn-light border border-start-0 text-success fw-semibold px-3 small d-inline-flex align-items-center" id="btnSendOtp" onclick="sendOtpCode()">
-                                        <i class="bi bi-send me-1"></i> Kirim OTP
-                                    </button>
-                                </div>
-                                <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Kode verifikasi OTP 6 digit akan dikirim ke WhatsApp ini</small>
-                            </div>
-
-                            <!-- Input OTP -->
-                            <div class="col-md-5">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <label class="form-label fw-bold text-navy small mb-0">Kode Verifikasi OTP <span class="text-danger">*</span></label>
-                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1" id="otpStatusBadge" style="font-size: 0.68rem;">
-                                        <i class="bi bi-patch-check-fill me-1"></i> Terverifikasi
-                                    </span>
-                                </div>
-                                <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6"><i class="bi bi-shield-lock"></i></span>
-                                    <input type="text" class="form-control fs-6 border-start-0 fw-bold text-navy text-center" id="otpCodeInput" name="otp_code" placeholder="6 Digit Angka" value="849201" maxlength="6" style="letter-spacing: 4px;">
-                                </div>
-                                <small class="text-success d-block mt-1" id="otpSuccessMsg" style="font-size: 0.73rem;">
-                                    <i class="bi bi-check-circle-fill"></i> Nomor berhasil terhubung ke server WhatsApp
-                                </small>
-                            </div>
-                        </div>
-
-                        <!-- Email Resmi & Kata Sandi Portal -->
+                        <!-- Kontak Pengelola & Email Resmi -->
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
+                                <label class="form-label fw-bold text-navy small mb-2">Nomor WhatsApp Pengelola (Nomor Utama) <span class="text-danger">*</span></label>
+                                <div class="input-group rounded-3">
+                                    <span class="input-group-text bg-light text-muted border-end-0 fw-semibold" style="font-size: 0.85rem;">+62</span>
+                                    <input type="text" class="form-control border-start-0" id="step1PhoneInput" name="owner_phone" placeholder="813-xxxx-xxxx" value="813-9090-4421" required style="font-size: 0.88rem;">
+                                </div>
+                                <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Nomor WhatsApp aktif pengelola untuk koordinasi dan konfirmasi kemitraan</small>
+                            </div>
+
+                            <div class="col-md-6">
                                 <label class="form-label fw-bold text-navy small mb-2">Alamat Email Resmi <span class="text-danger">*</span></label>
-                                <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6"><i class="bi bi-envelope"></i></span>
-                                    <input type="email" class="form-control fs-6 border-start-0" name="owner_email" placeholder="nama@pengelola.com" value="mitra@dokemas.banyumaskab.go.id" required>
+                                <div class="input-group rounded-3">
+                                    <span class="input-group-text bg-light text-muted border-end-0" style="font-size: 0.88rem;"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control border-start-0" name="owner_email" placeholder="nama@pengelola.com" value="mitra@dokemas.banyumaskab.go.id" required style="font-size: 0.88rem;">
                                 </div>
                                 <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Untuk pengiriman laporan kunjungan dan akses portal mitra</small>
                             </div>
+                        </div>
+
+                        <!-- Kata Sandi Portal Mitra & Konfirmasi Sandi -->
+                        <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-navy small mb-2">Buat Kata Sandi Portal Mitra <span class="text-danger">*</span></label>
-                                <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6"><i class="bi bi-key"></i></span>
-                                    <input type="password" class="form-control fs-6 border-start-0 border-end-0" id="portalPassword" name="password" value="DokemasBanyumas2026!" placeholder="Minimal 8 karakter" required>
+                                <div class="input-group rounded-3">
+                                    <span class="input-group-text bg-light text-muted border-end-0" style="font-size: 0.88rem;"><i class="bi bi-key"></i></span>
+                                    <input type="password" class="form-control border-start-0 border-end-0" id="portalPassword" name="password" value="DokemasBanyumas2026!" placeholder="Minimal 8 karakter" required style="font-size: 0.88rem;">
                                     <button type="button" class="btn btn-light border border-start-0 text-muted" onclick="togglePasswordVisibility()">
                                         <i class="bi bi-eye" id="passwordEyeIcon"></i>
                                     </button>
                                 </div>
                                 <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Gunakan minimal 8 karakter kombinasi huruf dan angka</small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-navy small mb-2">Konfirmasi Kata Sandi <span class="text-danger">*</span></label>
+                                <div class="input-group rounded-3">
+                                    <span class="input-group-text bg-light text-muted border-end-0" style="font-size: 0.88rem;"><i class="bi bi-shield-check"></i></span>
+                                    <input type="password" class="form-control border-start-0" id="portalPasswordConfirm" name="password_confirmation" value="DokemasBanyumas2026!" placeholder="Ulangi kata sandi" required style="font-size: 0.88rem;">
+                                </div>
+                                <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Pastikan kata sandi sama untuk keamanan login portal</small>
                             </div>
                         </div>
 
@@ -336,7 +324,7 @@
                                 <i class="bi bi-arrow-left me-1"></i> Batal
                             </a>
                             <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
-                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small">
+                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small" onclick="saveDraft(true)">
                                     <i class="bi bi-bookmark me-1"></i> Simpan Draf
                                 </button>
                                 <button type="button" class="btn btn-green rounded-pill px-4 py-2 fw-bold text-white small shadow-sm" onclick="goToStep(2)">
@@ -368,14 +356,14 @@
                                 <label class="form-label fw-bold text-navy small mb-0">Nama Destinasi / Tempat Usaha <span class="text-danger">*</span></label>
                                 <span class="text-muted" style="font-size: 0.75rem;">Sesuai plang atau izin resmi</span>
                             </div>
-                            <input type="text" class="form-control form-control-lg rounded-3 fs-6" name="name" placeholder="Contoh: Hutan Pinus Limpakuwus Baturraden" value="Hutan Pinus Limpakuwus Baturraden" required>
+                            <input type="text" class="form-control rounded-3" name="name" placeholder="Contoh: Hutan Pinus Limpakuwus Baturraden" value="Hutan Pinus Limpakuwus Baturraden" required style="font-size: 0.88rem;">
                         </div>
 
                         <!-- Kategori & Kisaran Harga -->
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-navy small mb-2">Jenis Usaha / Kategori <span class="text-danger">*</span></label>
-                                <select class="form-select form-select-lg rounded-3 fs-6" name="category_id" required>
+                                <select class="form-select rounded-3" name="category_id" required style="font-size: 0.88rem;">
                                     <option value="" disabled>Pilih Kategori Utama...</option>
                                     @if(isset($categories) && count($categories) > 0)
                                         @foreach($categories as $cat)
@@ -395,9 +383,9 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-navy small mb-2">Kisaran Harga Tiket / Sewa <span class="text-danger">*</span></label>
-                                <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6 fw-semibold">Rp</span>
-                                    <input type="text" class="form-control fs-6 border-start-0" name="price_range" placeholder="Contoh: 15.000 / orang atau 450.000 / kamar" value="15.000 / orang">
+                                <div class="input-group rounded-3">
+                                    <span class="input-group-text bg-light text-muted border-end-0 fw-semibold" style="font-size: 0.88rem;">Rp</span>
+                                    <input type="text" class="form-control border-start-0" name="price_range" placeholder="Contoh: 15.000 / orang atau 450.000 / kamar" value="15.000 / orang" style="font-size: 0.88rem;">
                                 </div>
                             </div>
                         </div>
@@ -410,9 +398,9 @@
                             </div>
                             <div class="d-flex flex-column flex-sm-row gap-2 align-items-stretch">
                                 <div class="flex-grow-1">
-                                    <input type="text" id="inputJamOperasional" class="form-control form-control-lg rounded-3 fs-6" name="open_hours" placeholder="Contoh: 08:00 - 17:00 WIB (Setiap Hari)" value="08:00 - 17:00 WIB (Setiap Hari)" required>
+                                    <input type="text" id="inputJamOperasional" class="form-control rounded-3" name="open_hours" placeholder="Contoh: 08:00 - 17:00 WIB (Setiap Hari)" value="08:00 - 17:00 WIB (Setiap Hari)" required style="font-size: 0.88rem;">
                                 </div>
-                                <button type="button" class="btn btn-light border rounded-3 px-3 fs-6 fw-semibold text-secondary flex-shrink-0 d-inline-flex align-items-center justify-content-center" onclick="document.getElementById('inputJamOperasional').value='00:00 - 24:00 WIB (Buka 24 Jam)'">
+                                <button type="button" class="btn btn-light border rounded-3 px-3 fw-semibold text-secondary flex-shrink-0 d-inline-flex align-items-center justify-content-center" onclick="document.getElementById('inputJamOperasional').value='00:00 - 24:00 WIB (Buka 24 Jam)'" style="font-size: 0.82rem;">
                                     <i class="bi bi-clock-history me-1"></i> Set Buka 24 Jam
                                 </button>
                             </div>
@@ -432,7 +420,7 @@
                         <div class="row g-3 mb-4">
                             <div class="col-md-5">
                                 <label class="form-label fw-bold text-navy small mb-2">Kecamatan di Kab. Banyumas <span class="text-danger">*</span></label>
-                                <select class="form-select form-select-lg rounded-3 fs-6" name="subdistrict" required>
+                                <select class="form-select rounded-3" name="subdistrict" required style="font-size: 0.88rem;">
                                     <option value="Baturraden" selected>Baturraden</option>
                                     <option value="Purwokerto Timur">Purwokerto Timur</option>
                                     <option value="Purwokerto Barat">Purwokerto Barat</option>
@@ -455,11 +443,11 @@
                                         Buka Maps <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem;"></i>
                                     </a>
                                 </div>
-                                <div class="input-group input-group-lg rounded-3 mb-1">
-                                    <span class="input-group-text bg-light border-end-0 text-success">
+                                <div class="input-group rounded-3 mb-1">
+                                    <span class="input-group-text bg-light border-end-0 text-success" style="font-size: 0.88rem;">
                                         <i class="bi bi-geo-alt-fill"></i>
                                     </span>
-                                    <input type="url" class="form-control fs-6 border-start-0" name="maps_link" placeholder="https://maps.app.goo.gl/..." value="https://maps.app.goo.gl/BanyumasTourism" required>
+                                    <input type="url" class="form-control border-start-0" name="maps_link" placeholder="https://maps.app.goo.gl/..." value="https://maps.app.goo.gl/BanyumasTourism" required style="font-size: 0.88rem;">
                                 </div>
                                 <small class="text-muted d-block" style="font-size: 0.75rem;">Buka Google Maps lalu salin tautan lokasi destinasi Anda</small>
                             </div>
@@ -468,7 +456,7 @@
                         <!-- Alamat Lengkap & Petunjuk Arah -->
                         <div class="mb-4">
                             <label class="form-label fw-bold text-navy small mb-2">Alamat Lengkap & Petunjuk Arah Akses Kendaraan <span class="text-danger">*</span></label>
-                            <textarea class="form-control rounded-3 fs-6" name="address_full" rows="3" required placeholder="Tuliskan nama jalan, nomor, RT/RW, dan patokan akses (misal: muat dua bus besar, akses tanjakan, dsb)">Jl. Raya Baturraden Timur KM 12, Karangsalam, Baturraden. Masuk gapura sebelah barat 100 meter, jalan beraspal halus dan muat papasan dua bus besar.</textarea>
+                            <textarea class="form-control rounded-3" name="address_full" rows="3" required placeholder="Tuliskan nama jalan, nomor, RT/RW, dan patokan akses (misal: muat dua bus besar, akses tanjakan, dsb)" style="font-size: 0.88rem;">Jl. Raya Baturraden Timur KM 12, Karangsalam, Baturraden. Masuk gapura sebelah barat 100 meter, jalan beraspal halus dan muat papasan dua bus besar.</textarea>
                         </div>
 
                         <!-- Nomor WhatsApp CS -->
@@ -479,9 +467,9 @@
                                     <i class="bi bi-check2-circle me-1"></i> Notifikasi pemesanan & verifikasi instan
                                 </span>
                             </div>
-                            <div class="input-group input-group-lg rounded-3">
-                                <span class="input-group-text bg-light text-muted border-end-0 fs-6 fw-semibold">+62</span>
-                                <input type="text" class="form-control fs-6 border-start-0" name="phone" placeholder="812-xxxx-xxxx" value="813-9090-4421" required>
+                            <div class="input-group rounded-3">
+                                <span class="input-group-text bg-light text-muted border-end-0 fw-semibold" style="font-size: 0.88rem;">+62</span>
+                                <input type="text" class="form-control border-start-0" name="phone" placeholder="812-xxxx-xxxx" value="813-9090-4421" required style="font-size: 0.88rem;">
                             </div>
                         </div>
 
@@ -662,7 +650,7 @@
                                 <i class="bi bi-arrow-left me-1"></i> Kembali
                             </button>
                             <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
-                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small">
+                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small" onclick="saveDraft(true)">
                                     <i class="bi bi-bookmark me-1"></i> Simpan Draf
                                 </button>
                                 <button type="button" class="btn btn-green rounded-pill px-4 py-2 fw-bold text-white small shadow-sm" onclick="goToStep(3)">
@@ -697,9 +685,9 @@
                                         <i class="bi bi-patch-check-fill me-1"></i> Terkoneksi OSS
                                     </span>
                                 </div>
-                                <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6"><i class="bi bi-file-earmark-check"></i></span>
-                                    <input type="text" class="form-control fs-6 border-start-0" id="step3NibInput" name="business_nib" placeholder="13 Digit Angka NIB" value="1289000451234" maxlength="13" required>
+                                <div class="input-group rounded-3">
+                                    <span class="input-group-text bg-light text-muted border-end-0" style="font-size: 0.88rem;"><i class="bi bi-file-earmark-check"></i></span>
+                                    <input type="text" class="form-control border-start-0" id="step3NibInput" name="business_nib" placeholder="13 Digit Angka NIB" value="1289000451234" maxlength="13" required style="font-size: 0.88rem;">
                                 </div>
                                 <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">Nomor legalitas resmi dari sistem OSS Kementerian Investasi / BKPM</small>
                             </div>
@@ -708,9 +696,9 @@
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <label class="form-label fw-bold text-navy small mb-0">Nomor Pokok Wajib Pajak (NPWP) <span class="text-danger">*</span></label>
                                 </div>
-                                <div class="input-group input-group-lg rounded-3">
-                                    <span class="input-group-text bg-light text-muted border-end-0 fs-6"><i class="bi bi-credit-card-2-front"></i></span>
-                                    <input type="text" class="form-control fs-6 border-start-0" id="step3NpwpInput" name="business_npwp" placeholder="16 Digit NPWP Usaha / Pribadi" value="08.123.456.7-521.000" required>
+                                <div class="input-group rounded-3">
+                                    <span class="input-group-text bg-light text-muted border-end-0" style="font-size: 0.88rem;"><i class="bi bi-credit-card-2-front"></i></span>
+                                    <input type="text" class="form-control border-start-0" id="step3NpwpInput" name="business_npwp" placeholder="16 Digit NPWP Usaha / Pribadi" value="08.123.456.7-521.000" required style="font-size: 0.88rem;">
                                 </div>
                                 <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">NPWP badan usaha, koperasi, yayasan, atau penanggung jawab</small>
                             </div>
@@ -720,7 +708,7 @@
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-navy small mb-2">Izin Lingkungan / Surat Rekomendasi <span class="text-danger">*</span></label>
-                                <select class="form-select form-select-lg rounded-3 fs-6" id="step3IzinSelect" name="env_permit" required>
+                                <select class="form-select rounded-3" id="step3IzinSelect" name="env_permit" required style="font-size: 0.88rem;">
                                     <option value="SPPL (Surat Pernyataan Pengelolaan Lingkungan)" selected>SPPL (Surat Pernyataan Pengelolaan Lingkungan)</option>
                                     <option value="UKL-UPL (Upaya Pengelolaan & Pemantauan)">UKL-UPL (Upaya Pengelolaan & Pemantauan)</option>
                                     <option value="Surat Rekomendasi POKDARWIS & Desa">Surat Keputusan / Rekomendasi POKDARWIS Desa</option>
@@ -729,7 +717,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-navy small mb-2">Status Hak Pengelolaan / Lahan <span class="text-danger">*</span></label>
-                                <select class="form-select form-select-lg rounded-3 fs-6" id="step3LahanSelect" name="land_status" required>
+                                <select class="form-select rounded-3" id="step3LahanSelect" name="land_status" required style="font-size: 0.88rem;">
                                     <option value="Kerjasama Perhutani (PKS KPH)" selected>Kerjasama Perhutani (PKS KPH Banyumas Timur/Barat)</option>
                                     <option value="Milik Sendiri (SHM / SHGB)">Milik Sendiri (Sertifikat SHM / SHGB)</option>
                                     <option value="Tanah Kas Desa / Bengkok">Tanah Kas Desa / Bengkok (Izin Pemdes)</option>
@@ -875,7 +863,7 @@
                         <div class="row g-3 mb-5">
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-navy small mb-2">Nama Bank Mitra <span class="text-danger">*</span></label>
-                                <select class="form-select form-select-lg rounded-3 fs-6" id="step3BankSelect" name="bank_name" required>
+                                <select class="form-select rounded-3" id="step3BankSelect" name="bank_name" required style="font-size: 0.88rem;">
                                     <option value="Bank Jateng" selected>Bank Jateng (Rekomendasi Pemkab Banyumas)</option>
                                     <option value="BCA">BCA (Bank Central Asia)</option>
                                     <option value="BRI">BRI (Bank Rakyat Indonesia)</option>
@@ -885,11 +873,11 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-navy small mb-2">Nomor Rekening <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-lg rounded-3 fs-6" id="step3RekeningNo" name="bank_account_number" placeholder="Contoh: 100239482819" value="1002-3948-2819" required>
+                                <input type="text" class="form-control rounded-3" id="step3RekeningNo" name="bank_account_number" placeholder="Contoh: 100239482819" value="1002-3948-2819" required style="font-size: 0.88rem;">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold text-navy small mb-2">Nama Pemilik Rekening <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-lg rounded-3 fs-6" id="step3RekeningName" name="bank_account_holder" placeholder="Sesuai buku rekening" value="Hutan Pinus Limpakuwus Baturraden" required>
+                                <input type="text" class="form-control rounded-3" id="step3RekeningName" name="bank_account_holder" placeholder="Sesuai buku rekening" value="Hutan Pinus Limpakuwus Baturraden" required style="font-size: 0.88rem;">
                             </div>
                         </div>
 
@@ -899,7 +887,7 @@
                                 <i class="bi bi-arrow-left me-1"></i> Kembali
                             </button>
                             <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
-                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small">
+                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small" onclick="saveDraft(true)">
                                     <i class="bi bi-bookmark me-1"></i> Simpan Draf
                                 </button>
                                 <button type="button" class="btn btn-green rounded-pill px-4 py-2 fw-bold text-white small shadow-sm" onclick="goToStep(4)">
@@ -1103,8 +1091,8 @@
                                 <i class="bi bi-arrow-left me-1"></i> Kembali
                             </button>
                             <div class="d-flex align-items-center gap-2 w-100 w-sm-auto justify-content-end">
-                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small" onclick="window.print()">
-                                    <i class="bi bi-printer me-1"></i> Cetak Ringkasan
+                                <button type="button" class="btn btn-light border border-slate-200 rounded-pill px-4 py-2 fw-semibold text-secondary small" onclick="saveDraft(true)">
+                                    <i class="bi bi-bookmark me-1"></i> Simpan Draf
                                 </button>
                                 <button type="button" class="btn btn-green rounded-pill px-4 py-2 fw-bold text-white small shadow-sm" onclick="submitPendaftaranMitra()">
                                     <i class="bi bi-check2-circle me-1"></i> Kirim Pendaftaran
@@ -1264,7 +1252,7 @@
                 tipsContent.innerHTML = `
                     <strong class="text-success d-block small mb-1">Tips Langkah 1:</strong>
                     <p class="text-secondary mb-0" style="font-size: 0.75rem; line-height: 1.45;">
-                        Pastikan data penanggung jawab sesuai KTP dan nomor WhatsApp aktif untuk menerima kode verifikasi OTP instan.
+                        Pastikan data penanggung jawab sesuai KTP dan nomor WhatsApp aktif untuk koordinasi kemitraan resmi.
                     </p>
                 `;
             }
@@ -1308,6 +1296,9 @@
         const url = new URL(window.location);
         url.searchParams.set('step', stepNum);
         window.history.pushState({}, '', url);
+
+        // Simpan otomatis ke draf lokal setiap navigasi langkah
+        saveDraft(false);
 
         // Scroll halus ke atas formulir
         window.scrollTo({ top: 120, behavior: 'smooth' });
@@ -1368,6 +1359,9 @@
             return;
         }
 
+        // Hapus draf karena pendaftaran resmi telah diajukan
+        localStorage.removeItem('dokemas_mitra_draft');
+
         const modalEl = document.getElementById('modalPendaftaranBerhasil');
         if (!modalEl) return;
 
@@ -1391,6 +1385,155 @@
         }
     }
 
+    // ==============================================================
+    // MANAJEMEN SIMPAN & MUAT DRAF PENDAFTARAN MITRA (LOCALSTORAGE)
+    // ==============================================================
+    function saveDraft(showAlert = true) {
+        const form = document.getElementById('formOnboardingMitra');
+        if (!form) return;
+
+        const draft = {};
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (!input.name || input.type === 'file') return;
+
+            if (input.type === 'checkbox') {
+                if (input.name.endsWith('[]')) {
+                    if (!draft[input.name]) draft[input.name] = [];
+                    if (input.checked) draft[input.name].push(input.value);
+                } else {
+                    draft[input.name] = input.checked;
+                }
+            } else if (input.type === 'radio') {
+                if (input.checked) {
+                    draft[input.name] = input.value;
+                }
+            } else {
+                draft[input.name] = input.value;
+            }
+        });
+
+        // Simpan juga checkbox persetujuan berdasarkan ID
+        ['checkAgreeTerms', 'agreeRule1', 'agreeRule2', 'agreeRule3'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) draft['_id_' + id] = el.checked;
+        });
+
+        // Simpan informasi langkah saat ini dan tanggal simpan
+        const urlParams = new URLSearchParams(window.location.search);
+        draft['_saved_step'] = urlParams.get('step') || 1;
+        const now = new Date();
+        draft['_saved_at'] = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) + ' pukul ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+        localStorage.setItem('dokemas_mitra_draft', JSON.stringify(draft));
+
+        if (showAlert) {
+            // Visual feedback pada semua tombol Simpan Draf
+            const draftBtns = document.querySelectorAll('button[onclick*="saveDraft"]');
+            draftBtns.forEach(btn => {
+                const origHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="bi bi-check2 text-success me-1"></i> Tersimpan!';
+                btn.classList.add('border-success');
+                setTimeout(() => {
+                    btn.innerHTML = origHtml;
+                    btn.classList.remove('border-success');
+                }, 2200);
+            });
+
+            showDraftToast('Draf pendaftaran Anda berhasil disimpan! Seluruh data formulir yang sudah terisi otomatis tersimpan.');
+        }
+    }
+
+    function loadDraft() {
+        const saved = localStorage.getItem('dokemas_mitra_draft');
+        if (!saved) return;
+
+        try {
+            const draft = JSON.parse(saved);
+            const form = document.getElementById('formOnboardingMitra');
+            if (!form) return;
+
+            Object.keys(draft).forEach(key => {
+                if (key.startsWith('_saved_')) return;
+
+                if (key.startsWith('_id_')) {
+                    const id = key.replace('_id_', '');
+                    const el = document.getElementById(id);
+                    if (el && el.type === 'checkbox') el.checked = Boolean(draft[key]);
+                    return;
+                }
+
+                if (key.endsWith('[]')) {
+                    const checkboxes = form.querySelectorAll(`input[name="${key}"]`);
+                    const values = Array.isArray(draft[key]) ? draft[key] : [];
+                    checkboxes.forEach(cb => {
+                        cb.checked = values.includes(cb.value);
+                    });
+                } else {
+                    const field = form.querySelector(`[name="${key}"]`);
+                    if (field) {
+                        if (field.type === 'checkbox') {
+                            field.checked = Boolean(draft[key]);
+                        } else if (field.type === 'radio') {
+                            const radio = form.querySelector(`input[name="${key}"][value="${draft[key]}"]`);
+                            if (radio) radio.checked = true;
+                        } else {
+                            field.value = draft[key];
+                        }
+                    }
+                }
+            });
+
+            // Sinkronkan review data langkah 4
+            syncReviewData();
+
+            // Tampilkan notifikasi draf berhasil dimuat kembali
+            if (draft['_saved_at']) {
+                showDraftToast(`Draf formulir Anda sebelumnya otomatis dimuat kembali (${draft['_saved_at']}).`, false);
+            }
+        } catch (e) {
+            console.error('Gagal memuat draf:', e);
+        }
+    }
+
+    function showDraftToast(message, isSuccess = true) {
+        let toastContainer = document.getElementById('draftToastContainer');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.id = 'draftToastContainer';
+            toastContainer.style.cssText = 'position: fixed; bottom: 24px; right: 24px; z-index: 10050; max-width: 390px; pointer-events: none;';
+            document.body.appendChild(toastContainer);
+        }
+
+        const toastId = 'draftToast_' + Date.now();
+        const toastItem = document.createElement('div');
+        toastItem.id = toastId;
+        toastItem.className = 'toast align-items-center text-bg-white border-0 shadow-lg show mb-2 rounded-4 p-1';
+        toastItem.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1 !important; pointer-events: auto;';
+        toastItem.innerHTML = `
+            <div class="d-flex p-3 align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px; background-color: ${isSuccess ? '#e0f2fe' : '#f1f5f9'}; color: ${isSuccess ? '#1967d2' : '#0d233a'};">
+                    <i class="bi ${isSuccess ? 'bi-bookmark-check-fill' : 'bi-arrow-clockwise'} fs-5"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <strong class="d-block text-navy small fw-bold">${isSuccess ? 'Draf Berhasil Disimpan' : 'Draf Dimuat Kembali'}</strong>
+                    <span class="text-secondary small" style="font-size: 0.78rem; line-height: 1.35;">${message}</span>
+                </div>
+                <button type="button" class="btn-close me-1 m-auto" onclick="document.getElementById('${toastId}').remove()"></button>
+            </div>
+        `;
+        toastContainer.appendChild(toastItem);
+
+        setTimeout(() => {
+            const el = document.getElementById(toastId);
+            if (el) {
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.4s ease';
+                setTimeout(() => el.remove(), 400);
+            }
+        }, 4500);
+    }
+
     // Toggle Tampilkan/Sembunyikan Password
     function togglePasswordVisibility() {
         const passwordInput = document.getElementById('portalPassword');
@@ -1406,34 +1549,9 @@
         }
     }
 
-    // Simulasi Kirim OTP WhatsApp
-    function sendOtpCode() {
-        const btn = document.getElementById('btnSendOtp');
-        const phone = document.getElementById('step1PhoneInput').value;
-        if (!phone) {
-            alert('Silakan masukkan nomor WhatsApp Anda terlebih dahulu.');
-            return;
-        }
-
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Mengirim...';
-
-        setTimeout(() => {
-            btn.innerHTML = '<i class="bi bi-check2"></i> Terkirim (60s)';
-            alert('Kode OTP 6-digit verifikasi pendaftaran telah dikirim ke WhatsApp +62 ' + phone);
-            
-            let countdown = 60;
-            const timer = setInterval(() => {
-                countdown--;
-                if (countdown > 0) {
-                    btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Kirim Ulang (' + countdown + 's)';
-                } else {
-                    clearInterval(timer);
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="bi bi-send me-1"></i> Kirim OTP';
-                }
-            }, 1000);
-        }, 1000);
-    }
+    // Inisialisasi Muat Draf Otomatis saat Halaman Siap
+    document.addEventListener('DOMContentLoaded', function() {
+        loadDraft();
+    });
 </script>
 @endsection

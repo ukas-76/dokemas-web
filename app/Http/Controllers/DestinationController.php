@@ -74,23 +74,39 @@ class DestinationController extends Controller
         if (!empty($selectedCategories)) {
             // Normalisasi kategori umum atau sinonim (contoh: 'wisata' -> 'alam')
             $mappedCats = [];
+            $hasLodging = false;
             foreach ($selectedCategories as $catVal) {
                 $mappedCats[] = $catVal;
                 if ($catVal === 'wisata' || $catVal === 'wisata-alam') {
                     $mappedCats[] = 'alam';
                 }
+                if (in_array($catVal, ['hotel', 'villa', 'hotel-villa', 'penginapan', 'homestay'])) {
+                    $hasLodging = true;
+                }
             }
             $mappedCats = array_unique(array_filter($mappedCats));
 
-            $query->whereHas('category', function ($sub) use ($mappedCats) {
-                $sub->whereIn('slug', $mappedCats)
-                    ->orWhereIn('id', $mappedCats)
-                    ->orWhere(function ($s) use ($mappedCats) {
-                        foreach ($mappedCats as $mc) {
-                            $s->orWhere('name', 'like', "%{$mc}%")
-                              ->orWhere('slug', 'like', "%{$mc}%");
-                        }
-                    });
+            $query->where(function ($sub) use ($mappedCats, $hasLodging) {
+                $sub->whereHas('category', function ($catSub) use ($mappedCats) {
+                    $catSub->whereIn('slug', $mappedCats)
+                        ->orWhereIn('id', $mappedCats)
+                        ->orWhere(function ($s) use ($mappedCats) {
+                            foreach ($mappedCats as $mc) {
+                                $s->orWhere('name', 'like', "%{$mc}%")
+                                  ->orWhere('slug', 'like', "%{$mc}%");
+                            }
+                        });
+                });
+
+                if ($hasLodging) {
+                    $sub->orWhere('facilities', 'like', '%penginapan%')
+                        ->orWhere('facilities', 'like', '%villa%')
+                        ->orWhere('facilities', 'like', '%hotel%')
+                        ->orWhere('name', 'like', '%hotel%')
+                        ->orWhere('name', 'like', '%villa%')
+                        ->orWhere('description', 'like', '%penginapan%')
+                        ->orWhere('description', 'like', '%villa%');
+                }
             });
         }
 

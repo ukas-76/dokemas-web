@@ -13,22 +13,18 @@
                         <small class="text-white-50" style="font-size: 0.6rem;">DOLAN KELILING BANYUMAS</small>
                     </div>
                 </div>
-                <p class="text-white-50 small mb-4" style="line-height: 1.6;">
-                    Platform kurasi perjalanan, destinasi alam Gunung Slamet, reservasi homestay otentik, dan pemberdayaan ekowisata lokal Kabupaten Banyumas.
+                <p class="text-white-50 small mb-0" style="line-height: 1.6;">
+                    Platform itinerary perjalanan, destinasi alam Gunung Slamet, reservasi homestay otentik, dan pemberdayaan ekowisata lokal Kabupaten Banyumas.
                 </p>
-                <div class="d-inline-flex align-items-center gap-2 bg-white bg-opacity-10 px-3 py-2 rounded-pill border border-white border-opacity-10 text-white-50 small">
-                    <i class="bi bi-patch-check-fill text-success"></i> DIDUKUNG BANYUMAS TOURISM HUB
-                </div>
             </div>
 
             <!-- Col 2: Eksplorasi -->
             <div class="col-lg-2 col-md-6 ms-lg-auto">
                 <h6 class="fw-bold text-white mb-3">Eksplorasi</h6>
                 <ul class="list-unstyled d-flex flex-column gap-2 small text-white-50">
-                    <li><a href="#" class="text-white-50 text-decoration-none">Wisata Alam</a></li>
-                    <li><a href="#" class="text-white-50 text-decoration-none">Hotel & Villa</a></li>
-                    <li><a href="#" class="text-white-50 text-decoration-none">Kuliner Banyumasan</a></li>
-                    <li><a href="#" class="text-white-50 text-decoration-none">Panduan Wisata</a></li>
+                    <li><a href="{{ route('destinasi.index', ['kategori' => ['alam']]) }}" class="text-white-50 text-decoration-none">Wisata Alam</a></li>
+                    <li><a href="{{ route('destinasi.index', ['fasilitas' => ['penginapan']]) }}" class="text-white-50 text-decoration-none">Hotel & Villa</a></li>
+                    <li><a href="{{ route('destinasi.index', ['kategori' => ['kuliner']]) }}" class="text-white-50 text-decoration-none">Kuliner Banyumasan</a></li>
                 </ul>
             </div>
 
@@ -36,10 +32,8 @@
             <div class="col-lg-2 col-md-6">
                 <h6 class="fw-bold text-white mb-3">Kemitraan</h6>
                 <ul class="list-unstyled d-flex flex-column gap-2 small text-white-50">
-                    <li><a href="#" class="text-white-50 text-decoration-none">Daftar Jadi Merchant</a></li>
-                    <li><a href="#" class="text-white-50 text-decoration-none">Portal Pengelola</a></li>
-                    <li><a href="#" class="text-white-50 text-decoration-none">Komunitas Homestay</a></li>
-                    <li><a href="#" class="text-white-50 text-decoration-none">Bantuan Operator</a></li>
+                    <li><a href="{{ route('mitra.register') }}" class="text-white-50 text-decoration-none">Daftar Menjadi Mitra</a></li>
+                    <li><a href="{{ route('mitra.dashboard') }}" class="text-white-50 text-decoration-none">Portal Pengelola</a></li>
                 </ul>
             </div>
 
@@ -47,17 +41,23 @@
             <div class="col-lg-3 col-md-6">
                 <h6 class="fw-bold text-white mb-3">Pusat Kontak</h6>
                 <ul class="list-unstyled d-flex flex-column gap-3 small text-white-50">
-                    <li class="d-flex align-items-start gap-2">
-                        <i class="bi bi-geo-alt text-success fs-6 mt-1"></i>
-                        <span>Banyumas Tourism Center, Jl. Jend. Soedirman, Purwokerto</span>
+                    <li>
+                        <a href="https://maps.google.com/?q=Purwokerto+Banyumas" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none d-flex align-items-start gap-2">
+                            <i class="bi bi-geo-alt text-success fs-6 mt-1 flex-shrink-0"></i>
+                            <span>Banyumas Tourism Center, Jl. Jend. Soedirman, Purwokerto</span>
+                        </a>
                     </li>
-                    <li class="d-flex align-items-center gap-2">
-                        <i class="bi bi-whatsapp text-success fs-6"></i>
-                        <span>WhatsApp Concierge +62 812-3456-7890</span>
+                    <li>
+                        <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none d-flex align-items-center gap-2">
+                            <i class="bi bi-whatsapp text-success fs-6 flex-shrink-0"></i>
+                            <span>+62 812-3456-7890</span>
+                        </a>
                     </li>
-                    <li class="d-flex align-items-center gap-2">
-                        <i class="bi bi-envelope text-success fs-6"></i>
-                        <span>halo@dokemas.id</span>
+                    <li>
+                        <a href="mailto:halo@dokemas.id" class="text-white-50 text-decoration-none d-flex align-items-center gap-2">
+                            <i class="bi bi-envelope text-success fs-6 flex-shrink-0"></i>
+                            <span>halo@dokemas.id</span>
+                        </a>
                     </li>
                 </ul>
             </div>

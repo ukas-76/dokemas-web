@@ -23,12 +23,6 @@
                 <span class="badge rounded-pill px-3 py-2 text-white fw-semibold small d-inline-flex align-items-center gap-1" style="background-color: #0d233a; font-size: 0.75rem;">
                     <i class="bi bi-compass text-info"></i> {{ $destination->category->name ?? 'Wisata Alam' }}
                 </span>
-                <span class="badge rounded-pill px-3 py-2 fw-semibold small d-inline-flex align-items-center gap-1" style="background-color: #dcfce7; color: #15803d; font-size: 0.75rem;">
-                    <i class="bi bi-check-circle-fill"></i> Terverifikasi Resmi Dinporabudpar Banyumas
-                </span>
-                <span class="badge rounded-pill px-3 py-2 text-secondary fw-semibold small d-inline-flex align-items-center gap-1" style="background-color: #f1f5f9; font-size: 0.75rem;">
-                    <i class="bi bi-ticket-perforated"></i> {{ $destination->type === 'ticket' ? 'Bebas Antre Loket' : 'Bebas Biaya Reservasi' }}
-                </span>
             </div>
 
             <!-- Title -->
@@ -53,11 +47,6 @@
                 <div class="d-flex align-items-center gap-1">
                     <span class="d-inline-block rounded-circle bg-success me-1" style="width: 8px; height: 8px;"></span>
                     <span class="text-success fw-semibold">Buka Hari Ini: {{ $destination->open_hours ?? '07.30 - 17.00 WIB' }}</span>
-                </div>
-                <span>•</span>
-                <div class="d-flex align-items-center gap-1">
-                    <i class="bi bi-thermometer-half text-info"></i>
-                    <span>{{ $destination->temperature ?? '20° - 23° C' }} Sejuk Pegunungan</span>
                 </div>
             </div>
         </div>
@@ -118,17 +107,15 @@
                 transform: scale(1.1) rotate(90deg) !important;
                 box-shadow: 0 0 20px rgba(220, 53, 69, 0.6) !important;
             }
-            /* Hilangkan scrollbar pada strip thumbnail galeri */
-            .lightbox-thumb-strip {
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                scrollbar-width: none !important;
-                -ms-overflow-style: none !important;
+            /* Titik-titik indikator galeri lightbox */
+            .lightbox-dot {
+                cursor: pointer !important;
+                outline: none !important;
+                border: none !important;
             }
-            .lightbox-thumb-strip::-webkit-scrollbar {
-                display: none !important;
-                width: 0 !important;
-                height: 0 !important;
+            .lightbox-dot:hover {
+                background-color: rgba(255, 255, 255, 0.9) !important;
+                transform: scale(1.3) !important;
             }
         </style>
 
@@ -528,7 +515,7 @@
 
             </div>
 
-            <!-- RIGHT COLUMN: SIDEBAR (INFORMASI KUNJUNGAN, CUACA & DESTINASI SEKITAR) -->
+            <!-- RIGHT COLUMN: SIDEBAR (INFORMASI KUNJUNGAN & DESTINASI SEKITAR) -->
             <div class="col-lg-4">
                 
                 <!-- 1. INFORMASI TIKET & KUNJUNGAN LOKET RESMI -->
@@ -614,46 +601,7 @@
 
                 </div>
 
-                <!-- 2. KONDISI CUACA & ANTREAN (LIVE UPDATE) -->
-                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="d-flex align-items-center gap-2 text-navy fw-bold small">
-                            <i class="bi bi-brightness-high text-warning"></i>
-                            <span>Kondisi Cuaca & Antrean</span>
-                        </div>
-                        <span class="badge bg-success bg-opacity-10 text-success fw-bold text-uppercase" style="font-size: 0.65rem;">
-                            LIVE UPDATE
-                        </span>
-                    </div>
-
-                    <!-- Weather Info -->
-                    <div class="d-flex justify-content-between align-items-center p-3 rounded-4 bg-light mb-3 border border-slate-100">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="bi bi-cloud-sun text-warning fs-3"></i>
-                            <div>
-                                <h6 class="fw-bold text-navy mb-0" style="font-size: 0.95rem;">Cerah Berawan</h6>
-                                <small class="text-muted" style="font-size: 0.7rem;">Kelembapan 78% • Hawa Sejuk Pegunungan</small>
-                            </div>
-                        </div>
-                        <div class="display-6 fw-bold text-navy" style="font-size: 1.5rem;">22°C</div>
-                    </div>
-
-                    <!-- Crowd Level -->
-                    <div class="p-3 rounded-4 bg-light border border-slate-100">
-                        <div class="d-flex justify-content-between align-items-center small mb-1">
-                            <span class="text-muted" style="font-size: 0.72rem;">Tingkat Kepadatan Hari Ini:</span>
-                            <span class="fw-bold text-success" style="font-size: 0.75rem;">Normal / Nyaman</span>
-                        </div>
-                        <div class="progress mb-2" style="height: 6px;">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 28%"></div>
-                        </div>
-                        <p class="text-muted small mb-0" style="font-size: 0.72rem; line-height: 1.4;">
-                            Kapasitas pengunjung tersedia 75% (Sangat ideal untuk kunjungan hari ini).
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 3. DESTINASI TERDEKAT (DARI DATABASE) -->
+                <!-- 2. DESTINASI TERDEKAT (DARI DATABASE) -->
                 <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="h6 fw-bold text-navy mb-0" style="font-size: 0.95rem;">Destinasi Terdekat</h4>
@@ -741,11 +689,18 @@
 
             </div>
 
-            <!-- Bottom Thumbnail Strip -->
-            <div class="position-absolute bottom-0 start-0 w-100 p-3 text-center" style="z-index: 1060; background: linear-gradient(0deg, rgba(6,13,22,0.95) 0%, transparent 100%); pointer-events: none;">
-                <div class="d-inline-flex align-items-center gap-2 p-1.5 rounded-pill bg-black bg-opacity-70 border border-white border-opacity-20 shadow-lg lightbox-thumb-strip" style="max-width: 90vw; pointer-events: auto; height: 56px;">
+            <!-- Bottom Indicator Dots (Titik-Titik Navigasi) -->
+            <div class="position-absolute bottom-0 start-0 w-100 pb-3 pt-2 text-center" style="z-index: 1060; background: linear-gradient(0deg, rgba(6,13,22,0.9) 0%, transparent 100%); pointer-events: none;">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill bg-black bg-opacity-40 border-0" style="pointer-events: auto; backdrop-filter: blur(4px);">
                     @foreach($allImages as $idx => $img)
-                        <img src="{{ $img }}" alt="Thumbnail {{ $idx + 1 }}" class="rounded-circle object-fit-cover cursor-pointer flex-shrink-0" style="width: 42px; height: 42px; border: 2.5px solid {{ $idx == 0 ? '#22c55e' : 'transparent' }}; opacity: {{ $idx == 0 ? '1' : '0.5' }}; transition: all 0.2s ease; box-sizing: border-box;" onclick="event.stopPropagation(); setLightboxIndex({{ $idx }})" id="lightboxThumb{{ $idx }}">
+                        <button type="button" 
+                                class="lightbox-dot p-0 border-0 rounded-circle" 
+                                id="lightboxThumb{{ $idx }}" 
+                                onclick="event.stopPropagation(); setLightboxIndex({{ $idx }})" 
+                                title="Foto {{ $idx + 1 }}" 
+                                aria-label="Lihat Foto {{ $idx + 1 }}"
+                                style="width: 8px; height: 8px; background-color: {{ $idx == 0 ? '#ffffff' : 'rgba(255, 255, 255, 0.35)' }}; transition: all 0.25s ease; cursor: pointer; border: none; {{ $idx == 0 ? 'transform: scale(1.35); box-shadow: 0 0 8px rgba(255,255,255,0.9);' : '' }}">
+                        </button>
                     @endforeach
                 </div>
             </div>
@@ -836,20 +791,20 @@
             counterEl.innerText = `Foto ${currentLightboxIndex + 1} dari ${galleryImages.length}`;
         }
 
-        // Sinkronisasi border thumbnail di bagian bawah modal
+        // Sinkronisasi indikator titik-titik (dots) di bagian bawah modal
         galleryImages.forEach((_, idx) => {
-            const thumb = document.getElementById(`lightboxThumb${idx}`);
-            if (thumb) {
+            const dot = document.getElementById(`lightboxThumb${idx}`);
+            if (dot) {
                 if (idx === currentLightboxIndex) {
-                    thumb.style.borderColor = '#22c55e';
-                    thumb.style.boxShadow = '0 0 12px rgba(34, 197, 94, 0.9)';
-                    thumb.style.opacity = '1';
-                    thumb.style.transform = 'scale(1.08)';
+                    dot.style.backgroundColor = '#ffffff';
+                    dot.style.boxShadow = '0 0 8px rgba(255, 255, 255, 0.9)';
+                    dot.style.transform = 'scale(1.35)';
+                    dot.style.opacity = '1';
                 } else {
-                    thumb.style.borderColor = 'transparent';
-                    thumb.style.boxShadow = 'none';
-                    thumb.style.opacity = '0.5';
-                    thumb.style.transform = 'scale(1)';
+                    dot.style.backgroundColor = 'rgba(255, 255, 255, 0.35)';
+                    dot.style.boxShadow = 'none';
+                    dot.style.transform = 'scale(1)';
+                    dot.style.opacity = '0.7';
                 }
             }
         });

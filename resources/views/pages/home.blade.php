@@ -5,11 +5,7 @@
 <!-- HERO & SEARCH BAR -->
 <section class="hero-section text-white pt-5 pb-5" style="background: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), linear-gradient(180deg, rgba(13, 35, 58, 0.75) 0%, rgba(6, 18, 30, 0.85) 100%), url('{{ asset('images/gunung-selamet.jpg') }}'); background-size: 24px 24px, cover, cover; background-position: center;">
     <div class="container pt-4 pb-5 text-center position-relative z-1">
-        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-white bg-opacity-10 border border-white border-opacity-10 text-white-50 small mb-4">
-            <i class="bi bi-compass text-success"></i> GERBANG RESMI WISATA LERENG SLAMET
-        </div>
-
-        <h1 class="display-4 fw-bold mb-3 text-white col-lg-10 mx-auto lh-sm" style="font-weight: 800;">
+        <h1 class="display-4 fw-bold mb-3 text-white col-lg-10 mx-auto lh-sm pt-2" style="font-weight: 800;">
             Eksplorasi Wisata & Penginapan<br>Terbaik di Banyumas
         </h1>
 
@@ -239,13 +235,13 @@
                     </h2>
 
                     <p class="text-white-50 mb-4 small" style="line-height: 1.7;">
-                        Jelajahi keindahan wisata Banyumas terlengkap, dapatkan info jam buka & rute lokasi terverifikasi, dan pantau cuaca lereng Gunung Slamet secara langsung.
+                        Jelajahi keindahan wisata Banyumas terlengkap, dapatkan info jam buka & rute lokasi terverifikasi, dan temukan rekomendasi destinasi terbaik secara langsung.
                     </p>
 
                     <div class="d-flex flex-wrap gap-2 mb-4 small">
                         <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-info-circle text-success me-1"></i> Info Loket Resmi</span>
                         <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-map text-success me-1"></i> Petunjuk Rute Wisata</span>
-                        <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-compass text-success me-1"></i> Kurasi Destinasi</span>
+                        <span class="bg-white bg-opacity-10 text-white px-3 py-2 rounded-3"><i class="bi bi-compass text-success me-1"></i> Itinerary Destinasi</span>
                     </div>
 
                     <div class="d-flex flex-wrap align-items-center gap-3">
@@ -264,14 +260,6 @@
                                 <span class="fw-bold small">Google Play</span>
                             </div>
                         </a>
-
-                        <div class="bg-white bg-opacity-10 p-2 rounded-3 d-flex align-items-center gap-2 border border-white border-opacity-10">
-                            <i class="bi bi-qr-code fs-3 text-white"></i>
-                            <div class="text-start lh-1">
-                                <small class="d-block text-success fw-bold" style="font-size: 0.6rem;">SCAN CEPAT</small>
-                                <span class="fw-bold text-white small">Install Sekarang</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -312,10 +300,10 @@
 
                             <div class="bg-success bg-opacity-10 p-2 rounded-3 d-flex justify-content-between align-items-center">
                                 <div>
-                                    <small class="d-block text-muted" style="font-size: 0.55rem;">Cuaca Lereng Slamet</small>
-                                    <span class="fw-bold text-success" style="font-size: 0.65rem;">Cerah Berawan • 22°C</span>
+                                    <small class="d-block text-muted" style="font-size: 0.55rem;">Status Kunjungan</small>
+                                    <span class="fw-bold text-success" style="font-size: 0.65rem;">Buka Hari Ini</span>
                                 </div>
-                                <span class="badge bg-success" style="font-size: 0.55rem;">Kondisi Ideal</span>
+                                <span class="badge bg-success" style="font-size: 0.55rem;">Banyumas</span>
                             </div>
                         </div>
                     </div>

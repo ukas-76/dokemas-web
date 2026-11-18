@@ -41,9 +41,6 @@
                         <h4 class="fw-bold text-navy mb-0" style="letter-spacing: -0.3px;">
                             {{ $activeDestination->name ?? 'Lokawisata Baturraden' }}
                         </h4>
-                        <span class="badge bg-success bg-opacity-10 text-success fw-bold border border-success-subtle rounded-pill px-2 py-1 small">
-                            <i class="bi bi-patch-check-fill me-1"></i> Terverifikasi Dinporabudpar
-                        </span>
                     </div>
                     <div class="d-flex align-items-center gap-3 text-muted small flex-wrap">
                         <span><i class="bi bi-geo-alt-fill text-danger me-1"></i> {{ $activeDestination->location ?? 'Kec. Baturraden, Banyumas' }}</span>
@@ -345,21 +342,12 @@
                             </div>
                         </div>
 
-                        <!-- Suhu / Cuaca -->
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold text-navy small mb-1">Suhu Rata-rata Lingkungan</label>
-                            <div class="input-group rounded-3">
-                                <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-thermometer-half"></i></span>
-                                <input type="text" name="temperature" class="form-control border-start-0" value="{{ $activeDestination->temperature ?? '20° - 23° C' }}" placeholder="Contoh: 20° - 23° C Sejuk Pegunungan">
-                            </div>
-                        </div>
-
                         <!-- Lokasi Ringkas & Alamat Lengkap -->
                         <div class="col-md-6">
                             <label class="form-label fw-bold text-navy small mb-1">Wilayah / Kecamatan</label>
                             <input type="text" name="location" class="form-control rounded-3" value="{{ $activeDestination->location ?? 'Karangmangu, Kec. Baturraden' }}" placeholder="Misal: Karangmangu, Kec. Baturraden">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-12 mt-3">
                             <label class="form-label fw-bold text-navy small mb-1">Alamat Lengkap & Petunjuk Akses</label>
                             <input type="text" name="address_full" class="form-control rounded-3" value="{{ $activeDestination->address_full ?? '' }}" placeholder="Alamat lengkap, patokan jalan, atau kapasitas bus">
                         </div>
